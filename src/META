@@ -1,0 +1,10 @@
+# OASIS_START
+# DO NOT EDIT (digest: 0eb505fe222e4a66595f927048239a64)
+version = "0.0.1"
+description = "DNAnexus OCaml API"
+requires = "threads yajl yajl-extra ssl curl batteries"
+archive(byte) = "DNAnexus.cma"
+archive(native) = "DNAnexus.cmxa"
+exists_if = "DNAnexus.cma"
+# OASIS_STOP
+

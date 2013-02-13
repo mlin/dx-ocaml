@@ -1,0 +1,10 @@
+# OASIS_START
+# DO NOT EDIT (digest: 1d1fd829b49194b9e3c2e654fab811bb)
+DNAnexus
+HTTP
+ThreadPool
+DX
+DXDataObject
+FileHelpers
+GTableHelpers
+# OASIS_STOP

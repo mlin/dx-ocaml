@@ -1,0 +1,23 @@
+OASISFormat: 0.2
+Name:        DNAnexus
+Version:     0.0.1
+Synopsis:    DNAnexus OCaml API
+Authors:     DNAnexus, Inc.
+License:     LGPL-2.1 with OCaml linking exception
+Plugins:     META (0.2)
+
+Library DNAnexus
+  Path:       . 
+  BuildTools: ocamlbuild
+  BuildDepends: threads,yajl,yajl-extra,ssl,curl,batteries
+  Modules:    DNAnexus
+  InternalModules: HTTP,ThreadPool,DX,DXDataObject,FileHelpers,GTableHelpers
+
+Executable unit_tests
+  Path:       .
+  MainIs:     unit_tests.ml
+  Install:    false
+  Build:      false
+  BuildTools: ocamlbuild
+  BuildDepends: threads,yajl,yajl-extra,ssl,curl,batteries,oUnit
+  CompiledObject: best

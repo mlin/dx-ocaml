@@ -1,0 +1,6 @@
+.JSON.loc
+.curl.loc
+_build
+setup.data
+setup.log
+*.native

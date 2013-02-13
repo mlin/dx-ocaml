@@ -1,0 +1,12 @@
+[submodule "twt"]
+	path = twt
+	url = git://github.com/mlin/twt.git
+	ignore = dirty
+[submodule "ocurl"]
+	path = ocurl
+	url = git://repo.or.cz/ocurl.git
+	ignore = dirty
+[submodule "yajl-ocaml"]
+	path = yajl-ocaml
+	url = git://github.com/mlin/yajl-ocaml.git
+	ignore = dirty
