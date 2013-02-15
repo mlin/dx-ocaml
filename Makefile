@@ -4,7 +4,7 @@ default: all
 all: src/setup.data
 	cd src && ocaml setup.ml -build
 
-install: check-env all
+install: all
 	ocamlfind remove DNAnexus || true
 	cd src && ocaml setup.ml -install
 
