@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="DNAnexus.Record.html">
+<link rel="next" href="DNAnexus.GTable.html">
+<link rel="Up" href="DNAnexus.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="DNAnexus" rel="Chapter" href="DNAnexus.html"><link title="Transferring files to and from the local file system" rel="Section" href="#3_Transferringfilestoandfromthelocalfilesystem">
+<link title="Streaming file data" rel="Section" href="#3_Streamingfiledata">
+<link title="Controlling parallelism and memory usage" rel="Section" href="#3_Controllingparallelismandmemoryusage">
+<title>DNAnexus.File</title>
+</head>
+<body>
+<div class="navbar"><a href="DNAnexus.Record.html">Previous</a>
+&nbsp;<a href="DNAnexus.html">Up</a>
+&nbsp;<a href="DNAnexus.GTable.html">Next</a>
+</div>
+<center><h1>Module <a href="type_DNAnexus.File.html">DNAnexus.File</a></h1></center>
+<br>
+<pre><span class="keyword">module</span> File: <code class="code">sig</code> <a href="DNAnexus.File.html">..</a> <code class="code">end</code></pre>Files<br>
+<b>See also</b> <a href=" http://wiki.dnanexus.com/API-Specification-v1.0.0/Files ">API Specification : Files</a><br>
+<hr width="100%">
+<pre><span class="keyword">include</span> <a href="DNAnexus.DataObject.html">DNAnexus.DataObject</a></pre>
+<div class="info">
+Common interface to all data objects<br>
+</div>
+<br>
+<span id="3_Transferringfilestoandfromthelocalfilesystem"><h3>Transferring files to and from the local file system</h3></span><br>
+<pre><span id="VALupload_new"><span class="keyword">val</span> upload_new</span> : <code class="type">?options:JSON.t -> ?wait:bool -> string -> t</code></pre><div class="info">
+<code class="code">DNAnexus.File.upload_new local_filename</code> creates a new platform file object,
+      uploads the local file to it, and closes it. By default, the file object will
+      be placed in the root folder of the current workspace or project, and will be
+      given the same name as the local file.<br>
+</div>
+<div class="param_info"><code class="code">options</code> : a JSON object containing inputs passed along to the
+      <code class="code">/file-xxxx/new</code> API call. By specifying appropriate keys here, the project,
+      folder, and name can be overridden, and various other metadata can be set (see
+      the API documentation).</div>
+<div class="param_info"><code class="code">wait</code> : for the file object to become 'closed' before returning (default
+             false)</div>
+<pre><span id="VALupload"><span class="keyword">val</span> upload</span> : <code class="type">t -> string -> unit</code></pre><div class="info">
+<code class="code">DNAnexus.File.upload file local_filename</code> uploads a local file to the
+      existing platform file object. The file object must be in the open state,
+      generally with no data yet written to it, and is <em><b>not</b></em> closed when the
+      upload is complete. That is, once the upload is complete, it will still be
+      necessary to make the <code class="code">/file-xxxx/close</code> API call before the data can be read
+      through the API.<br>
+</div>
+<pre><span id="VALdownload_url"><span class="keyword">val</span> download_url</span> : <code class="type">?duration:int -> t -> string</code></pre><div class="info">
+<code class="code">DNAnexus.File.download_url file</code> invokes <code class="code">/file-xxxx/download</code>, returning
+      a "preauthenticated" URL from which the file data can be downloaded by any
+      HTTP[S] client.<br>
+</div>
+<div class="param_info"><code class="code">duration</code> : see <a href=" http://wiki.dnanexus.com/API-Specification-v1.0.0/Files#API-method%3A-%2Ffile-xxxx%2Fdownload "> API Specification : Files : /file-xxxx/download </a>
+<p>
+
+      <b>Security warning:</b> since file downloads URLs provide access to the file data,
+      they generally should not be printed on the console, logged in error messages,
+      or otherwise stored permanently.</div>
+<pre><span id="VALdownload"><span class="keyword">val</span> download</span> : <code class="type">?duration:int -> t -> string -> unit</code></pre><div class="info">
+<code class="code">DNAnexus.File.download file local_filename</code> downloads the file to the local file
+      system.<br>
+</div>
+<div class="param_info"><code class="code">duration</code> : see <a href=" http://wiki.dnanexus.com/API-Specification-v1.0.0/Files#API-method%3A-%2Ffile-xxxx%2Fdownload "> API Specification : Files : /file-xxxx/download </a></div>
+<br>
+<span id="3_Streamingfiledata"><h3>Streaming file data</h3></span>
+<p>
+
+  <b>See also</b> <a href=" http://ocaml-batteries-team.github.com/batteries-included/hdoc/BatIO.html "> OCaml Batteries Included : IO</a><br>
+<pre><span id="VALopen_output"><span class="keyword">val</span> open_output</span> : <code class="type">t -> unit Batteries.IO.output</code></pre><div class="info">
+<code class="code">DNAnexus.File.open_output file</code> creates an <code class="code">output</code> you can use to write
+      bytes into the file. The file must be in the open state. 
+<p>
+
+      The output stream must be closed using <code class="code">Batteries.IO.close_out</code> when you're
+      finished, which will ensure the data you write is flushed to the API server.
+      However, <em>closing the output stream does <b>not</b> close the file object</em>.
+      That is, once you've closed the output stream, it will still be necessary to
+      make the <code class="code">/file-xxxx/close</code> API call before the data can be read through the
+      API. (Consider combining with <a href="DNAnexus.DataObject.html#VALwith_new"><code class="code">DNAnexus.DataObject.with_new</code></a>)
+<p>
+
+      It is generally not permissible to write additional data into a file that has
+      already been written to by another process or <code class="code">output</code>, even if the file is
+      still in the open state, or to have multiple output streams open for the same
+      file. The bindings will not immediately prevent you from doing this, but the
+      attempt to close the resulting file is likely to fail.
+<p>
+
+      If multiple threads will be writing to the <code class="code">output</code>, it should be protected
+      using <code class="code">Batteries.IO.synchronize_out</code>.<br>
+</div>
+<pre><span id="VALwith_output"><span class="keyword">val</span> with_output</span> : <code class="type">t -> (unit Batteries.IO.output -> 'a) -> 'a</code></pre><div class="info">
+Create an <code class="code">output</code> as in <code class="code">open_output</code>, call your function on it, and then call
+      <code class="code">Batteries.IO.close_out</code> on it (even if your function raises an exception). As
+      with <code class="code">open_out</code>, the file object itself is not closed.<br>
+</div>
+<pre><span id="VALopen_input"><span class="keyword">val</span> open_input</span> : <code class="type">?duration:int -> ?pos:int -> t -> Batteries.IO.input</code></pre><div class="info">
+<code class="code">DNAnexus.File.open_input file</code> creates an <code class="code">input</code> stream you can use to read
+      bytes from the file. The file must be in the closed state.
+<p>
+
+      The input stream should be closed using <code class="code">Batteries.IO.close_in</code> when you're
+      finished, which will allow internal buffers to be garbage-collected as soon as
+      possible.
+<p>
+
+      It is possible to have multiple <code class="code">input</code> streams open to the same file. If
+      multiple threads will be reading from one <code class="code">input</code>, it should be protected
+      using <code class="code">Batteries.IO.synchronize_in</code>.<br>
+</div>
+<div class="param_info"><code class="code">pos</code> : byte offset at which to begin reading the file (default 0)</div>
+<pre><span id="VALwith_input"><span class="keyword">val</span> with_input</span> : <code class="type">?duration:int -> ?pos:int -> t -> (Batteries.IO.input -> 'a) -> 'a</code></pre><div class="info">
+Create an <code class="code">input</code> as in <code class="code">open_in</code>, call your function on it, and then call
+      <code class="code">Batteries.IO.close_in</code> on it (even if your function raises an exception).<br>
+</div>
+<br>
+<span id="3_Controllingparallelismandmemoryusage"><h3>Controlling parallelism and memory usage</h3></span><br>
+<pre><span id="VALreconfigure"><span class="keyword">val</span> reconfigure</span> : <code class="type">?part_size:int -> ?parallelism:int -> t -> unit</code></pre><div class="info">
+The above operations each use parallel HTTP requests to maximize network
+      throughput. For example, files are uploaded in 64MB parts, four parts at a
+      time in parallel. This means that the upload of a large file requires at least
+      256MB of memory in steady-state (realistically more, due to
+      garbage-collection dynamics). Similarly, each open <code class="code">output</code> or <code class="code">input</code> stream
+      uses 256MB of buffers by default.
+<p>
+
+      The defaults of 4 parallel requests with 67,108,864-byte buffers (64MB) can be
+      changed by calling <code class="code">DNAnexus.File.reconfigure</code> before beginning the operation
+      or opening the stream. Reducing these parameters too far will negatively
+      affect the data throughput you can sustain, while raising them excessively
+      will cause out-of-memory problems. For uploads, the API imposes a minimum 5MB
+      part size.<br>
+</div>
+</body></html>

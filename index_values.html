@@ -1,0 +1,280 @@
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="DNAnexus" rel="Chapter" href="DNAnexus.html"><title>Index of values</title>
+</head>
+<body>
+<center><h1>Index of values</h1></center>
+<table>
+<tr><td align="left"><br>A</td></tr>
+<tr><td><a href="DNAnexus.GTable.html#VALadd_row">add_row</a> [<a href="DNAnexus.GTable.html">DNAnexus.GTable</a>]</td>
+<td><div class="info">
+Add one row to the GTable.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.DataObject.html#VALadd_tags">add_tags</a> [<a href="DNAnexus.DataObject.html">DNAnexus.DataObject</a>]</td>
+<td></td></tr>
+<tr><td><a href="DNAnexus.DataObject.html#VALadd_types">add_types</a> [<a href="DNAnexus.DataObject.html">DNAnexus.DataObject</a>]</td>
+<td></td></tr>
+<tr><td><a href="DNAnexus.html#VALapi_call">api_call</a> [<a href="DNAnexus.html">DNAnexus</a>]</td>
+<td><div class="info">
+<code class="code">DNAnexus.api_call ["noun"; "verb"] input</code> synchronously executes an HTTP
+request for the API route <code class="code">/noun/verb</code> (e.g.
+</div>
+</td></tr>
+<tr><td align="left"><br>B</td></tr>
+<tr><td><a href="DNAnexus.DataObject.html#VALbind">bind</a> [<a href="DNAnexus.DataObject.html">DNAnexus.DataObject</a>]</td>
+<td><div class="info">
+<code class="code">DNAnexus.{Class}.bind (project,dxid)</code> returns a wrapper for an existing
+      data object with the given project and object IDs.
+</div>
+</td></tr>
+<tr><td align="left"><br>C</td></tr>
+<tr><td><a href="DNAnexus.DataObject.html#VALclose">close</a> [<a href="DNAnexus.DataObject.html">DNAnexus.DataObject</a>]</td>
+<td><div class="info">
+Invokes <code class="code">/{class}-xxxx/close</code> on an existing, open data object.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.GTable.html#VALcolumns">columns</a> [<a href="DNAnexus.GTable.html">DNAnexus.GTable</a>]</td>
+<td><div class="info">
+Get an array of column descriptors for the GTable through the <code class="code">/gtable-xxxx/describe</code> API call
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.html#VALconfig">config</a> [<a href="DNAnexus.html">DNAnexus</a>]</td>
+<td><div class="info">
+Get the current configuration.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.html#VALconfig_json">config_json</a> [<a href="DNAnexus.html">DNAnexus</a>]</td>
+<td><div class="info">
+Get the current configuration as JSON (useful to print for debugging).
+</div>
+</td></tr>
+<tr><td align="left"><br>D</td></tr>
+<tr><td><a href="DNAnexus.DataObject.html#VALdescribe">describe</a> [<a href="DNAnexus.DataObject.html">DNAnexus.DataObject</a>]</td>
+<td><div class="info">
+Invokes <code class="code">/{class}-xxxx/describe</code> and returns the JSON results.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.File.html#VALdownload">download</a> [<a href="DNAnexus.File.html">DNAnexus.File</a>]</td>
+<td><div class="info">
+<code class="code">DNAnexus.File.download file local_filename</code> downloads the file to the local file
+      system.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.File.html#VALdownload_url">download_url</a> [<a href="DNAnexus.File.html">DNAnexus.File</a>]</td>
+<td><div class="info">
+<code class="code">DNAnexus.File.download_url file</code> invokes <code class="code">/file-xxxx/download</code>, returning
+      a "preauthenticated" URL from which the file data can be downloaded by any
+      HTTP[S] client.
+</div>
+</td></tr>
+<tr><td align="left"><br>F</td></tr>
+<tr><td><a href="DNAnexus.GTable.html#VALflush_rows">flush_rows</a> [<a href="DNAnexus.GTable.html">DNAnexus.GTable</a>]</td>
+<td><div class="info">
+Send all buffered rows to the API server immediately, and wait for them to
+      finish uploading.
+</div>
+</td></tr>
+<tr><td align="left"><br>G</td></tr>
+<tr><td><a href="DNAnexus.DataObject.html#VALget_details">get_details</a> [<a href="DNAnexus.DataObject.html">DNAnexus.DataObject</a>]</td>
+<td></td></tr>
+<tr><td><a href="DNAnexus.html#VALget_link">get_link</a> [<a href="DNAnexus.html">DNAnexus</a>]</td>
+<td><div class="info">
+Given the JSON <code class="code">{"$dnanexus_link": "record-xxxx"}</code>, extract
+<code class="code">(None, "record-xxxx")</code>.
+</div>
+</td></tr>
+<tr><td align="left"><br>I</td></tr>
+<tr><td><a href="DNAnexus.DataObject.html#VALid">id</a> [<a href="DNAnexus.DataObject.html">DNAnexus.DataObject</a>]</td>
+<td><div class="info">
+Retrieve the DNAnexus ID of the object
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.GTable.html#VALindices">indices</a> [<a href="DNAnexus.GTable.html">DNAnexus.GTable</a>]</td>
+<td><div class="info">
+Get a list of the GTable's indices through the <code class="code">/gtable-xxxx/describe</code> API call
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.html#VALis_job">is_job</a> [<a href="DNAnexus.html">DNAnexus</a>]</td>
+<td><div class="info">
+Indicates whether the program is running as a job on the DNAnexus platform.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.GTable.html#VALiterate_rows">iterate_rows</a> [<a href="DNAnexus.GTable.html">DNAnexus.GTable</a>]</td>
+<td><div class="info">
+Get rows from the GTable in their natural order.
+</div>
+</td></tr>
+<tr><td align="left"><br>J</td></tr>
+<tr><td><a href="DNAnexus.html#VALjob_id">job_id</a> [<a href="DNAnexus.html">DNAnexus</a>]</td>
+<td><div class="info">
+Get the current job ID.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.html#VALjob_main">job_main</a> [<a href="DNAnexus.html">DNAnexus</a>]</td>
+<td><div class="info">
+A wrapper for your application logic to assist with conforming to the
+input, output and error handling scheme of the DNAnexus execution environment.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.GTable.html#VALjson_of_columns">json_of_columns</a> [<a href="DNAnexus.GTable.html">DNAnexus.GTable</a>]</td>
+<td><div class="info">
+Create a JSON array specifying GTable columns, suitable for filling in the
+      <code class="code">columns</code> field of the JSON input to <code class="code">make_new</code> or <code class="code">with_new</code>.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.GTable.html#VALjson_of_indices">json_of_indices</a> [<a href="DNAnexus.GTable.html">DNAnexus.GTable</a>]</td>
+<td><div class="info">
+Create a JSON array specifying GTable indices, suitable for filling in the
+      <code class="code">indices</code> field of the JSON input to <code class="code">make_new</code> or <code class="code">with_new</code>.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.GTable.html#VALjson_of_row">json_of_row</a> [<a href="DNAnexus.GTable.html">DNAnexus.GTable</a>]</td>
+<td></td></tr>
+<tr><td align="left"><br>M</td></tr>
+<tr><td><a href="DNAnexus.html#VALmake_jobref">make_jobref</a> [<a href="DNAnexus.html">DNAnexus</a>]</td>
+<td><div class="info">
+<code class="code">DNAnexus.make_jobref "job-xxxx" "xyz"</code> formulates the JSON <code class="code">{"job": "job-xxxx", "field": "xyz"}</code>.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.html#VALmake_link">make_link</a> [<a href="DNAnexus.html">DNAnexus</a>]</td>
+<td><div class="info">
+Formulate the JSON <code class="code">{"$dnanexus_link": "record-xxxx"}</code> from <code class="code">"record-xxxx"</code>.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.DataObject.html#VALmake_new">make_new</a> [<a href="DNAnexus.DataObject.html">DNAnexus.DataObject</a>]</td>
+<td><div class="info">
+<code class="code">DNAnexus.{Class}.make_new options</code> invokes the <code class="code">/{class}-xxxx/new</code>
+      API call with the given JSON input.
+</div>
+</td></tr>
+<tr><td align="left"><br>N</td></tr>
+<tr><td><a href="DNAnexus.html#VALnew_job">new_job</a> [<a href="DNAnexus.html">DNAnexus</a>]</td>
+<td><div class="info">
+<code class="code">DNAnexus.new_job function_name input</code> launches a subjob using the same app or
+    applet as the calling job, and sharing the same workspace.
+</div>
+</td></tr>
+<tr><td align="left"><br>O</td></tr>
+<tr><td><a href="DNAnexus.File.html#VALopen_input">open_input</a> [<a href="DNAnexus.File.html">DNAnexus.File</a>]</td>
+<td><div class="info">
+<code class="code">DNAnexus.File.open_input file</code> creates an <code class="code">input</code> stream you can use to read
+      bytes from the file.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.File.html#VALopen_output">open_output</a> [<a href="DNAnexus.File.html">DNAnexus.File</a>]</td>
+<td><div class="info">
+<code class="code">DNAnexus.File.open_output file</code> creates an <code class="code">output</code> you can use to write
+      bytes into the file.
+</div>
+</td></tr>
+<tr><td align="left"><br>P</td></tr>
+<tr><td><a href="DNAnexus.html#VALproject_id">project_id</a> [<a href="DNAnexus.html">DNAnexus</a>]</td>
+<td><div class="info">
+Return the project ID in the configuration <code class="code">project_context_id</code>.
+</div>
+</td></tr>
+<tr><td align="left"><br>Q</td></tr>
+<tr><td><a href="DNAnexus.GTable.html#VALquery_rows">query_rows</a> [<a href="DNAnexus.GTable.html">DNAnexus.GTable</a>]</td>
+<td><div class="info">
+<code class="code">DNAnexus.GTable.query_rows gtable index_name parameters</code> performs a query
+      against an index of the GTable.
+</div>
+</td></tr>
+<tr><td align="left"><br>R</td></tr>
+<tr><td><a href="DNAnexus.GTable.html#VALreconfigure">reconfigure</a> [<a href="DNAnexus.GTable.html">DNAnexus.GTable</a>]</td>
+<td><div class="info">
+The above operations use parallel HTTP requests to maximize throughput.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.File.html#VALreconfigure">reconfigure</a> [<a href="DNAnexus.File.html">DNAnexus.File</a>]</td>
+<td><div class="info">
+The above operations each use parallel HTTP requests to maximize network
+      throughput.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.html#VALreconfigure">reconfigure</a> [<a href="DNAnexus.html">DNAnexus</a>]</td>
+<td><div class="info">
+Change the configuration (rarely necessary).
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.DataObject.html#VALremove_tags">remove_tags</a> [<a href="DNAnexus.DataObject.html">DNAnexus.DataObject</a>]</td>
+<td></td></tr>
+<tr><td><a href="DNAnexus.DataObject.html#VALremove_types">remove_types</a> [<a href="DNAnexus.DataObject.html">DNAnexus.DataObject</a>]</td>
+<td></td></tr>
+<tr><td><a href="DNAnexus.DataObject.html#VALrename">rename</a> [<a href="DNAnexus.DataObject.html">DNAnexus.DataObject</a>]</td>
+<td></td></tr>
+<tr><td align="left"><br>S</td></tr>
+<tr><td><a href="DNAnexus.DataObject.html#VALset_details">set_details</a> [<a href="DNAnexus.DataObject.html">DNAnexus.DataObject</a>]</td>
+<td></td></tr>
+<tr><td><a href="DNAnexus.DataObject.html#VALset_properties">set_properties</a> [<a href="DNAnexus.DataObject.html">DNAnexus.DataObject</a>]</td>
+<td><div class="info">
+Set properties on the object.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.DataObject.html#VALset_visibility">set_visibility</a> [<a href="DNAnexus.DataObject.html">DNAnexus.DataObject</a>]</td>
+<td></td></tr>
+<tr><td align="left"><br>U</td></tr>
+<tr><td><a href="DNAnexus.File.html#VALupload">upload</a> [<a href="DNAnexus.File.html">DNAnexus.File</a>]</td>
+<td><div class="info">
+<code class="code">DNAnexus.File.upload file local_filename</code> uploads a local file to the
+      existing platform file object.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.File.html#VALupload_new">upload_new</a> [<a href="DNAnexus.File.html">DNAnexus.File</a>]</td>
+<td><div class="info">
+<code class="code">DNAnexus.File.upload_new local_filename</code> creates a new platform file object,
+      uploads the local file to it, and closes it.
+</div>
+</td></tr>
+<tr><td align="left"><br>W</td></tr>
+<tr><td><a href="DNAnexus.GTable.html#VALwith_flush_rows">with_flush_rows</a> [<a href="DNAnexus.GTable.html">DNAnexus.GTable</a>]</td>
+<td><div class="info">
+Call your function and then <code class="code">flush_rows</code>.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.File.html#VALwith_input">with_input</a> [<a href="DNAnexus.File.html">DNAnexus.File</a>]</td>
+<td><div class="info">
+Create an <code class="code">input</code> as in <code class="code">open_in</code>, call your function on it, and then call
+      <code class="code">Batteries.IO.close_in</code> on it (even if your function raises an exception).
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.DataObject.html#VALwith_new">with_new</a> [<a href="DNAnexus.DataObject.html">DNAnexus.DataObject</a>]</td>
+<td><div class="info">
+<code class="code">DNAnexus.{Class}.with_new options fn</code> invokes <code class="code">/{class}-xxxx/new</code>
+      with the given JSON input, calls your function <code class="code">fn</code> with the resulting
+      object, and then invokes <code class="code">/{class}-xxxx/close</code>.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.File.html#VALwith_output">with_output</a> [<a href="DNAnexus.File.html">DNAnexus.File</a>]</td>
+<td><div class="info">
+Create an <code class="code">output</code> as in <code class="code">open_output</code>, call your function on it, and then call
+      <code class="code">Batteries.IO.close_out</code> on it (even if your function raises an exception).
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.html#VALwith_project_id">with_project_id</a> [<a href="DNAnexus.html">DNAnexus</a>]</td>
+<td><div class="info">
+Add the key <code class="code">"project": DNAnexus.project_id()</code> to the given JSON object.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.html#VALwith_workspace_id">with_workspace_id</a> [<a href="DNAnexus.html">DNAnexus</a>]</td>
+<td><div class="info">
+Add the key <code class="code">"project": DNAnexus.workspace_id()</code> to the given JSON object.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.html#VALworkspace_id">workspace_id</a> [<a href="DNAnexus.html">DNAnexus</a>]</td>
+<td><div class="info">
+Get the container ID of the job workspace.
+</div>
+</td></tr>
+</table><br>
+</body>
+</html>

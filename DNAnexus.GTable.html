@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="DNAnexus.File.html">
+<link rel="Up" href="DNAnexus.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="DNAnexus" rel="Chapter" href="DNAnexus.html"><link title="Schema and data representation" rel="Section" href="#3_Schemaanddatarepresentation">
+<link title="Adding rows" rel="Section" href="#3_Addingrows">
+<link title="Reading and querying" rel="Section" href="#3_Readingandquerying">
+<link title="Controlling parallelism and memory usage" rel="Section" href="#3_Controllingparallelismandmemoryusage">
+<title>DNAnexus.GTable</title>
+</head>
+<body>
+<div class="navbar"><a href="DNAnexus.File.html">Previous</a>
+&nbsp;<a href="DNAnexus.html">Up</a>
+&nbsp;</div>
+<center><h1>Module <a href="type_DNAnexus.GTable.html">DNAnexus.GTable</a></h1></center>
+<br>
+<pre><span class="keyword">module</span> GTable: <code class="code">sig</code> <a href="DNAnexus.GTable.html">..</a> <code class="code">end</code></pre>GenomicTables<br>
+<b>See also</b> <a href=" http://wiki.dnanexus.com/API-Specification-v1.0.0/GenomicTables ">API Specification : GenomicTables</a><br>
+<hr width="100%">
+<pre><span class="keyword">include</span> <a href="DNAnexus.DataObject.html">DNAnexus.DataObject</a></pre>
+<div class="info">
+Common interface to all data objects<br>
+</div>
+<br>
+<span id="3_Schemaanddatarepresentation"><h3>Schema and data representation</h3></span><br>
+<br>
+<b>Column specifications</b><br>
+<pre><span id="TYPEcolumn_type"><span class="keyword">type</span> <code class="type"></code>column_type</span> = <code class="type">[ `Bool<br>       | `Double<br>       | `Float<br>       | `Int16<br>       | `Int32<br>       | `Int64<br>       | `String<br>       | `UInt16<br>       | `UInt32<br>       | `UInt8 ]</code> </pre>
+<div class="info">
+The storage types of GTable columns<br>
+</div>
+
+<pre><span id="TYPEcolumn_desc"><span class="keyword">type</span> <code class="type"></code>column_desc</span> = <code class="type">string * <a href="DNAnexus.GTable.html#TYPEcolumn_type">column_type</a></code> </pre>
+<div class="info">
+A column descriptor (specification), carrying the column name and type<br>
+</div>
+
+<pre><span id="VALcolumns"><span class="keyword">val</span> columns</span> : <code class="type">t -> <a href="DNAnexus.GTable.html#TYPEcolumn_desc">column_desc</a> array</code></pre><div class="info">
+Get an array of column descriptors for the GTable through the <code class="code">/gtable-xxxx/describe</code> API call<br>
+</div>
+<pre><span id="VALjson_of_columns"><span class="keyword">val</span> json_of_columns</span> : <code class="type"><a href="DNAnexus.GTable.html#TYPEcolumn_desc">column_desc</a> array -> JSON.t</code></pre><div class="info">
+Create a JSON array specifying GTable columns, suitable for filling in the
+      <code class="code">columns</code> field of the JSON input to <code class="code">make_new</code> or <code class="code">with_new</code>.<br>
+</div>
+<br>
+<b>Index specifications</b><br>
+<pre><span id="TYPEindex"><span class="keyword">type</span> <code class="type"></code>index</span> = <code class="type">string *<br>       [ `GRI of string * string * string<br>       | `Lexicographic of (string * [ `Asc | `Desc ]) list ]</code> </pre>
+<div class="info">
+GTable index specifications:<ul>
+<li><code class="code">index_name, `GRI (chr_col_name,lo_col_name,hi_col_name)</code></li>
+<li><code class="code">index_name, `Lexicographic [col_name, col_order; ...]</code></li>
+</ul>
+<br>
+</div>
+
+<pre><span id="VALindices"><span class="keyword">val</span> indices</span> : <code class="type">t -> <a href="DNAnexus.GTable.html#TYPEindex">index</a> list</code></pre><div class="info">
+Get a list of the GTable's indices through the <code class="code">/gtable-xxxx/describe</code> API call<br>
+</div>
+<pre><span id="VALjson_of_indices"><span class="keyword">val</span> json_of_indices</span> : <code class="type"><a href="DNAnexus.GTable.html#TYPEindex">index</a> list -> JSON.t</code></pre><div class="info">
+Create a JSON array specifying GTable indices, suitable for filling in the
+      <code class="code">indices</code> field of the JSON input to <code class="code">make_new</code> or <code class="code">with_new</code>.<br>
+</div>
+<br>
+<b>Row data</b><br>
+<pre><span id="TYPEdatum"><span class="keyword">type</span> <code class="type"></code>datum</span> = <code class="type">[ `Bool of bool | `Float of float | `Int of int | `String of string ]</code> </pre>
+<div class="info">
+GTable row data is produced and consumed as a subtype of <code class="code">JSON.t</code> for
+  convenience. Using integers or floats outside of the representable range for
+  the respective column storage type will cause runtime exceptions.<br>
+</div>
+
+<pre><span id="TYPErow"><span class="keyword">type</span> <code class="type"></code>row</span> = <code class="type"><a href="DNAnexus.GTable.html#TYPEdatum">datum</a> array</code> </pre>
+
+<pre><span id="VALjson_of_row"><span class="keyword">val</span> json_of_row</span> : <code class="type"><a href="DNAnexus.GTable.html#TYPErow">row</a> -> JSON.t</code></pre><br>
+<span id="3_Addingrows"><h3>Adding rows</h3></span><br>
+<pre><span id="VALadd_row"><span class="keyword">val</span> add_row</span> : <code class="type">?typecheck:bool -> t -> <a href="DNAnexus.GTable.html#TYPErow">row</a> -> unit</code></pre><div class="info">
+Add one row to the GTable. The GTable must be in the open state.
+<p>
+
+      The row is immediately converted to JSON text and buffered. The buffered data
+      is sent to the API server when a certain number of rows have been added (see
+      below), or when <code class="code">flush_rows</code> is called.<br>
+</div>
+<div class="param_info"><code class="code">typecheck</code> : if set to true, first typecheck the given row against the
+        GTable's schema, and raise <code class="code">Invalid_argument</code> if there's a type mismatch or
+        integer out of range. This should be used mainly for development and
+        debugging, as it adds significant overhead to the operation. Also, the
+        API server will ultimately typecheck the row itself.</div>
+<pre><span id="VALflush_rows"><span class="keyword">val</span> flush_rows</span> : <code class="type">t -> unit</code></pre><div class="info">
+Send all buffered rows to the API server immediately, and wait for them to
+      finish uploading. <b>Important:</b> you MUST call <code class="code">flush_rows</code> when you're done
+      adding rows and before closing the GTable.<br>
+</div>
+<pre><span id="VALwith_flush_rows"><span class="keyword">val</span> with_flush_rows</span> : <code class="type">t -> (t -> 'a) -> 'a</code></pre><div class="info">
+Call your function and then <code class="code">flush_rows</code>. Does <em>not</em> call <code class="code">flush_rows</code> if
+      your function raises an exception.<br>
+</div>
+<br>
+<span id="3_Readingandquerying"><h3>Reading and querying</h3></span><br>
+<pre><span id="VALiterate_rows"><span class="keyword">val</span> iterate_rows</span> : <code class="type">?starting:int -><br>       ?limit:int -><br>       ?columns:string array -> t -> <a href="DNAnexus.GTable.html#TYPErow">row</a> Batteries.Enum.t</code></pre><div class="info">
+Get rows from the GTable in their natural order. The GTable must be in the
+      closed state.<br>
+</div>
+<div class="param_info"><code class="code">starting</code> : rowid at which to begin reading the table</div>
+<div class="param_info"><code class="code">limit</code> : on the total number of rows to return. You can set this to an
+             arbitrarily large value; the bindings automatically issue multiple API
+             calls as needed to paginate large result sets.</div>
+<div class="param_info"><code class="code">columns</code> : array of the names of the columns to return</div>
+<pre><span id="TYPEquery_parameters"><span class="keyword">type</span> <code class="type"></code>query_parameters</span> = <code class="type">[ `GRI of string * int * int * [ `Enclose | `Overlap ]<br>       | `Lexicographic of<br>           (string * [ `Eq | `Gt | `Gte | `Lt | `Lte ] * string) list ]</code> </pre>
+<div class="info">
+Query parameters:<ul>
+<li><code class="code">`GRI (chr,lo,hi,mode)</code></li>
+<li><code class="code">`Lexicographic [col_name, predicate, value; ...]</code> (a list with multiple clauses specifies a compound AND predicate)</li>
+</ul>
+<br>
+</div>
+
+<pre><span id="VALquery_rows"><span class="keyword">val</span> query_rows</span> : <code class="type">?limit:int -><br>       ?columns:string array -><br>       t -><br>       string -><br>       <a href="DNAnexus.GTable.html#TYPEquery_parameters">query_parameters</a> -> <a href="DNAnexus.GTable.html#TYPErow">row</a> Batteries.Enum.t</code></pre><div class="info">
+<code class="code">DNAnexus.GTable.query_rows gtable index_name parameters</code> performs a query
+      against an index of the GTable. The GTable must be in the closed state.<br>
+<b>See also</b> <a href=" http://wiki.dnanexus.com/API-Specification-v1.0.0/GenomicTables#API-method%3A-%2Fgtable-xxxx%2Fget ">API Specification : GenomicTables : /gtable-xxxx/get</a><br>
+</div>
+<br>
+<span id="3_Controllingparallelismandmemoryusage"><h3>Controlling parallelism and memory usage</h3></span><br>
+<pre><span id="VALreconfigure"><span class="keyword">val</span> reconfigure</span> : <code class="type">?pagination:int -> ?parallelism:int -> t -> unit</code></pre><div class="info">
+The above operations use parallel HTTP requests to maximize throughput.
+      For example, GTable row data is uploaded in 100,000-row parts, four parts at a
+      time in parallel. This means that the upload of a large GTable can require
+      substantial amounts of memory. Similarly, <code class="code">iterate_rows</code> and <code class="code">query_rows</code> issue
+      parallel requests for 100,000-row pages.
+<p>
+
+      The defaults of 4 parallel requests and pagination at 100,000 rows can be
+      changed by calling <code class="code">DNAnexus.GTable.reconfigure</code> before adding the first row or
+      reading any rows. Reducing these parameters too far will negatively
+      affect the data throughput you can sustain, while raising them excessively
+      will make your program run out of memory.<br>
+</div>
+</body></html>
