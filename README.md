@@ -19,20 +19,8 @@ Lastly, you should have a working installation of
 
 ## Installation
 
-First, initialize your command-line session with `source
-/path/to/dx-toolkit/environment` and `dx login`. Then, just `make install` in
-this directory.
-
-Libraries will be installed to: `$DNANEXUS_HOME/lib/ocaml` where
-`$DNANEXUS_HOME` is the directory of your dx-toolkit installation.
-
-## Compiling OCaml programs using the bindings
-
-To make the bindings visible to OCaml findlib, add `$DNANEXUS_HOME/lib/ocaml`
-to the `OCAMLPATH` environment variable. (In the shell, just `export
-OCAMLPATH=$DNANEXUS_HOME/lib/ocaml:$OCAMLPATH`.) You can then use the
-`DNAnexus` findlib package to compile against the bindings (see below for
-interface documentation).
+Just `make install` in this directory. The `DNAnexus` findlib package will be
+installed to the default destination (most likely within your OPAM directory).
 
 ## Writing DNAnexus platform apps
 
@@ -43,16 +31,18 @@ DNAnexus Apps in C++](http://wiki.dnanexus.com/Developer-Tutorials/Cpp/Cpp)
 tutorial.
 1. Start writing some OCaml code in the `src/` subdirectory of the new applet
 directory. Use the `DNAnexus.job_main` function as the entry point to help
-deal with job input and output.
+deal with job input and output. (You can delete the auto-generated
+`src/your_app_name.cpp` if you wish.)
 1. Rewrite the `src/Makefile` so that it builds your OCaml program instead of
-the auto-generated C++ program.  It might be useful to put `export OCAMLPATH
-:= ${DNANEXUS_HOME}/lib/ocaml:${OCAMLPATH}` at the top of the Makefile.
-1. The Makefile should cause the compiled executable to be placed in
-`../resources/your_app_name` -- the same target as the original C++ Makefile.
-The `runSpec` entry in `dxapp.json` causes this executable to run when the
-job starts.
-1. Delete the auto-generated `src/your_app_name.cpp` if you wish.
-1. Run `dx-build-app` as usual to build the applet.
+the template C++ program. Be sure to make the `DNAnexus` findlib package
+available for compiling and linking.
+1. Make the `src/Makefile` also move or copy the compiled executable to
+`../resources/your_app_name` - the same target as the original C++ Makefile.
+(The `runSpec` entry in `dxapp.json` causes this executable to run when the
+job starts.)
+1. Initialize your DNAnexus command-line session with `source
+/path/to/dx-toolkit/environment && dx login`, then run `dx-build-applet` to
+build the applet.
 
 ## Examples
 
