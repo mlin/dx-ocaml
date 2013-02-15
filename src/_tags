@@ -1,20 +1,34 @@
 # OASIS_START
-# DO NOT EDIT (digest: 75a29a60fa8be351f8e7dbba803c2a2d)
+# DO NOT EDIT (digest: dd07b010ca91ffba5053def6d262050a)
+# Ignore VCS directories, you can use the same kind of rule outside 
+# OASIS_START/STOP if you want to exclude directories that contains 
+# useless stuff for the build process
+<**/.svn>: -traverse
+<**/.svn>: not_hygienic
+".bzr": -traverse
+".bzr": not_hygienic
+".hg": -traverse
+".hg": not_hygienic
+".git": -traverse
+".git": not_hygienic
+"_darcs": -traverse
+"_darcs": not_hygienic
 # Library DNAnexus
+"DNAnexus.cmxs": use_DNAnexus
 # Executable unit_tests
-<unit_tests.{native,byte}>: pkg_yajl-extra
-<unit_tests.{native,byte}>: pkg_yajl
 <unit_tests.{native,byte}>: pkg_threads
+<unit_tests.{native,byte}>: pkg_yajl
+<unit_tests.{native,byte}>: pkg_yajl-extra
 <unit_tests.{native,byte}>: pkg_ssl
-<unit_tests.{native,byte}>: pkg_oUnit
 <unit_tests.{native,byte}>: pkg_curl
 <unit_tests.{native,byte}>: pkg_batteries
-<*.ml{,i}>: pkg_yajl-extra
-<*.ml{,i}>: pkg_yajl
+<unit_tests.{native,byte}>: pkg_oUnit
 <*.ml{,i}>: pkg_threads
+<*.ml{,i}>: pkg_yajl
+<*.ml{,i}>: pkg_yajl-extra
 <*.ml{,i}>: pkg_ssl
-<*.ml{,i}>: pkg_oUnit
 <*.ml{,i}>: pkg_curl
 <*.ml{,i}>: pkg_batteries
+<*.ml{,i}>: pkg_oUnit
 # OASIS_STOP
 <*.ml{,i}>: pp(ocaml+twt), debug
