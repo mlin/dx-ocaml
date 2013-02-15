@@ -4,15 +4,15 @@ These bindings are *not* officially supported by DNAnexus.
 
 ## Dependencies
 
-The bindings depend on [batteries](http://batteries.forge.ocamlcore.org/) 2.x
-and [ocaml-ssl](https://github.com/savonet/ocaml-ssl). The easiest way to
-install everything from scratch is to use
-[OPAM](http://opam.ocamlpro.com/doc/Quick_Install.html): install it, then
-`eval $(opam config -env)` and `opam install batteries ssl`.
+dx-ocaml depends on a few other OCaml libraries. The best way to install them
+is to use the [OPAM](http://opam.ocamlpro.com/doc/Quick_Install.html) package
+manager. Install it, then
 
-The bindings also use [libcurl](http://curl.haxx.se/libcurl/). This is
-probably already available on your system, but if not you can e.g. `apt-get
-install libcurl-dev` on Ubuntu.
+```eval $(opam config -env) && opam install batteries ocaml+twt ocurl ssl yajl-extra```
+
+Compiling [ocurl](http://ocurl.forge.ocamlcore.org/) may require you to
+install a fairly recent version of [libcurl](http://curl.haxx.se/libcurl/).
+The Ubuntu 12.10 libcurl-dev package works.
 
 Lastly, you should have a working installation of
 [dx-toolkit](http://wiki.dnanexus.com/Downloads#DNAnexus-Platform-SDK).
@@ -66,6 +66,5 @@ TODO: place link to ocamldoc
 
 ## Wish list
 
-- Route-specific retry logic
-- Monadic concurrency
+- Safer (route-specific) retry logic
 - Streaming JSON processing for GTables
