@@ -194,7 +194,7 @@ module RowAdder = struct
           row
           BatVect.empty
     adder.row_count <- 1 + adder.row_count
-    if adder.row_count > adder.pagination then launch_addRows adder
+    if adder.row_count >= adder.pagination then launch_addRows adder
 
   exception IntOutOfRange of int64*int64
   let int_bounds = [`UInt8, (0L,255L); `UInt16, (0L,65535L); `Int16, (-32768L,32767L);
