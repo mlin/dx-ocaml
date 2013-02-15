@@ -1,6 +1,6 @@
 # DNAnexus API bindings for OCaml
 
-These bindings are *not* officially supported by DNAnexus.
+These bindings are *not* officially supported by DNAnexus!
 
 ## Dependencies
 
@@ -21,6 +21,10 @@ Lastly, you should have a working installation of
 
 Just `make install` in this directory. The `DNAnexus` findlib package will be
 installed to the default destination (most likely within your OPAM directory).
+
+## API documentation
+
+[ocamldoc:DNAnexus](http://mlin.github.com/dx-ocaml/DNAnexus.html)
 
 ## Writing DNAnexus platform apps
 
@@ -47,10 +51,6 @@ build the applet.
 ## Examples
 
 TODO: link to some example applets
-
-## Documentation
-
-TODO: place link to ocamldoc
 
 ## Version history
 

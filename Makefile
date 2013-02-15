@@ -1,5 +1,5 @@
 default: all
-.PHONY: default all install doc test test-env clean
+.PHONY: default all install doc test test-env clean gh-pages
 
 all: src/setup.data
 	cd src && ocaml setup.ml -build
@@ -34,3 +34,14 @@ src/setup.ml: src/_oasis
 clean:
 	cd src && (ocaml setup.ml -clean || ocamlbuild -clean) && rm -f *.ba?
 	rm -f src/setup.data
+
+gh-pages: clean
+	rm -rf /tmp/DNAnexus.docdir
+	$(MAKE) doc
+	cp -r src/_build/DNAnexus.docdir /tmp
+	git checkout gh-pages
+	git pull origin gh-pages
+	cp /tmp/DNAnexus.docdir/* .
+	git commit -am 'update ocamldoc documentation [via make gh-pages]'
+	git push origin gh-pages
+	git checkout master
