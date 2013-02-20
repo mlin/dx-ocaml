@@ -56,5 +56,6 @@ TODO: link to some example applets
 
 ## Wish list
 
+- Load configuration from ~/.dnanexus_config
 - Safer (route-specific) retry logic
 - Streaming JSON processing for GTables
