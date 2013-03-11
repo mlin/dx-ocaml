@@ -452,7 +452,8 @@ val is_job : unit -> bool
 @raise Failure if [not (is_job ())] *)
 val job_id : unit -> string
 
-(** Get the container ID of the job workspace.
+(** Get the container ID of the job workspace, if available, or the project context
+ID otherwise.
 
 @raise Failure if [not (is_job ())] *)
 val workspace_id : unit -> string

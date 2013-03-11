@@ -6,53 +6,8 @@ open Batteries
 open JSON.Operators
 open Printf
 
-(* TODO
-
-CONFIGURATION (from python bindings):
-
-When this package is imported, configuration values will be loaded from
-the following sources in order of decreasing priority:
-
-1. Environment variables
-2. Values stored in ``~/.dnanexus_config/environment``
-3. Values stored in ``/opt/dnanexus/environment``
-4. Hardcoded defaults
-
-The bindings are configured by the following environment variables:
-
-.. envvar:: DX_SECURITY_CONTEXT
-
-   A JSON hash containing your auth token, typically of the form
-   ``{"auth_token_type": "Bearer", "auth_token": "YOUR_TOKEN"}``.
-
-.. envvar:: DX_APISERVER_PROTOCOL
-
-   Either ``http`` or ``https`` (usually ``https``).
-
-.. envvar:: DX_APISERVER_HOST
-
-   Hostname of the DNAnexus API server.
-
-.. envvar:: DX_APISERVER_PORT
-
-   Port of the DNAnexus API server.
-
-.. envvar:: DX_JOB_ID
-
-   Should only be present if run in an Execution Environment; indicates
-   the ID of the currently running job.
-
-.. envvar:: DX_WORKSPACE_ID
-
-   Should only be present if run in an Execution Environment; indicates
-   the running job's temporary workspace ID.
-
-.. envvar:: DX_PROJECT_CONTEXT_ID
-
-   Indicates either the project context of a running job, or the default
-   project to use for a user accessing the platform from the outside.
-
-*)
+(* TODO: load configuration from ~/.dnanexus_config/environment.json
+at lower precedence than environment variables *)
 
 type configuration = {
   apiserver_host: string;
@@ -270,7 +225,10 @@ let job_config () = match (config()).job with
 
 let job_id () = (job_config()).job_id
 
-let workspace_id () = (job_config()).workspace_id
+let workspace_id () = match config() with
+    | { job = Some { workspace_id = ws } } -> ws
+    | { project_context_id = None } -> failwith "DX_PROJECT_CONTEXT_ID environment is not configured"
+    | { project_context_id = Some proj } -> proj
 
 let with_workspace_id json = json $+ ("project",`String (workspace_id()))
 

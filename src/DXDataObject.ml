@@ -54,7 +54,7 @@ module Make = functor (T : Subclass) -> struct
     else
       match Base.project (T.base x) with
         | Some p -> json $+ ("project",`String p)
-        | None -> json $+ ("project",`String (DX.project_id()))
+        | None -> json $+ ("project",`String (DX.workspace_id()))
   let with_optional_project x json =
     try
       with_required_project x json
@@ -67,7 +67,7 @@ module Make = functor (T : Subclass) -> struct
     let options =
       if options $? "project" then options
       else
-        let project = try DX.workspace_id() with _ -> DX.project_id()
+        let project = DX.workspace_id()
         options $+ ("project",`String project)
     let ans = DX.api_call [T.dxclass; "new"] options
     bind (Some (JSON.string (options$"project")), JSON.string (ans$"id"))

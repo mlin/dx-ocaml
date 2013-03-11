@@ -14,11 +14,11 @@ doc: src/setup.ml
 
 test:
 	cd src && ocaml setup.ml -build unit_tests.native
-	bash -c "source ~/.dnanexus_config/environment && src/unit_tests.native"
+	bash -c 'eval "`dx env --bash`" && src/unit_tests.native'
 
 test-quick:
 	cd src && ocaml setup.ml -build unit_tests.native
-	bash -c "source ~/.dnanexus_config/environment && DX_SKIP_SLOW_TESTS=1 src/unit_tests.native"
+	bash -c 'eval "`dx env --bash`" && DX_SKIP_SLOW_TESTS=1 src/unit_tests.native'
 
 # don't rely on ~/.dnanexus_config; require DX_* environment variables
 test-env:
