@@ -12,7 +12,7 @@
 <link title="Index of module types" rel=Appendix href="index_module_types.html">
 <link title="DNAnexus" rel="Chapter" href="DNAnexus.html"><link title="Bindings configuration" rel="Section" href="#2_Bindingsconfiguration">
 <link title="Low-level API calls" rel="Section" href="#2_LowlevelAPIcalls">
-<link title="Records, files, and GTables" rel="Section" href="#2_RecordsfilesandGTables">
+<link title="High-level bindings for records, files, and GTables" rel="Section" href="#2_HighlevelbindingsforrecordsfilesandGTables">
 <link title="Execution environment" rel="Section" href="#2_Executionenvironment">
 <title>DNAnexus</title>
 </head>
@@ -171,35 +171,46 @@ Convenient for formulating JSON inputs to API calls requiring this field.<br>
 </div>
 <br>
 <span id="2_LowlevelAPIcalls"><h2>Low-level API calls</h2></span><br>
-<pre><span id="VALapi_call"><span class="keyword">val</span> api_call</span> : <code class="type">?retry:bool -> string list -> JSON.t -> JSON.t</code></pre><div class="info">
+<pre><span id="VALapi_call"><span class="keyword">val</span> api_call</span> : <code class="type">?always_retry:bool -> string list -> JSON.t -> JSON.t</code></pre><div class="info">
 <code class="code">DNAnexus.api_call ["noun"; "verb"] input</code> synchronously executes an HTTP
 request for the API route <code class="code">/noun/verb</code> (e.g. <code class="code">/gtable-xxxx/get</code>) with the
-given input JSON, and returns the response JSON.<br>
-<b>Raises</b> <code>APIError</code> for error responses returned by the DNAnexus API server; also,
-various other exceptions that can arise in the course of attempting an HTTP
-request (especially <code class="code">CurlException</code>).<br>
-</div>
-<div class="param_info"><code class="code">retry</code> : (default: true) Retry the request should it fail due to
-potentially intermittent errors. If retry is enabled, then by default:
+given input JSON, and returns the response JSON.
+<p>
+
+Built-in retry logic detects "safe" errors (indicating that the HTTP request
+was never received by the API server), and by default:
 <p>
 <ul>
-<li>The request will be retried up to 5 times</li>
+<li>The request is retried up to 5 times</li>
 <li>There is a delay of one second before the first retry</li>
 <li>The delay increases by a factor of two on each subsequent retry</li>
 <li>Each retry attempt, and the eventual success, is logged to standard error</li>
 </ul>
 
-These defaults can be changed using <code class="code">reconfigure</code> (above). If all retry
-attempts fail, then the exception raised on the <em>last</em> attempt is
-re-raised.</div>
-<pre><span id="EXCEPTIONAPIError"><span class="keyword">exception</span> APIError</span> <span class="keyword">of</span> <code class="type">string * string * JSON.t</code></pre>
+These defaults can be changed using <code class="code">reconfigure</code> (above); in particular,
+retry logic can be disabled entirely by setting <code class="code">retry_times</code> to 0. If all
+retry attempts fail, then the exception raised on the <em>last</em> attempt is re-
+raised.<br>
+<b>Raises</b> <code>APIError</code> for error responses returned by the DNAnexus API server; also,
+various other exceptions that can arise in the course of attempting an HTTP
+request (especially <code class="code">CurlException</code>).<br>
+</div>
+<div class="param_info"><code class="code">always_retry</code> : Enable retry in the event the HTTP request is interrupted
+midway through, not just for "safe" errors. This should only be used for
+idempotent API methods.</div>
+<pre><span id="EXCEPTIONAPIError"><span class="keyword">exception</span> APIError</span> <span class="keyword">of</span> <code class="type">int * string * string * JSON.t</code></pre>
 <div class="info">
 Exception representing errors returned by the DNAnexus API server. Carries
-the error type, message, and "details" JSON (which can be <code class="code">`Null</code>)<br>
+the HTTP code, error type, message, and "details" JSON (which can be <code class="code">`Null</code>)<br>
 <b>See also</b> <a href=" http://wiki.dnanexus.com/API-Specification-v1.0.0/Protocols#Errors ">API Specification : Protocols : Errors</a><br>
 </div>
 <br>
-<span id="2_RecordsfilesandGTables"><h2>Records, files, and GTables</h2></span><br>
+<b>API method wrappers</b><br>
+<pre><span class="keyword">module</span> <a href="DNAnexus.API.html">API</a>: <code class="code">sig</code> <a href="DNAnexus.API.html">..</a> <code class="code">end</code></pre><div class="info">
+Low-level wrapper functions for each individual method in the DNAnexus API.
+</div>
+<br>
+<span id="2_HighlevelbindingsforrecordsfilesandGTables"><h2>High-level bindings for records, files, and GTables</h2></span><br>
 <pre><span class="keyword">module type</span> <a href="DNAnexus.DataObject.html">DataObject</a> = <code class="code">sig</code> <a href="DNAnexus.DataObject.html">..</a> <code class="code">end</code></pre><div class="info">
 Signature common to DNAnexus data objects (records, files, and GenomicTables).
 </div>
@@ -250,7 +261,8 @@ Get the current job ID.<br>
 <b>Raises</b> <code>Failure</code> if <code class="code">not (is_job ())</code><br>
 </div>
 <pre><span id="VALworkspace_id"><span class="keyword">val</span> workspace_id</span> : <code class="type">unit -> string</code></pre><div class="info">
-Get the container ID of the job workspace.<br>
+Get the container ID of the job workspace, if available, or the project context
+ID otherwise.<br>
 <b>Raises</b> <code>Failure</code> if <code class="code">not (is_job ())</code><br>
 </div>
 <pre><span id="VALwith_workspace_id"><span class="keyword">val</span> with_workspace_id</span> : <code class="type">JSON.t -> JSON.t</code></pre><div class="info">
