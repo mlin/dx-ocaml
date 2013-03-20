@@ -341,11 +341,11 @@ module GTable : sig
 
   (** GTable index specifications:
       - [index_name, `GRI (chr_col_name,lo_col_name,hi_col_name)]
-      - [index_name, `Lexicographic [col_name, col_order; ...]]
+      - [index_name, `Lexicographic [col_name, col_order, case_sensitive; ...]]
   *)
   type index = string*[
       `GRI of string*string*string
-    | `Lexicographic of (string*[`Asc|`Desc]) list
+    | `Lexicographic of (string*[`Asc|`Desc]*(bool option)) list
   ]
 
   (** Get a list of the GTable's indices through the [/gtable-xxxx/describe] API call *)
