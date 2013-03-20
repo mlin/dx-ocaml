@@ -17,7 +17,7 @@ let rec check_threads tp =
 (* thread to upload an individual part *)
 let upload_part_thread (file_id,part_idx,buf) =
   let upload_ans = 
-    DX.api_call [file_id; "upload"] 
+    DXAPI.file_upload file_id
       JSON.of_assoc ["index", `Int part_idx]
   let upload_url = JSON.string (upload_ans$"url")
   let headers = ["content-type", "application/octet-stream"]

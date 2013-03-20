@@ -9,7 +9,7 @@ DX.reconfigure {(DX.config()) with DX.project_context_id = None}
 let master_teardown () =
   if ((DX.config()).DX.project_context_id <> None) then
     try
-      ignore (DX.api_call [DX.project_id(); "destroy"] JSON.empty)
+      ignore (DXAPI.project_destroy (DX.project_id()) JSON.empty)
       eprintf "Destroyed test project %s\n" (DX.project_id())
     with
       | exn ->
@@ -31,7 +31,7 @@ module Basic = struct
       "tags", JSON.of_list [`String "test"]
     ]
 
-    let rslt = DX.api_call ["project"; "new"] inp
+    let rslt = DXAPI.project_new inp
     
     let id = rslt$"id" |> JSON.string
     DX.reconfigure {(DX.config()) with DX.project_context_id = Some id}

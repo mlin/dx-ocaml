@@ -38,11 +38,27 @@ module Base = struct
   let project {project} = project      
 
 (* Internal interface to the base representation that must be provided by all subclasses *)
+type api_wrapper_class = ?retry:bool -> JSON.t -> JSON.t
+type api_wrapper_object = ?retry:bool -> string -> JSON.t -> JSON.t
 module type Subclass = sig
   val dxclass : string   (* class name, e.g. "file", "gtable" *)
   type t                 (* the subclass' type *)
   val bind : Base.t -> t (* bind to specified existing data object *)
   val base : t -> Base.t (* retrieve base representation from data object *)
+
+  (* API method wrappers *)
+  val dxapi_new : api_wrapper_class
+  val dxapi_describe : api_wrapper_object
+  val dxapi_rename : api_wrapper_object
+  val dxapi_set_properties : api_wrapper_object
+  val dxapi_add_tags : api_wrapper_object
+  val dxapi_remove_tags : api_wrapper_object
+  val dxapi_add_types : api_wrapper_object
+  val dxapi_remove_types : api_wrapper_object
+  val dxapi_get_details : api_wrapper_object
+  val dxapi_set_details : api_wrapper_object
+  val dxapi_set_visibility : api_wrapper_object
+  val dxapi_close : api_wrapper_object
 
 (* Functor to implement common external interface for given subclass *)
 module Make = functor (T : Subclass) -> struct
@@ -69,18 +85,18 @@ module Make = functor (T : Subclass) -> struct
       else
         let project = DX.workspace_id()
         options $+ ("project",`String project)
-    let ans = DX.api_call [T.dxclass; "new"] options
+    let ans = T.dxapi_new options
     bind (Some (JSON.string (options$"project")), JSON.string (ans$"id"))
 
   let id x = Base.id (T.base x)
 
-  let describe ?(options=JSON.empty) x = DX.api_call [id x; "describe"] (with_optional_project x options)
+  let describe ?(options=JSON.empty) x = T.dxapi_describe (id x) (with_optional_project x options)
 
   (* metadata *)
 
   let rename x nm =
     let input = with_required_project x (JSON.of_assoc ["name", `String nm])
-    ignore (DX.api_call [id x; "rename"] input)
+    ignore (T.dxapi_rename (id x) input)
         
   let set_properties x props =
     let prophash =
@@ -93,35 +109,34 @@ module Make = functor (T : Subclass) -> struct
     let input =
       with_required_project x
         JSON.empty $+ ("properties",prophash)
-    ignore (DX.api_call [id x; "setProperties"] input)
+    ignore (T.dxapi_set_properties (id x) input)
 
   let string_list_json_helper k lst =
     JSON.of_assoc [k, JSON.of_list (List.map (fun t -> `String t) lst)]
 
   let add_tags x tags =
     let input = with_required_project x (string_list_json_helper "tags" tags)
-    ignore (DX.api_call [id x; "addTags"] input)
+    ignore (T.dxapi_add_tags (id x) input)
 
   let remove_tags x tags =
     let input = with_required_project x (string_list_json_helper "tags" tags)
-    ignore (DX.api_call [id x; "removeTags"] input)
+    ignore (T.dxapi_remove_tags (id x) input)
 
   (* data *)
 
   let add_types x types =
-    ignore (DX.api_call [id x; "addTypes"] (string_list_json_helper "types" types))
+    ignore (T.dxapi_add_types (id x) (string_list_json_helper "types" types))
 
   let remove_types x types =
-    ignore (DX.api_call [id x; "removeTypes"] (string_list_json_helper "types" types))
+    ignore (T.dxapi_remove_types (id x) (string_list_json_helper "types" types))
 
-  let get_details x = DX.api_call [id x; "getDetails"] JSON.empty
+  let get_details x = T.dxapi_get_details (id x) JSON.empty
 
-  let set_details x deets = ignore (DX.api_call [id x; "setDetails"] deets)
+  let set_details x deets = ignore (T.dxapi_set_details (id x) deets)
 
   let set_visibility x ~hidden =
     ignore
-      DX.api_call [id x; "setVisibility"]
-        JSON.of_assoc ["hidden", `Bool hidden]
+      (T.dxapi_set_visibility (id x) (JSON.of_assoc ["hidden", `Bool hidden]))
 
   (* close *)
 
@@ -132,14 +147,14 @@ module Make = functor (T : Subclass) -> struct
       Thread.delay 2.0
       await_close x
   let close ?(wait=false) x =
-    ignore (DX.api_call [id x; "close"] JSON.empty)
+    ignore (T.dxapi_close (id x) JSON.empty)
     if wait then await_close x
 
   let with_new ?(wait=false) options f =
     let o = make_new options
     let ans = f o
     try
-      ignore (DX.api_call [id o; "close"] JSON.empty)
+      ignore (T.dxapi_close (id o) JSON.empty)
     with
       (* object is already closing/closed -- that's okay *)
       | DX.APIError ("InvalidState", _, _) -> ()
@@ -154,6 +169,18 @@ module Record = struct
     type t = Base.t
     let bind b = b
     let base b = b
+    let dxapi_new = DXAPI.record_new
+    let dxapi_describe = DXAPI.record_describe
+    let dxapi_rename = DXAPI.record_rename
+    let dxapi_set_properties = DXAPI.record_set_properties
+    let dxapi_add_tags = DXAPI.record_add_tags
+    let dxapi_remove_tags = DXAPI.record_remove_tags
+    let dxapi_add_types = DXAPI.record_add_types
+    let dxapi_remove_types = DXAPI.record_remove_types
+    let dxapi_get_details = DXAPI.record_get_details
+    let dxapi_set_details = DXAPI.record_set_details
+    let dxapi_set_visibility = DXAPI.record_set_visibility
+    let dxapi_close = DXAPI.record_close
 
   include Make(T)
 
@@ -167,6 +194,18 @@ module File = struct
     type t = { b : Base.t; mutable closed_size : int option; mutable part_size : int; mutable parallelism : int }
     let bind b = { b; closed_size = None; part_size = 64*oneMB; parallelism = 4 }
     let base { b } = b
+    let dxapi_new = DXAPI.file_new
+    let dxapi_describe = DXAPI.file_describe
+    let dxapi_rename = DXAPI.file_rename
+    let dxapi_set_properties = DXAPI.file_set_properties
+    let dxapi_add_tags = DXAPI.file_add_tags
+    let dxapi_remove_tags = DXAPI.file_remove_tags
+    let dxapi_add_types = DXAPI.file_add_types
+    let dxapi_remove_types = DXAPI.file_remove_types
+    let dxapi_get_details = DXAPI.file_get_details
+    let dxapi_set_details = DXAPI.file_set_details
+    let dxapi_set_visibility = DXAPI.file_set_visibility
+    let dxapi_close = DXAPI.file_close
 
   include Make(T)
 
@@ -194,7 +233,7 @@ module File = struct
     let api_input = match duration with
       | None -> JSON.empty
       | Some dur -> JSON.of_assoc ["duration", `Int dur]
-    JSON.string (DX.api_call [id fo; "download"] api_input $ "url")
+    JSON.string (DXAPI.file_download (id fo) api_input $ "url")
 
   let open_input ?duration ?pos ({T.part_size; parallelism; closed_size} as fo) =
     let size = match closed_size with
@@ -259,6 +298,18 @@ module GTable = struct
                mutable pagination : int; mutable parallelism : int }
     let bind b = { b; known_columns = None; known_indices = None; closed_rows = None; maybe_adder = None; pagination = 100000; parallelism = 4 }
     let base { b } = b
+    let dxapi_new = DXAPI.gtable_new
+    let dxapi_describe = DXAPI.gtable_describe
+    let dxapi_rename = DXAPI.gtable_rename
+    let dxapi_set_properties = DXAPI.gtable_set_properties
+    let dxapi_add_tags = DXAPI.gtable_add_tags
+    let dxapi_remove_tags = DXAPI.gtable_remove_tags
+    let dxapi_add_types = DXAPI.gtable_add_types
+    let dxapi_remove_types = DXAPI.gtable_remove_types
+    let dxapi_get_details = DXAPI.gtable_get_details
+    let dxapi_set_details = DXAPI.gtable_set_details
+    let dxapi_set_visibility = DXAPI.gtable_set_visibility
+    let dxapi_close = DXAPI.gtable_close
   open T
   include Make(T)
 

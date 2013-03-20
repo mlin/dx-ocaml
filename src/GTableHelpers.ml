@@ -121,10 +121,11 @@ let json_of_query idxnm params =
   ]
 
 module RowAdder = struct
+  (* FIXME: set ~always_retry:true *)
   let perform_addRows id reqbdy = ignore (DX.api_call_raw_body [id; "addRows"] reqbdy)
 
   let addRows_thread (id,row_gen) =
-    let part = JSON.int (DX.api_call [id; "nextPart"] JSON.empty $ "part")
+    let part = JSON.int (DXAPI.gtable_next_part id JSON.empty $ "part")
     YAJL.gen_end_array row_gen
     YAJL.gen_string row_gen "part"
     YAJL.gen_int row_gen part
@@ -258,7 +259,7 @@ module RowEnum = struct
          Option.map (fun n -> "starting", `Int n) starting;
          Option.map (fun q -> "query", q) query;
          Option.map (fun c -> "columns", c) columns]
-    let ans = DX.api_call [dxid; "get"] (JSON.of_assoc input)
+    let ans = DXAPI.gtable_get dxid (JSON.of_assoc input)
     let starting =
       if not (ans $? "next") then None
       else if ans$"next" = `Null then None
