@@ -24,18 +24,34 @@ handles that are checked back in, at most n will be held in the pool for
 future checkouts. When a handle is checked out it must either be checked back
 in or Curl.cleanup must be called on it. *)
 let checkout_conn, checkin_conn =
-  let n = 5
+  let n = 16
   let connpool = ref []
-  let checkout_conn () =
-    match !connpool with
-      | fst :: rest -> connpool := rest; fst
-      | [] -> Curl.init ()
-  let checkin_conn c =
-    if (List.length !connpool) < n then
-      Curl.reset c
-      connpool := c :: !connpool
-    else
-      Curl.cleanup c
+
+  (* make the pool pid-specific, in case the process is forked *)
+  let lastpid = ref (Unix.getpid ())
+  (* also protect the pool with a mutex, in case the program is multithreaded *)
+  let lock = Mutex.create ()
+  
+  let checkout_conn =
+    BatteriesThread.Mutex.synchronize ~lock
+      fun () ->
+        let pid = Unix.getpid ()
+        if pid <> !lastpid then
+          List.iter Curl.cleanup !connpool
+          connpool := []
+          lastpid := pid
+        match !connpool with
+          | fst :: rest -> connpool := rest; fst
+          | [] -> Curl.init ()
+  let checkin_conn =
+    BatteriesThread.Mutex.synchronize ~lock
+      fun c ->
+        if (List.length !connpool) < n then
+          Curl.reset c
+          connpool := c :: !connpool
+        else
+          Curl.cleanup c
+
   checkout_conn, checkin_conn
 
 (* Supported HTTP request types *)
