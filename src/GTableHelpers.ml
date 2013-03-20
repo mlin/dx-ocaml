@@ -85,11 +85,11 @@ let indices_of_json json =
             let cols =
               JSON.array (json_idx$"columns") |> Vect.enum |> List.of_enum |> List.map
                 fun col ->
-                  let colord = match String.lowercase (JSON.string (col$@1)) with
+                  let colord = match String.lowercase (JSON.string (col$"order")) with
                     | "asc" -> `Asc
                     | "desc" -> `Desc
                     | _ -> failwith (sprintf "DNAnexus.GTable: unrecognized column order in lexicographic index %s" (JSON.to_string json_idx))
-                  JSON.string (col$@0), colord
+                  JSON.string (col$"name"), colord
             nm, `Lexicographic cols
         | _ -> failwith (sprintf "DNAnexus.GTable: unrecognized index %s" (JSON.to_string json_idx))
 
