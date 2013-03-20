@@ -4,6 +4,7 @@ DNAnexus
 HTTP
 ThreadPool
 DX
+DXAPI
 DXDataObject
 FileHelpers
 GTableHelpers

@@ -11,7 +11,7 @@ Library DNAnexus
   BuildTools: ocamlbuild
   BuildDepends: threads,yajl,yajl-extra,ssl,curl,batteries
   Modules:    DNAnexus
-  InternalModules: HTTP,ThreadPool,DX,DXDataObject,FileHelpers,GTableHelpers
+  InternalModules: HTTP,ThreadPool,DX,DXAPI,DXDataObject,FileHelpers,GTableHelpers
 
 Executable unit_tests
   Path:       .
