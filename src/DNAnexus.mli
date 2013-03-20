@@ -641,6 +641,11 @@ module type DataObject = sig
         permissions. *)
   val bind : (string option*string) -> t
 
+  (** [DNAnexus.{Class}.bind_link link] returns a wrapper for an existing data
+      object specified by a [$dnanexus_link] JSON, as frequently received in
+      job input. Composes {! DNAnexus.get_link } and [bind]. *)
+  val bind_link : JSON.t -> t
+
   (** Invokes [/{class}-xxxx/close] on an existing, open data object.
   
       @param wait for the object to reach the [closed] state before returning

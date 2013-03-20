@@ -9,6 +9,7 @@ module type S = sig
 
   val make_new : JSON.t -> t
   val bind : (string option*string) -> t
+  val bind_link : JSON.t -> t
 
   val close : ?wait:bool -> t -> unit
   val with_new : ?wait:bool -> JSON.t -> (t -> 'a) -> 'a
@@ -78,6 +79,8 @@ module Make = functor (T : Subclass) -> struct
       | _ -> json    
 
   let bind (project,id) = T.bind {Base.id; project}
+
+  let bind_link link = bind (DX.get_link link)
 
   let make_new options =
     let options =
