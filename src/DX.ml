@@ -116,7 +116,7 @@ let with_project_id json = json$+("project",`String (project_id()))
 
 exception Escape_retry of exn
 
-let rec generic_retry ?(i=0) ?(desc="") f x =
+let rec generic_retry ?(i=0) ?(desc="") ?retryable f x =
   let cfg = config()
   try
     let y = f x
@@ -134,7 +134,7 @@ let rec generic_retry ?(i=0) ?(desc="") f x =
     y
   with
     | Escape_retry exn -> raise exn
-    | exn when i >= 0 && i < cfg.retry_times ->
+    | exn when (match retryable with Some f -> f exn | None -> true) && i < cfg.retry_times ->
         let d = cfg.retry_initial_delay *. (cfg.retry_backoff_factor ** (float i))
         match cfg.retry_logger with
           | Some log ->
@@ -147,18 +147,30 @@ let rec generic_retry ?(i=0) ?(desc="") f x =
         Thread.delay d
         generic_retry ~i:(i+1) ~desc f x
 
-exception APIError of string*string*JSON.t
+exception APIError of int*string*string*JSON.t
 
-(* TODO: retry only certain routes *)
+let api_retryable always_retry = function
+  | APIError (code,_,_,_) when code >= 500 && code <= 599 -> true
+  | APIError (code,_,_,_) -> false
+  | Curl.CurlException (curlcode,_,_) ->
+      let open Curl
+      match curlcode with
+        | CURLE_FAILED_INIT
+        | CURLE_COULDNT_RESOLVE_PROXY
+        | CURLE_COULDNT_RESOLVE_HOST
+        | CURLE_COULDNT_CONNECT
+        | CURLE_SSL_CONNECT_ERROR -> true
+        | _ -> always_retry
+  | _ -> false
 
-let api_call_raw_body ?(retry=true) path input =
+let api_call_raw_body ?(always_retry=false) path input =
   let cfg = config()
   let url =
     if path = [] then invalid_arg "DNAnexus.api_call_prepare: empty route"
     let base = sprintf "%s://%s:%d" cfg.apiserver_protocol cfg.apiserver_host cfg.apiserver_port
     String.concat "/" (base :: path)
   let headers = ["content-type", "application/json"; "authorization", (sprintf "%s %s" cfg.auth_token_type cfg.auth_token)]
-  () |> generic_retry ~desc:("/" ^ (String.concat "/" path)) ~i:(if retry then 0 else (-1))
+  () |> generic_retry ~retryable:(api_retryable always_retry) ~desc:("/" ^ (String.concat "/" path))
     fun () ->
       let buf = IO.output_string ()
       let code = HTTP.(perform ~headers (POST input) url buf)
@@ -167,23 +179,18 @@ let api_call_raw_body ?(retry=true) path input =
       else
         try
           match code with
-            | 400 | 401 | 404 | 422 | 500 ->
+            | 400 | 401 | 404 | 422 | 500 | 502 | 503 | 504 | 507 | 508 | 509 ->
               let response = JSON.from_string rsp
               let err = response$"error"
               let details = if err$?"details" then err$"details" else `Null
-              let api_error = APIError (JSON.string (err$"type"), JSON.string (err$"message"), details)
-              if code <> 500 then
-                raise (Escape_retry api_error)
-              else
-                raise api_error
+              raise (APIError (code, JSON.string (err$"type"), JSON.string (err$"message"), details))
             | _ -> failwith ""
         with
           | (APIError _) as err -> raise err
-          | (Escape_retry (APIError _)) as err -> raise err
           | _ -> failwith (sprintf "Unrecognized response from DNAnexus API server with HTTP code %d: %s" code rsp)
 
-let api_call ?retry path input =
-  api_call_raw_body ?retry path (JSON.to_string input)
+let api_call ?always_retry path input =
+  api_call_raw_body ?always_retry path (JSON.to_string input)
 
 let original_cwd = Sys.getcwd () (* in case user's code does chdir *)
 

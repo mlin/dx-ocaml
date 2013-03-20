@@ -86,36 +86,41 @@ val with_project_id : JSON.t -> JSON.t
 request for the API route [/noun/verb] (e.g. [/gtable-xxxx/get]) with the
 given input JSON, and returns the response JSON.
 
-@param retry (default: true) Retry the request should it fail due to
-potentially intermittent errors. If retry is enabled, then by default:
+Built-in retry logic detects "safe" errors (indicating that the HTTP request
+was never received by the API server), and by default:
 
-- The request will be retried up to 5 times
+- The request is retried up to 5 times
 - There is a delay of one second before the first retry
 - The delay increases by a factor of two on each subsequent retry
 - Each retry attempt, and the eventual success, is logged to standard error
 
-These defaults can be changed using [reconfigure] (above). If all retry
-attempts fail, then the exception raised on the {e last} attempt is
-re-raised.
+These defaults can be changed using [reconfigure] (above); in particular,
+retry logic can be disabled entirely by setting [retry_times] to 0. If all
+retry attempts fail, then the exception raised on the {e last} attempt is re-
+raised.
+
+@param always_retry Enable retry in the event the HTTP request is interrupted
+midway through, not just for "safe" errors. This should only be used for
+idempotent API methods.
 
 @raise APIError for error responses returned by the DNAnexus API server; also,
 various other exceptions that can arise in the course of attempting an HTTP
 request (especially [CurlException]).
 *)
-val api_call : ?retry:bool -> string list -> JSON.t -> JSON.t
+val api_call : ?always_retry:bool -> string list -> JSON.t -> JSON.t
 
 (** Exception representing errors returned by the DNAnexus API server. Carries
-the error type, message, and "details" JSON (which can be [`Null])
+the HTTP code, error type, message, and "details" JSON (which can be [`Null])
 
 @see < http://wiki.dnanexus.com/API-Specification-v1.0.0/Protocols#Errors > API Specification : Protocols : Errors
 *)
-exception APIError of string*string*JSON.t
+exception APIError of int*string*string*JSON.t
 
-(** {2 API method wrappers} *)
+(** {b API method wrappers} *)
 
 <<<DXAPI.mli>>>
 
-(** {2 Records, files, and GTables} *)
+(** {2 High-level bindings for records, files, and GTables} *)
 
 (** Signature common to DNAnexus data objects (records, files, and GenomicTables).
 

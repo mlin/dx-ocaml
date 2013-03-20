@@ -21,11 +21,11 @@ import json
 import re
 import sys
 
-preamble = '''(** Wrapper functions for each individual method in the DNAnexus API. 
+preamble = '''(** Low-level wrapper functions for each individual method in the DNAnexus API. 
 
 These functions are thin wrappers around {! DNAnexus.api_call } for individual
-API methods. Each function has an optional [retry] argument, which
-enables/disables the retry logic described in the documentation for {!
+API methods. Each function has an optional [always_retry] argument, which
+adjusts the retry logic as described in the documentation for {!
 DNAnexus.api_call }. This argument defaults to true for idempotent methods,
 and false for others.
 
@@ -38,17 +38,17 @@ module API : sig
 class_method_template = '''
   (** Invokes the [{route}] API method with the given JSON input, returning the JSON output.
   {wiki_ref} *)
-  val {wrapper_method_name} : ?retry:bool -> JSON.t -> JSON.t'''
+  val {wrapper_method_name} : ?always_retry:bool -> JSON.t -> JSON.t'''
 
 object_method_template = '''
   (** Invokes the [{route}] API method with the given object ID and JSON input, returning the JSON output.
   {wiki_ref} *)
-  val {wrapper_method_name} : ?retry:bool -> string -> JSON.t -> JSON.t'''
+  val {wrapper_method_name} : ?always_retry:bool -> string -> JSON.t -> JSON.t'''
 
 app_object_method_template = '''
   (** Invokes the [/app-xxxx/{api_method_name}] API method with the given app name/ID and JSON input, returning the JSON output.
   {wiki_ref} *)
-  val {wrapper_method_name} : ?retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t'''
+  val {wrapper_method_name} : ?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t'''
 
 def make_wiki_ref(route, url):
     return ("@see < " + url + " > DNAnexus API Specification : " + route) if url else ""

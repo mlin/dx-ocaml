@@ -86,38 +86,43 @@ val with_project_id : JSON.t -> JSON.t
 request for the API route [/noun/verb] (e.g. [/gtable-xxxx/get]) with the
 given input JSON, and returns the response JSON.
 
-@param retry (default: true) Retry the request should it fail due to
-potentially intermittent errors. If retry is enabled, then by default:
+Built-in retry logic detects "safe" errors (indicating that the HTTP request
+was never received by the API server), and by default:
 
-- The request will be retried up to 5 times
+- The request is retried up to 5 times
 - There is a delay of one second before the first retry
 - The delay increases by a factor of two on each subsequent retry
 - Each retry attempt, and the eventual success, is logged to standard error
 
-These defaults can be changed using [reconfigure] (above). If all retry
-attempts fail, then the exception raised on the {e last} attempt is
-re-raised.
+These defaults can be changed using [reconfigure] (above); in particular,
+retry logic can be disabled entirely by setting [retry_times] to 0. If all
+retry attempts fail, then the exception raised on the {e last} attempt is re-
+raised.
+
+@param always_retry Enable retry in the event the HTTP request is interrupted
+midway through, not just for "safe" errors. This should only be used for
+idempotent API methods.
 
 @raise APIError for error responses returned by the DNAnexus API server; also,
 various other exceptions that can arise in the course of attempting an HTTP
 request (especially [CurlException]).
 *)
-val api_call : ?retry:bool -> string list -> JSON.t -> JSON.t
+val api_call : ?always_retry:bool -> string list -> JSON.t -> JSON.t
 
 (** Exception representing errors returned by the DNAnexus API server. Carries
-the error type, message, and "details" JSON (which can be [`Null])
+the HTTP code, error type, message, and "details" JSON (which can be [`Null])
 
 @see < http://wiki.dnanexus.com/API-Specification-v1.0.0/Protocols#Errors > API Specification : Protocols : Errors
 *)
-exception APIError of string*string*JSON.t
+exception APIError of int*string*string*JSON.t
 
-(** {2 API method wrappers} *)
+(** {b API method wrappers} *)
 
-(** Wrapper functions for each individual method in the DNAnexus API. 
+(** Low-level wrapper functions for each individual method in the DNAnexus API. 
 
 These functions are thin wrappers around {! DNAnexus.api_call } for individual
-API methods. Each function has an optional [retry] argument, which
-enables/disables the retry logic described in the documentation for {!
+API methods. Each function has an optional [always_retry] argument, which
+adjusts the retry logic as described in the documentation for {!
 DNAnexus.api_call }. This argument defaults to true for idempotent methods,
 and false for others.
 
@@ -129,485 +134,485 @@ module API : sig
 
   (** Invokes the [/app-xxxx/addCategories] API method with the given app name/ID and JSON input, returning the JSON output.
    *)
-  val app_add_categories : ?retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t
+  val app_add_categories : ?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/app-xxxx/addDevelopers] API method with the given app name/ID and JSON input, returning the JSON output.
    *)
-  val app_add_developers : ?retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t
+  val app_add_developers : ?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/app-xxxx/addTags] API method with the given app name/ID and JSON input, returning the JSON output.
    *)
-  val app_add_tags : ?retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t
+  val app_add_tags : ?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/app-xxxx/delete] API method with the given app name/ID and JSON input, returning the JSON output.
    *)
-  val app_delete : ?retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t
+  val app_delete : ?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/app-xxxx/describe] API method with the given app name/ID and JSON input, returning the JSON output.
    *)
-  val app_describe : ?retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t
+  val app_describe : ?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/app-xxxx/get] API method with the given app name/ID and JSON input, returning the JSON output.
    *)
-  val app_get : ?retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t
+  val app_get : ?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/app-xxxx/install] API method with the given app name/ID and JSON input, returning the JSON output.
    *)
-  val app_install : ?retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t
+  val app_install : ?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/app-xxxx/listCategories] API method with the given app name/ID and JSON input, returning the JSON output.
    *)
-  val app_list_categories : ?retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t
+  val app_list_categories : ?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/app-xxxx/listDevelopers] API method with the given app name/ID and JSON input, returning the JSON output.
    *)
-  val app_list_developers : ?retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t
+  val app_list_developers : ?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/app-xxxx/publish] API method with the given app name/ID and JSON input, returning the JSON output.
    *)
-  val app_publish : ?retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t
+  val app_publish : ?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/app-xxxx/removeCategories] API method with the given app name/ID and JSON input, returning the JSON output.
    *)
-  val app_remove_categories : ?retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t
+  val app_remove_categories : ?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/app-xxxx/removeDevelopers] API method with the given app name/ID and JSON input, returning the JSON output.
    *)
-  val app_remove_developers : ?retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t
+  val app_remove_developers : ?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/app-xxxx/removeTags] API method with the given app name/ID and JSON input, returning the JSON output.
    *)
-  val app_remove_tags : ?retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t
+  val app_remove_tags : ?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/app-xxxx/run] API method with the given app name/ID and JSON input, returning the JSON output.
    *)
-  val app_run : ?retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t
+  val app_run : ?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/app-xxxx/uninstall] API method with the given app name/ID and JSON input, returning the JSON output.
    *)
-  val app_uninstall : ?retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t
+  val app_uninstall : ?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/app-xxxx/update] API method with the given app name/ID and JSON input, returning the JSON output.
    *)
-  val app_update : ?retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t
+  val app_update : ?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/app/new] API method with the given JSON input, returning the JSON output.
    *)
-  val app_new : ?retry:bool -> JSON.t -> JSON.t
+  val app_new : ?always_retry:bool -> JSON.t -> JSON.t
 
   (** Invokes the [/applet-xxxx/addTags] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val applet_add_tags : ?retry:bool -> string -> JSON.t -> JSON.t
+  val applet_add_tags : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/applet-xxxx/addTypes] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val applet_add_types : ?retry:bool -> string -> JSON.t -> JSON.t
+  val applet_add_types : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/applet-xxxx/close] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val applet_close : ?retry:bool -> string -> JSON.t -> JSON.t
+  val applet_close : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/applet-xxxx/describe] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val applet_describe : ?retry:bool -> string -> JSON.t -> JSON.t
+  val applet_describe : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/applet-xxxx/get] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val applet_get : ?retry:bool -> string -> JSON.t -> JSON.t
+  val applet_get : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/applet-xxxx/getDetails] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val applet_get_details : ?retry:bool -> string -> JSON.t -> JSON.t
+  val applet_get_details : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/applet-xxxx/listProjects] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val applet_list_projects : ?retry:bool -> string -> JSON.t -> JSON.t
+  val applet_list_projects : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/applet-xxxx/removeTags] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val applet_remove_tags : ?retry:bool -> string -> JSON.t -> JSON.t
+  val applet_remove_tags : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/applet-xxxx/removeTypes] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val applet_remove_types : ?retry:bool -> string -> JSON.t -> JSON.t
+  val applet_remove_types : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/applet-xxxx/rename] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val applet_rename : ?retry:bool -> string -> JSON.t -> JSON.t
+  val applet_rename : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/applet-xxxx/run] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val applet_run : ?retry:bool -> string -> JSON.t -> JSON.t
+  val applet_run : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/applet-xxxx/setDetails] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val applet_set_details : ?retry:bool -> string -> JSON.t -> JSON.t
+  val applet_set_details : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/applet-xxxx/setProperties] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val applet_set_properties : ?retry:bool -> string -> JSON.t -> JSON.t
+  val applet_set_properties : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/applet-xxxx/setVisibility] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val applet_set_visibility : ?retry:bool -> string -> JSON.t -> JSON.t
+  val applet_set_visibility : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/applet/new] API method with the given JSON input, returning the JSON output.
    *)
-  val applet_new : ?retry:bool -> JSON.t -> JSON.t
+  val applet_new : ?always_retry:bool -> JSON.t -> JSON.t
 
   (** Invokes the [/container-xxxx/clone] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val container_clone : ?retry:bool -> string -> JSON.t -> JSON.t
+  val container_clone : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/container-xxxx/describe] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val container_describe : ?retry:bool -> string -> JSON.t -> JSON.t
+  val container_describe : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/container-xxxx/destroy] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val container_destroy : ?retry:bool -> string -> JSON.t -> JSON.t
+  val container_destroy : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/container-xxxx/listFolder] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val container_list_folder : ?retry:bool -> string -> JSON.t -> JSON.t
+  val container_list_folder : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/container-xxxx/move] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val container_move : ?retry:bool -> string -> JSON.t -> JSON.t
+  val container_move : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/container-xxxx/newFolder] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val container_new_folder : ?retry:bool -> string -> JSON.t -> JSON.t
+  val container_new_folder : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/container-xxxx/removeFolder] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val container_remove_folder : ?retry:bool -> string -> JSON.t -> JSON.t
+  val container_remove_folder : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/container-xxxx/removeObjects] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val container_remove_objects : ?retry:bool -> string -> JSON.t -> JSON.t
+  val container_remove_objects : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/container-xxxx/renameFolder] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val container_rename_folder : ?retry:bool -> string -> JSON.t -> JSON.t
+  val container_rename_folder : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/file-xxxx/addTags] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val file_add_tags : ?retry:bool -> string -> JSON.t -> JSON.t
+  val file_add_tags : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/file-xxxx/addTypes] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val file_add_types : ?retry:bool -> string -> JSON.t -> JSON.t
+  val file_add_types : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/file-xxxx/close] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val file_close : ?retry:bool -> string -> JSON.t -> JSON.t
+  val file_close : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/file-xxxx/describe] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val file_describe : ?retry:bool -> string -> JSON.t -> JSON.t
+  val file_describe : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/file-xxxx/download] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val file_download : ?retry:bool -> string -> JSON.t -> JSON.t
+  val file_download : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/file-xxxx/getDetails] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val file_get_details : ?retry:bool -> string -> JSON.t -> JSON.t
+  val file_get_details : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/file-xxxx/listProjects] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val file_list_projects : ?retry:bool -> string -> JSON.t -> JSON.t
+  val file_list_projects : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/file-xxxx/removeTags] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val file_remove_tags : ?retry:bool -> string -> JSON.t -> JSON.t
+  val file_remove_tags : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/file-xxxx/removeTypes] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val file_remove_types : ?retry:bool -> string -> JSON.t -> JSON.t
+  val file_remove_types : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/file-xxxx/rename] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val file_rename : ?retry:bool -> string -> JSON.t -> JSON.t
+  val file_rename : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/file-xxxx/setDetails] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val file_set_details : ?retry:bool -> string -> JSON.t -> JSON.t
+  val file_set_details : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/file-xxxx/setProperties] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val file_set_properties : ?retry:bool -> string -> JSON.t -> JSON.t
+  val file_set_properties : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/file-xxxx/setVisibility] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val file_set_visibility : ?retry:bool -> string -> JSON.t -> JSON.t
+  val file_set_visibility : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/file-xxxx/upload] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val file_upload : ?retry:bool -> string -> JSON.t -> JSON.t
+  val file_upload : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/file/new] API method with the given JSON input, returning the JSON output.
    *)
-  val file_new : ?retry:bool -> JSON.t -> JSON.t
+  val file_new : ?always_retry:bool -> JSON.t -> JSON.t
 
   (** Invokes the [/gtable-xxxx/addRows] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val gtable_add_rows : ?retry:bool -> string -> JSON.t -> JSON.t
+  val gtable_add_rows : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/gtable-xxxx/addTags] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val gtable_add_tags : ?retry:bool -> string -> JSON.t -> JSON.t
+  val gtable_add_tags : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/gtable-xxxx/addTypes] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val gtable_add_types : ?retry:bool -> string -> JSON.t -> JSON.t
+  val gtable_add_types : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/gtable-xxxx/close] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val gtable_close : ?retry:bool -> string -> JSON.t -> JSON.t
+  val gtable_close : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/gtable-xxxx/describe] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val gtable_describe : ?retry:bool -> string -> JSON.t -> JSON.t
+  val gtable_describe : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/gtable-xxxx/get] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val gtable_get : ?retry:bool -> string -> JSON.t -> JSON.t
+  val gtable_get : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/gtable-xxxx/getDetails] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val gtable_get_details : ?retry:bool -> string -> JSON.t -> JSON.t
+  val gtable_get_details : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/gtable-xxxx/listProjects] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val gtable_list_projects : ?retry:bool -> string -> JSON.t -> JSON.t
+  val gtable_list_projects : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/gtable-xxxx/nextPart] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val gtable_next_part : ?retry:bool -> string -> JSON.t -> JSON.t
+  val gtable_next_part : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/gtable-xxxx/removeTags] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val gtable_remove_tags : ?retry:bool -> string -> JSON.t -> JSON.t
+  val gtable_remove_tags : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/gtable-xxxx/removeTypes] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val gtable_remove_types : ?retry:bool -> string -> JSON.t -> JSON.t
+  val gtable_remove_types : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/gtable-xxxx/rename] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val gtable_rename : ?retry:bool -> string -> JSON.t -> JSON.t
+  val gtable_rename : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/gtable-xxxx/setDetails] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val gtable_set_details : ?retry:bool -> string -> JSON.t -> JSON.t
+  val gtable_set_details : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/gtable-xxxx/setProperties] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val gtable_set_properties : ?retry:bool -> string -> JSON.t -> JSON.t
+  val gtable_set_properties : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/gtable-xxxx/setVisibility] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val gtable_set_visibility : ?retry:bool -> string -> JSON.t -> JSON.t
+  val gtable_set_visibility : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/gtable/new] API method with the given JSON input, returning the JSON output.
    *)
-  val gtable_new : ?retry:bool -> JSON.t -> JSON.t
+  val gtable_new : ?always_retry:bool -> JSON.t -> JSON.t
 
   (** Invokes the [/job-xxxx/describe] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val job_describe : ?retry:bool -> string -> JSON.t -> JSON.t
+  val job_describe : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/job-xxxx/streamLog] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val job_stream_log : ?retry:bool -> string -> JSON.t -> JSON.t
+  val job_stream_log : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/job-xxxx/terminate] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val job_terminate : ?retry:bool -> string -> JSON.t -> JSON.t
+  val job_terminate : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/job/new] API method with the given JSON input, returning the JSON output.
    *)
-  val job_new : ?retry:bool -> JSON.t -> JSON.t
+  val job_new : ?always_retry:bool -> JSON.t -> JSON.t
 
   (** Invokes the [/notifications/get] API method with the given JSON input, returning the JSON output.
    *)
-  val notifications_get : ?retry:bool -> JSON.t -> JSON.t
+  val notifications_get : ?always_retry:bool -> JSON.t -> JSON.t
 
   (** Invokes the [/notifications/markRead] API method with the given JSON input, returning the JSON output.
    *)
-  val notifications_mark_read : ?retry:bool -> JSON.t -> JSON.t
+  val notifications_mark_read : ?always_retry:bool -> JSON.t -> JSON.t
 
   (** Invokes the [/project-xxxx/addTags] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val project_add_tags : ?retry:bool -> string -> JSON.t -> JSON.t
+  val project_add_tags : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/project-xxxx/clone] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val project_clone : ?retry:bool -> string -> JSON.t -> JSON.t
+  val project_clone : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/project-xxxx/decreasePermissions] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val project_decrease_permissions : ?retry:bool -> string -> JSON.t -> JSON.t
+  val project_decrease_permissions : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/project-xxxx/describe] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val project_describe : ?retry:bool -> string -> JSON.t -> JSON.t
+  val project_describe : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/project-xxxx/destroy] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val project_destroy : ?retry:bool -> string -> JSON.t -> JSON.t
+  val project_destroy : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/project-xxxx/invite] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val project_invite : ?retry:bool -> string -> JSON.t -> JSON.t
+  val project_invite : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/project-xxxx/leave] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val project_leave : ?retry:bool -> string -> JSON.t -> JSON.t
+  val project_leave : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/project-xxxx/listFolder] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val project_list_folder : ?retry:bool -> string -> JSON.t -> JSON.t
+  val project_list_folder : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/project-xxxx/move] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val project_move : ?retry:bool -> string -> JSON.t -> JSON.t
+  val project_move : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/project-xxxx/newFolder] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val project_new_folder : ?retry:bool -> string -> JSON.t -> JSON.t
+  val project_new_folder : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/project-xxxx/removeFolder] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val project_remove_folder : ?retry:bool -> string -> JSON.t -> JSON.t
+  val project_remove_folder : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/project-xxxx/removeObjects] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val project_remove_objects : ?retry:bool -> string -> JSON.t -> JSON.t
+  val project_remove_objects : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/project-xxxx/removeTags] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val project_remove_tags : ?retry:bool -> string -> JSON.t -> JSON.t
+  val project_remove_tags : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/project-xxxx/renameFolder] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val project_rename_folder : ?retry:bool -> string -> JSON.t -> JSON.t
+  val project_rename_folder : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/project-xxxx/setProperties] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val project_set_properties : ?retry:bool -> string -> JSON.t -> JSON.t
+  val project_set_properties : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/project-xxxx/subscribe] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val project_subscribe : ?retry:bool -> string -> JSON.t -> JSON.t
+  val project_subscribe : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/project-xxxx/unsubscribe] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val project_unsubscribe : ?retry:bool -> string -> JSON.t -> JSON.t
+  val project_unsubscribe : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/project-xxxx/update] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val project_update : ?retry:bool -> string -> JSON.t -> JSON.t
+  val project_update : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/project/new] API method with the given JSON input, returning the JSON output.
    *)
-  val project_new : ?retry:bool -> JSON.t -> JSON.t
+  val project_new : ?always_retry:bool -> JSON.t -> JSON.t
 
   (** Invokes the [/record-xxxx/addTags] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val record_add_tags : ?retry:bool -> string -> JSON.t -> JSON.t
+  val record_add_tags : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/record-xxxx/addTypes] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val record_add_types : ?retry:bool -> string -> JSON.t -> JSON.t
+  val record_add_types : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/record-xxxx/close] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val record_close : ?retry:bool -> string -> JSON.t -> JSON.t
+  val record_close : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/record-xxxx/describe] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val record_describe : ?retry:bool -> string -> JSON.t -> JSON.t
+  val record_describe : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/record-xxxx/getDetails] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val record_get_details : ?retry:bool -> string -> JSON.t -> JSON.t
+  val record_get_details : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/record-xxxx/listProjects] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val record_list_projects : ?retry:bool -> string -> JSON.t -> JSON.t
+  val record_list_projects : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/record-xxxx/removeTags] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val record_remove_tags : ?retry:bool -> string -> JSON.t -> JSON.t
+  val record_remove_tags : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/record-xxxx/removeTypes] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val record_remove_types : ?retry:bool -> string -> JSON.t -> JSON.t
+  val record_remove_types : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/record-xxxx/rename] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val record_rename : ?retry:bool -> string -> JSON.t -> JSON.t
+  val record_rename : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/record-xxxx/setDetails] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val record_set_details : ?retry:bool -> string -> JSON.t -> JSON.t
+  val record_set_details : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/record-xxxx/setProperties] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val record_set_properties : ?retry:bool -> string -> JSON.t -> JSON.t
+  val record_set_properties : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/record-xxxx/setVisibility] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val record_set_visibility : ?retry:bool -> string -> JSON.t -> JSON.t
+  val record_set_visibility : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/record/new] API method with the given JSON input, returning the JSON output.
    *)
-  val record_new : ?retry:bool -> JSON.t -> JSON.t
+  val record_new : ?always_retry:bool -> JSON.t -> JSON.t
 
   (** Invokes the [/system/findAffiliates] API method with the given JSON input, returning the JSON output.
    *)
-  val system_find_affiliates : ?retry:bool -> JSON.t -> JSON.t
+  val system_find_affiliates : ?always_retry:bool -> JSON.t -> JSON.t
 
   (** Invokes the [/system/findApps] API method with the given JSON input, returning the JSON output.
    *)
-  val system_find_apps : ?retry:bool -> JSON.t -> JSON.t
+  val system_find_apps : ?always_retry:bool -> JSON.t -> JSON.t
 
   (** Invokes the [/system/findDataObjects] API method with the given JSON input, returning the JSON output.
    *)
-  val system_find_data_objects : ?retry:bool -> JSON.t -> JSON.t
+  val system_find_data_objects : ?always_retry:bool -> JSON.t -> JSON.t
 
   (** Invokes the [/system/findJobs] API method with the given JSON input, returning the JSON output.
    *)
-  val system_find_jobs : ?retry:bool -> JSON.t -> JSON.t
+  val system_find_jobs : ?always_retry:bool -> JSON.t -> JSON.t
 
   (** Invokes the [/system/findProjects] API method with the given JSON input, returning the JSON output.
    *)
-  val system_find_projects : ?retry:bool -> JSON.t -> JSON.t
+  val system_find_projects : ?always_retry:bool -> JSON.t -> JSON.t
 
   (** Invokes the [/system/findUsers] API method with the given JSON input, returning the JSON output.
    *)
-  val system_find_users : ?retry:bool -> JSON.t -> JSON.t
+  val system_find_users : ?always_retry:bool -> JSON.t -> JSON.t
 
   (** Invokes the [/system/findProjectMembers] API method with the given JSON input, returning the JSON output.
    *)
-  val system_find_project_members : ?retry:bool -> JSON.t -> JSON.t
+  val system_find_project_members : ?always_retry:bool -> JSON.t -> JSON.t
 
   (** Invokes the [/system/shortenURL] API method with the given JSON input, returning the JSON output.
    *)
-  val system_shorten_url : ?retry:bool -> JSON.t -> JSON.t
+  val system_shorten_url : ?always_retry:bool -> JSON.t -> JSON.t
 
   (** Invokes the [/user-xxxx/describe] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val user_describe : ?retry:bool -> string -> JSON.t -> JSON.t
+  val user_describe : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
   (** Invokes the [/user-xxxx/update] API method with the given object ID and JSON input, returning the JSON output.
    *)
-  val user_update : ?retry:bool -> string -> JSON.t -> JSON.t
+  val user_update : ?always_retry:bool -> string -> JSON.t -> JSON.t
 
-(** {2 Records, files, and GTables} *)
+(** {2 High-level bindings for records, files, and GTables} *)
 
 (** Signature common to DNAnexus data objects (records, files, and GenomicTables).
 

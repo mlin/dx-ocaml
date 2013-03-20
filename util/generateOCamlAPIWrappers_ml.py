@@ -25,19 +25,19 @@ preamble = '''(* Do not modify this file by hand. It is automatically generated 
    util/generateOCamlAPIWrappers_ml.py. *)'''
 
 class_method_template = '''
-let {wrapper_method_name} ?(retry={retry}) input = DX.api_call ~retry ["{klass}"; "{method}"] input
+let {wrapper_method_name} ?(always_retry={retry}) input = DX.api_call ~always_retry ["{klass}"; "{method}"] input
 '''
 
 object_method_template = '''
-let {wrapper_method_name} ?(retry={retry}) object_id input = DX.api_call ~retry [object_id; "{api_method_name}"] input
+let {wrapper_method_name} ?(always_retry={retry}) object_id input = DX.api_call ~always_retry [object_id; "{api_method_name}"] input
 '''
 
 app_object_method_template = '''
-let {wrapper_method_name} ?(retry={retry}) ?alias app_name_or_id input =
+let {wrapper_method_name} ?(always_retry={retry}) ?alias app_name_or_id input =
   let fully_qualified_route = match alias with
     | Some x -> [app_name_or_id; x; "{api_method_name}"]
     | None -> [app_name_or_id; "{api_method_name}"]
-  DX.api_call ~retry fully_qualified_route input
+  DX.api_call ~always_retry fully_qualified_route input
 '''
 
 def make_wiki_ref(route, url):

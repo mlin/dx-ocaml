@@ -38,8 +38,8 @@ module Base = struct
   let project {project} = project      
 
 (* Internal interface to the base representation that must be provided by all subclasses *)
-type api_wrapper_class = ?retry:bool -> JSON.t -> JSON.t
-type api_wrapper_object = ?retry:bool -> string -> JSON.t -> JSON.t
+type api_wrapper_class = ?always_retry:bool -> JSON.t -> JSON.t
+type api_wrapper_object = ?always_retry:bool -> string -> JSON.t -> JSON.t
 module type Subclass = sig
   val dxclass : string   (* class name, e.g. "file", "gtable" *)
   type t                 (* the subclass' type *)
@@ -157,7 +157,7 @@ module Make = functor (T : Subclass) -> struct
       ignore (T.dxapi_close (id o) JSON.empty)
     with
       (* object is already closing/closed -- that's okay *)
-      | DX.APIError ("InvalidState", _, _) -> ()
+      | DX.APIError (_,"InvalidState", _, _) -> ()
     if wait then await_close o
     ans
 
