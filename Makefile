@@ -1,14 +1,14 @@
 default: all
-.PHONY: default all install doc test test-env clean gh-pages
+.PHONY: default all install doc test test-env ensure-dnanexus-home regenerate-wrappers clean gh-pages
 
-all: src/setup.data
+all: src/setup.data src/DXAPI.ml src/DNAnexus.mli
 	cd src && ocaml setup.ml -build
 
 install: all
 	ocamlfind remove DNAnexus || true
 	cd src && ocaml setup.ml -install
 
-doc: src/setup.ml
+doc: all src/setup.ml
 	cd src && ocamlbuild -use-ocamlfind DNAnexus.docdir/index.html
 	cp src/ocamldoc_style.css src/_build/DNAnexus.docdir/style.css
 
@@ -30,6 +30,21 @@ src/setup.data: src/setup.ml
 
 src/setup.ml: src/_oasis
 	cd src && oasis setup
+
+ensure-dnanexus-home:
+	@bash -c '[[ "${DNANEXUS_HOME}" != "" ]] || (echo "Please initialize your environment with: source /path/to/dx-toolkit/environment" >&2; exit 1)'
+
+src/DXAPI.ml: ensure-dnanexus-home
+	cat ${DNANEXUS_HOME}/build/wrapper_table.json | util/generateOCamlAPIWrappers_ml.py > src/DXAPI.ml
+
+src/DNAnexus.mli: src/DNAnexus.TEMPLATE.mli
+	$(MAKE) ensure-dnanexus-home
+	cat ${DNANEXUS_HOME}/build/wrapper_table.json | util/generateOCamlAPIWrappers_mli.py > /tmp/DXAPI.mli
+	sed -e "/<<<DXAPI.mli>>>/r /tmp/DXAPI.mli" -e "/<<<DXAPI.mli>>>/d" src/DNAnexus.TEMPLATE.mli > src/DNAnexus.mli
+
+regenerate-wrappers:
+	rm -f src/DXAPI.ml src/DNAnexus.mli
+	$(MAKE) src/DXAPI.ml src/DNAnexus.mli
 
 clean:
 	cd src && (ocaml setup.ml -clean || ocamlbuild -clean) && rm -f *.ba?

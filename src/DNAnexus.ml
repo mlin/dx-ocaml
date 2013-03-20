@@ -2,6 +2,9 @@
 
 include DX
 
+module API = struct
+  include DXAPI
+
 module type DataObject = sig
   include DXDataObject.S
 
