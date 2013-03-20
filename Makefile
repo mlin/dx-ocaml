@@ -34,7 +34,8 @@ src/setup.ml: src/_oasis
 ensure-dnanexus-home:
 	@bash -c '[[ "${DNANEXUS_HOME}" != "" ]] || (echo "Please initialize your environment with: source /path/to/dx-toolkit/environment" >&2; exit 1)'
 
-src/DXAPI.ml: ensure-dnanexus-home
+src/DXAPI.ml:
+	$(MAKE) ensure-dnanexus-home
 	cat ${DNANEXUS_HOME}/build/wrapper_table.json | util/generateOCamlAPIWrappers_ml.py > src/DXAPI.ml
 
 src/DNAnexus.mli: src/DNAnexus.TEMPLATE.mli
