@@ -270,7 +270,7 @@ module GTable = struct
          "tags", JSON.of_list [`String "foo"];
          "columns", DNAnexus.GTable.json_of_columns columns;
          "indices", DNAnexus.GTable.json_of_indices [
-            "ord_index", `Lexicographic ["ord", `Asc]
+            "ord_index", `Lexicographic ["ord", `Asc, None]
           ]
         ]
     let data =

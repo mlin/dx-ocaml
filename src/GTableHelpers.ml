@@ -44,7 +44,7 @@ let columns_of_json cols =
 
 type index = string*[
     `GRI of string*string*string
-  | `Lexicographic of ((string*[`Asc|`Desc]) list)
+  | `Lexicographic of ((string*[`Asc|`Desc]*(bool option)) list)
 ]
 
 let json_of_indices indices =
@@ -63,11 +63,12 @@ let json_of_indices indices =
             let json_cols =
               JSON.of_list
                 cols |> List.map
-                  fun (colnm,colord) ->
-                    JSON.of_list [
-                      `String colnm;
-                      `String (match colord with `Asc -> "asc" | `Desc -> "desc")
+                  fun (colnm,colord,case) ->
+                    let lst = [
+                      "name", `String colnm;
+                      "order", `String (match colord with `Asc -> "asc" | `Desc -> "desc");
                     ]
+                    JSON.of_assoc (match case with Some b -> ("caseSensitive", `Bool b) :: lst | None -> lst)
             JSON.of_assoc [
               "name", `String nm;
               "type", `String "lexicographic";
@@ -89,7 +90,7 @@ let indices_of_json json =
                     | "asc" -> `Asc
                     | "desc" -> `Desc
                     | _ -> failwith (sprintf "DNAnexus.GTable: unrecognized column order in lexicographic index %s" (JSON.to_string json_idx))
-                  JSON.string (col$"name"), colord
+                  JSON.string (col$"name"), colord, (if col$?"caseSensitive" then Some (JSON.bool (col$"caseSensitive")) else None)
             nm, `Lexicographic cols
         | _ -> failwith (sprintf "DNAnexus.GTable: unrecognized index %s" (JSON.to_string json_idx))
 
