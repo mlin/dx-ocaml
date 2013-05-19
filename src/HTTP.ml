@@ -85,8 +85,10 @@ let perform ?(headers=[]) ty url response_body =
     let streaming_exn = ref None
 
     Curl.set_timeout c 1200
+    (*
     Curl.set_sslverifypeer c false
     Curl.set_sslverifyhost c Curl.SSLVERIFYHOST_EXISTENCE
+    *)
     Curl.set_tcpnodelay c true
     Curl.set_verbose c false
     Curl.set_url c url
