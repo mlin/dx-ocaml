@@ -233,16 +233,27 @@ module File = struct
         IO.close_out output
 
   let download_url ?duration fo = 
+    let api_input = ["preathenticated", `Bool true]
     let api_input = match duration with
-      | None -> JSON.empty
-      | Some dur -> JSON.of_assoc ["duration", `Int dur]
-    JSON.string (DXAPI.file_download (id fo) api_input $ "url")
+      | None -> api_input
+      | Some dur -> ("duration", `Int dur) :: api_input
+    JSON.string (DXAPI.file_download (id fo) (JSON.of_assoc api_input) $ "url")
 
   let open_input ?duration ?pos ({T.part_size; parallelism; closed_size} as fo) =
     let size = match closed_size with
       | Some sz -> sz
       | None -> JSON.int (describe fo $ "size")
-    FileHelpers.create_input ~part_size ~parallelism ?pos ~url:(download_url ?duration fo) ~size (id fo)
+    let api_input = match duration with
+      | None -> []
+      | Some dur -> ["duration", `Int dur]
+    let ticket = DXAPI.file_download (id fo) (JSON.of_assoc api_input)
+    let url = JSON.string (ticket$"url")
+    let headers =
+      if not (ticket$?"headers") then []
+      else
+        JSON.obj_keys (ticket$"headers") |> List.map 
+          fun k -> k, JSON.string (ticket$"headers"$k)
+    FileHelpers.create_input ~part_size ~parallelism ?pos ~url ~headers ~size (id fo)
   let with_input ?duration ?pos fo f =
     let input = open_input ?duration ?pos fo
     finally (fun _ -> IO.close_in input) f input
