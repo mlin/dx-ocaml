@@ -16,13 +16,17 @@ let rec check_threads tp =
 
 (* thread to upload an individual part *)
 let upload_part_thread (file_id,part_idx,buf) =
-  let upload_ans = 
-    DXAPI.file_upload file_id
-      JSON.of_assoc ["index", `Int part_idx]
-  let upload_url = JSON.string (upload_ans$"url")
-  let headers = ["content-type", "application/octet-stream"]
   () |> DX.generic_retry ~desc:(sprintf "upload of part %d for %s" part_idx file_id)
     fun () ->
+      let upload_ans = 
+        DXAPI.file_upload file_id
+          JSON.of_assoc ["index", `Int part_idx]
+      let upload_url = JSON.string (upload_ans$"url")
+      let headers =
+        if not (upload_ans$?"headers") then []
+        else
+          JSON.obj_keys (upload_ans$"headers") |> List.map 
+            fun k -> k, JSON.string (upload_ans$"headers"$k)
       match HTTP.(perform ~headers (POST buf) upload_url IO.stdnull) with
         | x when x >= 200 && x <= 299 -> ()
         | x -> failwith (sprintf "HTTP code %d while uploading %s part %d" x file_id part_idx)
@@ -81,11 +85,11 @@ let create_output ~part_size ~parallelism dx_file_id =
   ans
 
 (* thread to HTTP GET a range of the download URL *)
-let download_part_thread (file_id,url,ofs,len) =
+let download_part_thread (file_id,url,hdrs,ofs,len) =
   () |> DX.generic_retry ~desc:(sprintf "part download for %s" file_id)
     fun () ->
       let buf = IO.output_string ()
-      match HTTP.(perform ~headers:["range", (sprintf "bytes=%d-%d" ofs (ofs+len-1))] GET url buf) with
+      match HTTP.(perform ~headers:(("range", (sprintf "bytes=%d-%d" ofs (ofs+len-1))) :: hdrs) GET url buf) with
         | x when x >= 200 && x <= 299 ->
           let rsp = IO.close_out buf
           if String.length rsp <> len then
@@ -94,7 +98,7 @@ let download_part_thread (file_id,url,ofs,len) =
         | x -> failwith (sprintf "HTTP code %d while downloading %s bytes [%d,%d]" x file_id ofs (ofs+len-1))
 
 type input_state = New | Open | Closed
-let create_input ?(pos=0) ~part_size ~parallelism ~url ~size dx_file_id =
+let create_input ?(pos=0) ~part_size ~parallelism ~url ~headers ~size dx_file_id =
   if part_size < 1 then invalid_arg "DNAnexus.File.download part_size"
   if parallelism < 1 then invalid_arg "DNAnexus.File.download parallelism"
 
@@ -113,7 +117,7 @@ let create_input ?(pos=0) ~part_size ~parallelism ~url ~size dx_file_id =
     let ofs = pos + !next_part * part_size
     if ofs < size then
       let len = min part_size (size-ofs)
-      Queue.add (ThreadPool.launch tp download_part_thread (dx_file_id,url,ofs,len)) iou_q
+      Queue.add (ThreadPool.launch tp download_part_thread (dx_file_id,url,headers,ofs,len)) iou_q
       incr next_part
   let rec ensure_availability () =
     match !state with
