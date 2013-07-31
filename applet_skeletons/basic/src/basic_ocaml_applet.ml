@@ -24,8 +24,8 @@ let process file1 file2 output_2nd =
   let name = (JSON.string (File.describe the_file $ "name")) in
   begin
     (* Job logging examples: print file's name to stdout, and its id to stderr *)
-    printf "%s\n" name;
-    eprintf "%s\n" (File.id the_file);
+    printf "The file name is %s\n" name;
+    eprintf "The file id is %s\n" (File.id the_file);
 
     (* Download the file to the local scratch filesystem *)
     File.download file1 "the_file";
