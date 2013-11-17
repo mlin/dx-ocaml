@@ -369,6 +369,12 @@ module GTable = struct
     flush_rows gt
     y
 
+  (* override close to flush_rows before closing *)
+  let super_close = close
+  let close ?wait gt =
+    flush_rows gt
+    super_close ?wait gt
+
   let schema = columns
 
   let iterate_rows ?starting ?limit ?columns gt =

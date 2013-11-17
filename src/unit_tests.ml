@@ -317,6 +317,8 @@ module GTable = struct
 
   (* TODO: test typecheck setting to add_row *)
 
+  (* TODO: test automatic row flush when close is called *)
+
   let tests = [
     "make a tiny table and read it back" >:: tiny;
     "resolve ambiguous number typing" >:: number_typing;
