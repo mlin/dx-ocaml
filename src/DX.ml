@@ -118,13 +118,14 @@ exception Escape_retry of exn
 
 let rec generic_retry ?(i=0) ?(desc="") ?retryable f x =
   let cfg = config()
+  let t0 = Unix.gettimeofday ()
   try
     let y = f x
     match cfg.retry_logger with
       | Some log when i > 0 ->
           try
             log
-              sprintf "Successful%s after retrying %d times"
+              sprintf "Successful%s after retrying %d time(s)"
                 if desc <> "" then " " ^ desc else ""
                 i
               None
@@ -139,13 +140,14 @@ let rec generic_retry ?(i=0) ?(desc="") ?retryable f x =
         match cfg.retry_logger with
           | Some log ->
               log
-                sprintf "Retrying%s after %.1fs"
-                  if desc <> "" then " " ^ desc else ""
+                sprintf "Error%s after %.1fs, retrying in %.1fs"
+                  if desc <> "" then "in " ^ desc else ""
+                  Unix.gettimeofday() -. t0
                   d
                 Some exn
           | None -> ()
         Thread.delay d
-        generic_retry ~i:(i+1) ~desc f x
+        generic_retry ~i:(i+1) ~desc ?retryable f x
 
 exception APIError of int*string*string*JSON.t
 

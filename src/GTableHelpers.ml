@@ -122,8 +122,7 @@ let json_of_query idxnm params =
   ]
 
 module RowAdder = struct
-  (* FIXME: set ~always_retry:true *)
-  let perform_addRows id reqbdy = ignore (DX.api_call_raw_body [id; "addRows"] reqbdy)
+  let perform_addRows id reqbdy = ignore (DX.api_call_raw_body ~always_retry:true [id; "addRows"] reqbdy)
 
   let addRows_thread (id,row_gen) =
     let part = JSON.int (DXAPI.gtable_next_part id JSON.empty $ "part")
