@@ -34,6 +34,6 @@
   ],
   "runSpec": {
     "interpreter": "bash",
-    "code": "basic_ocaml_applet.native"
+    "code": "main(){\n basic_ocaml_applet.native \n}"
   }
 }
