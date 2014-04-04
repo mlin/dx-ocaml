@@ -141,7 +141,7 @@ let rec generic_retry ?(i=0) ?(desc="") ?retryable f x =
           | Some log ->
               log
                 sprintf "Error%s after %.1fs, retrying in %.1fs"
-                  if desc <> "" then "in " ^ desc else ""
+                  if desc <> "" then " in " ^ desc else ""
                   Unix.gettimeofday() -. t0
                   d
                 Some exn
