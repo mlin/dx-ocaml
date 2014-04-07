@@ -150,10 +150,14 @@ let rec generic_retry ?(i=0) ?(desc="") ?retryable f x =
         generic_retry ~i:(i+1) ~desc ?retryable f x
 
 exception APIError of int*string*string*JSON.t
+exception MalformedResponse of int*string
 
 let api_retryable always_retry = function
   | APIError (code,_,_,_) when code >= 500 && code <= 599 -> true
-  | APIError (code,_,_,_) -> false
+  | APIError _ -> false
+  | MalformedResponse (code,_) when code >= 500 && code <= 599 -> true
+  | MalformedResponse (code,_) when code >= 200 && code <= 299 -> always_retry
+  | MalformedResponse _ -> false
   | Curl.CurlException (curlcode,_,_) ->
       let open Curl
       match curlcode with
@@ -162,7 +166,7 @@ let api_retryable always_retry = function
         | CURLE_COULDNT_RESOLVE_HOST
         | CURLE_COULDNT_CONNECT
         | CURLE_SSL_CONNECT_ERROR -> true
-        | _ -> always_retry
+        | _ -> always_retry (* e.g. CURLE_GOT_NOTHING, CURLE_PARTIAL_FILE *)
   | _ -> false
 
 let api_call_raw_body ?(always_retry=false) path input =
@@ -177,7 +181,10 @@ let api_call_raw_body ?(always_retry=false) path input =
       let buf = IO.output_string ()
       let code = HTTP.(perform ~headers (POST input) url buf)
       let rsp = IO.close_out buf
-      if code >= 200 && code < 300 then JSON.from_string rsp
+      if code >= 200 && code < 300 then
+        try
+          JSON.from_string rsp
+        with _ -> raise (MalformedResponse (code, (sprintf "Malformed response from DNAnexus API server with HTTP code %d: %s" code rsp)))
       else
         try
           match code with
@@ -189,7 +196,7 @@ let api_call_raw_body ?(always_retry=false) path input =
             | _ -> failwith ""
         with
           | (APIError _) as err -> raise err
-          | _ -> failwith (sprintf "Unrecognized response from DNAnexus API server with HTTP code %d: %s" code rsp)
+          | _ -> raise (MalformedResponse (code, (sprintf "Malformed response from DNAnexus API server with HTTP code %d: %s" code rsp)))
 
 let api_call ?always_retry path input =
   api_call_raw_body ?always_retry path (JSON.to_string input)
