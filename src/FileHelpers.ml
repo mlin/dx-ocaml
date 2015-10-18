@@ -16,18 +16,21 @@ let rec check_threads tp =
 
 (* thread to upload an individual part *)
 let upload_part_thread (file_id,part_idx,buf) =
+  let md5 = (Digest.to_hex (Digest.string buf))
   () |> DX.generic_retry ~desc:(sprintf "upload of part %d for %s" part_idx file_id)
     fun () ->
       let upload_ans = 
         DXAPI.file_upload file_id
-          JSON.of_assoc ["index", `Int part_idx]
+          JSON.of_assoc ["index", `Int part_idx;
+                         "size", `Int (String.length buf);
+                         "md5", `String md5]
       let upload_url = JSON.string (upload_ans$"url")
       let headers =
         if not (upload_ans$?"headers") then []
         else
           JSON.obj_keys (upload_ans$"headers") |> List.map 
             fun k -> k, JSON.string (upload_ans$"headers"$k)
-      match HTTP.(perform ~headers (POST buf) upload_url IO.stdnull) with
+      match HTTP.(perform ~headers (PUT buf) upload_url IO.stdnull) with
         | x when x >= 200 && x <= 299 -> ()
         | x -> failwith (sprintf "HTTP code %d while uploading %s part %d" x file_id part_idx)
 

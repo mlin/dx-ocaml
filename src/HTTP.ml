@@ -55,7 +55,7 @@ let checkout_conn, checkin_conn =
   checkout_conn, checkin_conn
 
 (* Supported HTTP request types *)
-type request_type = GET | POST of string | POST_stream of IO.input
+type request_type = GET | POST of string | POST_stream of IO.input | PUT of string
 
 (* Synchronously perform an HTTP request.
 
@@ -97,6 +97,10 @@ let perform ?(headers=[]) ty url response_body =
       | GET -> Curl.set_post c false
       | POST data ->
           Curl.set_post c true
+          Curl.set_postfields c data
+          Curl.set_postfieldsize c (String.length data)
+      | PUT data ->
+          Curl.set_customrequest c "PUT"
           Curl.set_postfields c data
           Curl.set_postfieldsize c (String.length data)
       | POST_stream request_body ->
