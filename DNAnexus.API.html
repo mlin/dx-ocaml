@@ -14,12 +14,13 @@
 <link title="DNAnexus" rel="Chapter" href="DNAnexus.html"><title>DNAnexus.API</title>
 </head>
 <body>
-<div class="navbar">&nbsp;<a href="DNAnexus.html">Up</a>
-&nbsp;<a href="DNAnexus.Record.html">Next</a>
+<div class="navbar">&nbsp;<a class="up" href="DNAnexus.html" title="DNAnexus">Up</a>
+&nbsp;<a class="post" href="DNAnexus.Record.html" title="DNAnexus.Record">Next</a>
 </div>
-<center><h1>Module <a href="type_DNAnexus.API.html">DNAnexus.API</a></h1></center>
-<br>
-<pre><span class="keyword">module</span> API: <code class="code">sig</code> <a href="DNAnexus.API.html">..</a> <code class="code">end</code></pre>Low-level wrapper functions for each individual method in the DNAnexus API. 
+<h1>Module <a href="type_DNAnexus.API.html">DNAnexus.API</a></h1>
+
+<pre><span class="keyword">module</span> API: <code class="code">sig</code> <a href="DNAnexus.API.html">..</a> <code class="code">end</code></pre><div class="info module top">
+Low-level wrapper functions for each individual method in the DNAnexus API. 
 <p>
 
 These functions are thin wrappers around <a href="DNAnexus.html#VALapi_call"><code class="code">DNAnexus.api_call</code></a> for individual
@@ -27,365 +28,814 @@ API methods. Each function has an optional <code class="code">always_retry</code
 adjusts the retry logic as described in the documentation for <a href="DNAnexus.html#VALapi_call"><code class="code">DNAnexus.api_call</code></a>. This argument defaults to true for idempotent methods,
 and false for others.<br>
 <b>See also</b> <a href=" http://wiki.dnanexus.com/API-Specification-v1.0.0/Introduction# ">DNAnexus API Specification</a><br>
+</div>
 <hr width="100%">
-<pre><span id="VALapp_add_categories"><span class="keyword">val</span> app_add_categories</span> : <code class="type">?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALanalysis_add_tags"><span class="keyword">val</span> analysis_add_tags</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/analysis-xxxx/addTags</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Workflows-and-Analyses#API-method%3A-%2Fanalysis-xxxx%2FaddTags ">DNAnexus API Specification : /analysis-xxxx/addTags</a><br>
+</div>
+
+<pre><span id="VALanalysis_describe"><span class="keyword">val</span> analysis_describe</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/analysis-xxxx/describe</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Workflows-and-Analyses#API-method%3A-%2Fanalysis-xxxx%2Fdescribe ">DNAnexus API Specification : /analysis-xxxx/describe</a><br>
+</div>
+
+<pre><span id="VALanalysis_remove_tags"><span class="keyword">val</span> analysis_remove_tags</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/analysis-xxxx/removeTags</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Workflows-and-Analyses#API-method%3A-%2Fanalysis-xxxx%2FremoveTags ">DNAnexus API Specification : /analysis-xxxx/removeTags</a><br>
+</div>
+
+<pre><span id="VALanalysis_set_properties"><span class="keyword">val</span> analysis_set_properties</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/analysis-xxxx/setProperties</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Workflows-and-Analyses#API-method%3A-%2Fanalysis-xxxx%2FsetProperties ">DNAnexus API Specification : /analysis-xxxx/setProperties</a><br>
+</div>
+
+<pre><span id="VALanalysis_terminate"><span class="keyword">val</span> analysis_terminate</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/analysis-xxxx/terminate</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Workflows-and-Analyses#API-method%3A-%2Fanalysis-xxxx%2Fterminate ">DNAnexus API Specification : /analysis-xxxx/terminate</a><br>
+</div>
+
+<pre><span id="VALapp_add_authorized_users"><span class="keyword">val</span> app_add_authorized_users</span> : <code class="type">?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/app-xxxx/addAuthorizedUsers</code> API method with the given app name/ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Apps#API-method:-/app-xxxx%5B/yyyy%5D/addAuthorizedUsers ">DNAnexus API Specification : /app-xxxx/addAuthorizedUsers</a><br>
+</div>
+
+<pre><span id="VALapp_add_categories"><span class="keyword">val</span> app_add_categories</span> : <code class="type">?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/app-xxxx/addCategories</code> API method with the given app name/ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Apps#API-method:-/app-xxxx%5B/yyyy%5D/addCategories ">DNAnexus API Specification : /app-xxxx/addCategories</a><br>
 </div>
-<pre><span id="VALapp_add_developers"><span class="keyword">val</span> app_add_developers</span> : <code class="type">?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALapp_add_developers"><span class="keyword">val</span> app_add_developers</span> : <code class="type">?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/app-xxxx/addDevelopers</code> API method with the given app name/ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Apps#API-method:-/app-xxxx%5B/yyyy%5D/addDevelopers ">DNAnexus API Specification : /app-xxxx/addDevelopers</a><br>
 </div>
-<pre><span id="VALapp_add_tags"><span class="keyword">val</span> app_add_tags</span> : <code class="type">?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALapp_add_tags"><span class="keyword">val</span> app_add_tags</span> : <code class="type">?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/app-xxxx/addTags</code> API method with the given app name/ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Apps#API-method:-/app-xxxx%5B/yyyy%5D/addTags ">DNAnexus API Specification : /app-xxxx/addTags</a><br>
 </div>
-<pre><span id="VALapp_delete"><span class="keyword">val</span> app_delete</span> : <code class="type">?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALapp_delete"><span class="keyword">val</span> app_delete</span> : <code class="type">?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/app-xxxx/delete</code> API method with the given app name/ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Apps#API-method:-/app-xxxx%5B/yyyy%5D/delete ">DNAnexus API Specification : /app-xxxx/delete</a><br>
 </div>
-<pre><span id="VALapp_describe"><span class="keyword">val</span> app_describe</span> : <code class="type">?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALapp_describe"><span class="keyword">val</span> app_describe</span> : <code class="type">?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/app-xxxx/describe</code> API method with the given app name/ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Apps#API-method:-/app-xxxx%5B/yyyy%5D/describe ">DNAnexus API Specification : /app-xxxx/describe</a><br>
 </div>
-<pre><span id="VALapp_get"><span class="keyword">val</span> app_get</span> : <code class="type">?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALapp_get"><span class="keyword">val</span> app_get</span> : <code class="type">?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/app-xxxx/get</code> API method with the given app name/ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Apps#API-method:-/app-xxxx%5B/yyyy%5D/get ">DNAnexus API Specification : /app-xxxx/get</a><br>
 </div>
-<pre><span id="VALapp_install"><span class="keyword">val</span> app_install</span> : <code class="type">?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALapp_install"><span class="keyword">val</span> app_install</span> : <code class="type">?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/app-xxxx/install</code> API method with the given app name/ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Apps#API-method:-/app-xxxx%5B/yyyy%5D/install ">DNAnexus API Specification : /app-xxxx/install</a><br>
 </div>
-<pre><span id="VALapp_list_categories"><span class="keyword">val</span> app_list_categories</span> : <code class="type">?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALapp_list_authorized_users"><span class="keyword">val</span> app_list_authorized_users</span> : <code class="type">?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/app-xxxx/listAuthorizedUsers</code> API method with the given app name/ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Apps#API-method:-/app-xxxx%5B/yyyy%5D/listAuthorizedUsers ">DNAnexus API Specification : /app-xxxx/listAuthorizedUsers</a><br>
+</div>
+
+<pre><span id="VALapp_list_categories"><span class="keyword">val</span> app_list_categories</span> : <code class="type">?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/app-xxxx/listCategories</code> API method with the given app name/ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Apps#API-method:-/app-xxxx%5B/yyyy%5D/listCategories ">DNAnexus API Specification : /app-xxxx/listCategories</a><br>
 </div>
-<pre><span id="VALapp_list_developers"><span class="keyword">val</span> app_list_developers</span> : <code class="type">?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALapp_list_developers"><span class="keyword">val</span> app_list_developers</span> : <code class="type">?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/app-xxxx/listDevelopers</code> API method with the given app name/ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Apps#API-method:-/app-xxxx%5B/yyyy%5D/listDevelopers ">DNAnexus API Specification : /app-xxxx/listDevelopers</a><br>
 </div>
-<pre><span id="VALapp_publish"><span class="keyword">val</span> app_publish</span> : <code class="type">?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALapp_publish"><span class="keyword">val</span> app_publish</span> : <code class="type">?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/app-xxxx/publish</code> API method with the given app name/ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Apps#API-method:-/app-xxxx%5B/yyyy%5D/publish ">DNAnexus API Specification : /app-xxxx/publish</a><br>
 </div>
-<pre><span id="VALapp_remove_categories"><span class="keyword">val</span> app_remove_categories</span> : <code class="type">?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALapp_remove_authorized_users"><span class="keyword">val</span> app_remove_authorized_users</span> : <code class="type">?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/app-xxxx/removeAuthorizedUsers</code> API method with the given app name/ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Apps#API-method:-/app-xxxx%5B/yyyy%5D/removeAuthorizedUsers ">DNAnexus API Specification : /app-xxxx/removeAuthorizedUsers</a><br>
+</div>
+
+<pre><span id="VALapp_remove_categories"><span class="keyword">val</span> app_remove_categories</span> : <code class="type">?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/app-xxxx/removeCategories</code> API method with the given app name/ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Apps#API-method:-/app-xxxx%5B/yyyy%5D/removeCategories ">DNAnexus API Specification : /app-xxxx/removeCategories</a><br>
 </div>
-<pre><span id="VALapp_remove_developers"><span class="keyword">val</span> app_remove_developers</span> : <code class="type">?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALapp_remove_developers"><span class="keyword">val</span> app_remove_developers</span> : <code class="type">?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/app-xxxx/removeDevelopers</code> API method with the given app name/ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Apps#API-method:-/app-xxxx%5B/yyyy%5D/removeDevelopers ">DNAnexus API Specification : /app-xxxx/removeDevelopers</a><br>
 </div>
-<pre><span id="VALapp_remove_tags"><span class="keyword">val</span> app_remove_tags</span> : <code class="type">?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALapp_remove_tags"><span class="keyword">val</span> app_remove_tags</span> : <code class="type">?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/app-xxxx/removeTags</code> API method with the given app name/ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Apps#API-method:-/app-xxxx%5B/yyyy%5D/removeTags ">DNAnexus API Specification : /app-xxxx/removeTags</a><br>
 </div>
-<pre><span id="VALapp_run"><span class="keyword">val</span> app_run</span> : <code class="type">?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALapp_run"><span class="keyword">val</span> app_run</span> : <code class="type">?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/app-xxxx/run</code> API method with the given app name/ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Apps#API-method:-/app-xxxx%5B/yyyy%5D/run ">DNAnexus API Specification : /app-xxxx/run</a><br>
 </div>
-<pre><span id="VALapp_uninstall"><span class="keyword">val</span> app_uninstall</span> : <code class="type">?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALapp_uninstall"><span class="keyword">val</span> app_uninstall</span> : <code class="type">?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/app-xxxx/uninstall</code> API method with the given app name/ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Apps#API-method:-/app-xxxx%5B/yyyy%5D/uninstall ">DNAnexus API Specification : /app-xxxx/uninstall</a><br>
 </div>
-<pre><span id="VALapp_update"><span class="keyword">val</span> app_update</span> : <code class="type">?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALapp_update"><span class="keyword">val</span> app_update</span> : <code class="type">?always_retry:bool -> ?alias:string -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/app-xxxx/update</code> API method with the given app name/ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Apps#API-method:-/app-xxxx%5B/yyyy%5D/update ">DNAnexus API Specification : /app-xxxx/update</a><br>
 </div>
-<pre><span id="VALapp_new"><span class="keyword">val</span> app_new</span> : <code class="type">?always_retry:bool -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALapp_new"><span class="keyword">val</span> app_new</span> : <code class="type">?always_retry:bool -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/app/new</code> API method with the given JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Apps#API-method:-/app/new ">DNAnexus API Specification : /app/new</a><br>
 </div>
-<pre><span id="VALapplet_add_tags"><span class="keyword">val</span> applet_add_tags</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALapplet_add_tags"><span class="keyword">val</span> applet_add_tags</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/applet-xxxx/addTags</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Tags#API-method%3A-%2Fclass-xxxx%2FaddTags ">DNAnexus API Specification : /applet-xxxx/addTags</a><br>
 </div>
-<pre><span id="VALapplet_add_types"><span class="keyword">val</span> applet_add_types</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
-Invokes the <code class="code">/applet-xxxx/addTypes</code> API method with the given object ID and JSON input, returning the JSON output.<br>
-</div>
-<pre><span id="VALapplet_close"><span class="keyword">val</span> applet_close</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
-Invokes the <code class="code">/applet-xxxx/close</code> API method with the given object ID and JSON input, returning the JSON output.<br>
-</div>
-<pre><span id="VALapplet_describe"><span class="keyword">val</span> applet_describe</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALapplet_describe"><span class="keyword">val</span> applet_describe</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/applet-xxxx/describe</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Applets-and-Entry-Points#API-method%3A-%2Fapplet-xxxx%2Fdescribe ">DNAnexus API Specification : /applet-xxxx/describe</a><br>
 </div>
-<pre><span id="VALapplet_get"><span class="keyword">val</span> applet_get</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALapplet_get"><span class="keyword">val</span> applet_get</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/applet-xxxx/get</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Applets-and-Entry-Points#API-method%3A-%2Fapplet-xxxx%2Fget ">DNAnexus API Specification : /applet-xxxx/get</a><br>
 </div>
-<pre><span id="VALapplet_get_details"><span class="keyword">val</span> applet_get_details</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALapplet_get_details"><span class="keyword">val</span> applet_get_details</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/applet-xxxx/getDetails</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Details-and-Links#API-method%3A-%2Fclass-xxxx%2FgetDetails ">DNAnexus API Specification : /applet-xxxx/getDetails</a><br>
 </div>
-<pre><span id="VALapplet_list_projects"><span class="keyword">val</span> applet_list_projects</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALapplet_list_projects"><span class="keyword">val</span> applet_list_projects</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/applet-xxxx/listProjects</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Cloning#API-method%3A-%2Fclass-xxxx%2FlistProjects ">DNAnexus API Specification : /applet-xxxx/listProjects</a><br>
 </div>
-<pre><span id="VALapplet_remove_tags"><span class="keyword">val</span> applet_remove_tags</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALapplet_remove_tags"><span class="keyword">val</span> applet_remove_tags</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/applet-xxxx/removeTags</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Tags#API-method%3A-%2Fclass-xxxx%2FremoveTags ">DNAnexus API Specification : /applet-xxxx/removeTags</a><br>
 </div>
-<pre><span id="VALapplet_remove_types"><span class="keyword">val</span> applet_remove_types</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
-Invokes the <code class="code">/applet-xxxx/removeTypes</code> API method with the given object ID and JSON input, returning the JSON output.<br>
-</div>
-<pre><span id="VALapplet_rename"><span class="keyword">val</span> applet_rename</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALapplet_rename"><span class="keyword">val</span> applet_rename</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/applet-xxxx/rename</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Name#API-method%3A-%2Fclass-xxxx%2Frename ">DNAnexus API Specification : /applet-xxxx/rename</a><br>
 </div>
-<pre><span id="VALapplet_run"><span class="keyword">val</span> applet_run</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALapplet_run"><span class="keyword">val</span> applet_run</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/applet-xxxx/run</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Applets-and-Entry-Points#API-method%3A-%2Fapplet-xxxx%2Frun ">DNAnexus API Specification : /applet-xxxx/run</a><br>
 </div>
-<pre><span id="VALapplet_set_details"><span class="keyword">val</span> applet_set_details</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
-Invokes the <code class="code">/applet-xxxx/setDetails</code> API method with the given object ID and JSON input, returning the JSON output.<br>
-</div>
-<pre><span id="VALapplet_set_properties"><span class="keyword">val</span> applet_set_properties</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALapplet_set_properties"><span class="keyword">val</span> applet_set_properties</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/applet-xxxx/setProperties</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Properties#API-method%3A-%2Fclass-xxxx%2FsetProperties ">DNAnexus API Specification : /applet-xxxx/setProperties</a><br>
 </div>
-<pre><span id="VALapplet_set_visibility"><span class="keyword">val</span> applet_set_visibility</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
-Invokes the <code class="code">/applet-xxxx/setVisibility</code> API method with the given object ID and JSON input, returning the JSON output.<br>
-</div>
-<pre><span id="VALapplet_new"><span class="keyword">val</span> applet_new</span> : <code class="type">?always_retry:bool -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALapplet_new"><span class="keyword">val</span> applet_new</span> : <code class="type">?always_retry:bool -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/applet/new</code> API method with the given JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Applets-and-Entry-Points#API-method%3A-%2Fapplet%2Fnew ">DNAnexus API Specification : /applet/new</a><br>
 </div>
-<pre><span id="VALcontainer_clone"><span class="keyword">val</span> container_clone</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALcontainer_clone"><span class="keyword">val</span> container_clone</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/container-xxxx/clone</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Cloning#API-method%3A-%2Fclass-xxxx%2Fclone ">DNAnexus API Specification : /container-xxxx/clone</a><br>
 </div>
-<pre><span id="VALcontainer_describe"><span class="keyword">val</span> container_describe</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALcontainer_describe"><span class="keyword">val</span> container_describe</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/container-xxxx/describe</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Containers-for-Execution#API-method%3A-%2Fcontainer-xxxx%2Fdescribe ">DNAnexus API Specification : /container-xxxx/describe</a><br>
 </div>
-<pre><span id="VALcontainer_destroy"><span class="keyword">val</span> container_destroy</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALcontainer_destroy"><span class="keyword">val</span> container_destroy</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/container-xxxx/destroy</code> API method with the given object ID and JSON input, returning the JSON output.<br>
 </div>
-<pre><span id="VALcontainer_list_folder"><span class="keyword">val</span> container_list_folder</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALcontainer_list_folder"><span class="keyword">val</span> container_list_folder</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/container-xxxx/listFolder</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Folders-and-Deletion#API-method%3A-%2Fclass-xxxx%2FlistFolder ">DNAnexus API Specification : /container-xxxx/listFolder</a><br>
 </div>
-<pre><span id="VALcontainer_move"><span class="keyword">val</span> container_move</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALcontainer_move"><span class="keyword">val</span> container_move</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/container-xxxx/move</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Folders-and-Deletion#API-method%3A-%2Fclass-xxxx%2Fmove ">DNAnexus API Specification : /container-xxxx/move</a><br>
 </div>
-<pre><span id="VALcontainer_new_folder"><span class="keyword">val</span> container_new_folder</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALcontainer_new_folder"><span class="keyword">val</span> container_new_folder</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/container-xxxx/newFolder</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Folders-and-Deletion#API-method%3A-%2Fclass-xxxx%2FnewFolder ">DNAnexus API Specification : /container-xxxx/newFolder</a><br>
 </div>
-<pre><span id="VALcontainer_remove_folder"><span class="keyword">val</span> container_remove_folder</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALcontainer_remove_folder"><span class="keyword">val</span> container_remove_folder</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/container-xxxx/removeFolder</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Folders-and-Deletion#API-method%3A-%2Fclass-xxxx%2FremoveFolder ">DNAnexus API Specification : /container-xxxx/removeFolder</a><br>
 </div>
-<pre><span id="VALcontainer_remove_objects"><span class="keyword">val</span> container_remove_objects</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALcontainer_remove_objects"><span class="keyword">val</span> container_remove_objects</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/container-xxxx/removeObjects</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Folders-and-Deletion#API-method%3A-%2Fclass-xxxx%2FremoveObjects ">DNAnexus API Specification : /container-xxxx/removeObjects</a><br>
 </div>
-<pre><span id="VALcontainer_rename_folder"><span class="keyword">val</span> container_rename_folder</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALcontainer_rename_folder"><span class="keyword">val</span> container_rename_folder</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/container-xxxx/renameFolder</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Folders-and-Deletion#API-method%3A-%2Fclass-xxxx%2FrenameFolder ">DNAnexus API Specification : /container-xxxx/renameFolder</a><br>
 </div>
-<pre><span id="VALfile_add_tags"><span class="keyword">val</span> file_add_tags</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALfile_add_tags"><span class="keyword">val</span> file_add_tags</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/file-xxxx/addTags</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Tags#API-method%3A-%2Fclass-xxxx%2FaddTags ">DNAnexus API Specification : /file-xxxx/addTags</a><br>
 </div>
-<pre><span id="VALfile_add_types"><span class="keyword">val</span> file_add_types</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALfile_add_types"><span class="keyword">val</span> file_add_types</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/file-xxxx/addTypes</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Types#API-method%3A-%2Fclass-xxxx%2FaddTypes ">DNAnexus API Specification : /file-xxxx/addTypes</a><br>
 </div>
-<pre><span id="VALfile_close"><span class="keyword">val</span> file_close</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALfile_close"><span class="keyword">val</span> file_close</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/file-xxxx/close</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Files#API-method%3A-%2Ffile-xxxx%2Fclose ">DNAnexus API Specification : /file-xxxx/close</a><br>
 </div>
-<pre><span id="VALfile_describe"><span class="keyword">val</span> file_describe</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALfile_describe"><span class="keyword">val</span> file_describe</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/file-xxxx/describe</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Files#API-method%3A-%2Ffile-xxxx%2Fdescribe ">DNAnexus API Specification : /file-xxxx/describe</a><br>
 </div>
-<pre><span id="VALfile_download"><span class="keyword">val</span> file_download</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALfile_download"><span class="keyword">val</span> file_download</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/file-xxxx/download</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Files#API-method%3A-%2Ffile-xxxx%2Fdownload ">DNAnexus API Specification : /file-xxxx/download</a><br>
 </div>
-<pre><span id="VALfile_get_details"><span class="keyword">val</span> file_get_details</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALfile_get_details"><span class="keyword">val</span> file_get_details</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/file-xxxx/getDetails</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Details-and-Links#API-method%3A-%2Fclass-xxxx%2FgetDetails ">DNAnexus API Specification : /file-xxxx/getDetails</a><br>
 </div>
-<pre><span id="VALfile_list_projects"><span class="keyword">val</span> file_list_projects</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALfile_list_projects"><span class="keyword">val</span> file_list_projects</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/file-xxxx/listProjects</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Cloning#API-method%3A-%2Fclass-xxxx%2FlistProjects ">DNAnexus API Specification : /file-xxxx/listProjects</a><br>
 </div>
-<pre><span id="VALfile_remove_tags"><span class="keyword">val</span> file_remove_tags</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALfile_remove_tags"><span class="keyword">val</span> file_remove_tags</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/file-xxxx/removeTags</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Tags#API-method%3A-%2Fclass-xxxx%2FremoveTags ">DNAnexus API Specification : /file-xxxx/removeTags</a><br>
 </div>
-<pre><span id="VALfile_remove_types"><span class="keyword">val</span> file_remove_types</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALfile_remove_types"><span class="keyword">val</span> file_remove_types</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/file-xxxx/removeTypes</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Types#API-method%3A-%2Fclass-xxxx%2FremoveTypes ">DNAnexus API Specification : /file-xxxx/removeTypes</a><br>
 </div>
-<pre><span id="VALfile_rename"><span class="keyword">val</span> file_rename</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALfile_rename"><span class="keyword">val</span> file_rename</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/file-xxxx/rename</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Name#API-method%3A-%2Fclass-xxxx%2Frename ">DNAnexus API Specification : /file-xxxx/rename</a><br>
 </div>
-<pre><span id="VALfile_set_details"><span class="keyword">val</span> file_set_details</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALfile_set_details"><span class="keyword">val</span> file_set_details</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/file-xxxx/setDetails</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Details-and-Links#API-method%3A-%2Fclass-xxxx%2FsetDetails ">DNAnexus API Specification : /file-xxxx/setDetails</a><br>
 </div>
-<pre><span id="VALfile_set_properties"><span class="keyword">val</span> file_set_properties</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALfile_set_properties"><span class="keyword">val</span> file_set_properties</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/file-xxxx/setProperties</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Properties#API-method%3A-%2Fclass-xxxx%2FsetProperties ">DNAnexus API Specification : /file-xxxx/setProperties</a><br>
 </div>
-<pre><span id="VALfile_set_visibility"><span class="keyword">val</span> file_set_visibility</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALfile_set_visibility"><span class="keyword">val</span> file_set_visibility</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/file-xxxx/setVisibility</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Visibility#API-method%3A-%2Fclass-xxxx%2FsetVisibility ">DNAnexus API Specification : /file-xxxx/setVisibility</a><br>
 </div>
-<pre><span id="VALfile_upload"><span class="keyword">val</span> file_upload</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALfile_upload"><span class="keyword">val</span> file_upload</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/file-xxxx/upload</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Files#API-method%3A-%2Ffile-xxxx%2Fupload ">DNAnexus API Specification : /file-xxxx/upload</a><br>
 </div>
-<pre><span id="VALfile_new"><span class="keyword">val</span> file_new</span> : <code class="type">?always_retry:bool -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALfile_new"><span class="keyword">val</span> file_new</span> : <code class="type">?always_retry:bool -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/file/new</code> API method with the given JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Files#API-method%3A-%2Ffile%2Fnew ">DNAnexus API Specification : /file/new</a><br>
 </div>
-<pre><span id="VALgtable_add_rows"><span class="keyword">val</span> gtable_add_rows</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALgtable_add_rows"><span class="keyword">val</span> gtable_add_rows</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/gtable-xxxx/addRows</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/GenomicTables#API-method%3A-%2Fgtable-xxxx%2FaddRows ">DNAnexus API Specification : /gtable-xxxx/addRows</a><br>
 </div>
-<pre><span id="VALgtable_add_tags"><span class="keyword">val</span> gtable_add_tags</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALgtable_add_tags"><span class="keyword">val</span> gtable_add_tags</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/gtable-xxxx/addTags</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Tags#API-method%3A-%2Fclass-xxxx%2FaddTags ">DNAnexus API Specification : /gtable-xxxx/addTags</a><br>
 </div>
-<pre><span id="VALgtable_add_types"><span class="keyword">val</span> gtable_add_types</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALgtable_add_types"><span class="keyword">val</span> gtable_add_types</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/gtable-xxxx/addTypes</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Types#API-method%3A-%2Fclass-xxxx%2FaddTypes ">DNAnexus API Specification : /gtable-xxxx/addTypes</a><br>
 </div>
-<pre><span id="VALgtable_close"><span class="keyword">val</span> gtable_close</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALgtable_close"><span class="keyword">val</span> gtable_close</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/gtable-xxxx/close</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/GenomicTables#API-method%3A-%2Fgtable-xxxx%2Fclose ">DNAnexus API Specification : /gtable-xxxx/close</a><br>
 </div>
-<pre><span id="VALgtable_describe"><span class="keyword">val</span> gtable_describe</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALgtable_describe"><span class="keyword">val</span> gtable_describe</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/gtable-xxxx/describe</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/GenomicTables#API-method%3A-%2Fgtable-xxxx%2Fdescribe ">DNAnexus API Specification : /gtable-xxxx/describe</a><br>
 </div>
-<pre><span id="VALgtable_get"><span class="keyword">val</span> gtable_get</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALgtable_get"><span class="keyword">val</span> gtable_get</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/gtable-xxxx/get</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/GenomicTables#API-method%3A-%2Fgtable-xxxx%2Fget ">DNAnexus API Specification : /gtable-xxxx/get</a><br>
 </div>
-<pre><span id="VALgtable_get_details"><span class="keyword">val</span> gtable_get_details</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALgtable_get_details"><span class="keyword">val</span> gtable_get_details</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/gtable-xxxx/getDetails</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Details-and-Links#API-method%3A-%2Fclass-xxxx%2FgetDetails ">DNAnexus API Specification : /gtable-xxxx/getDetails</a><br>
 </div>
-<pre><span id="VALgtable_list_projects"><span class="keyword">val</span> gtable_list_projects</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALgtable_list_projects"><span class="keyword">val</span> gtable_list_projects</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/gtable-xxxx/listProjects</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Cloning#API-method%3A-%2Fclass-xxxx%2FlistProjects ">DNAnexus API Specification : /gtable-xxxx/listProjects</a><br>
 </div>
-<pre><span id="VALgtable_next_part"><span class="keyword">val</span> gtable_next_part</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALgtable_next_part"><span class="keyword">val</span> gtable_next_part</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/gtable-xxxx/nextPart</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/GenomicTables#API-method%3A-%2Fgtable-xxxx%2FnextPart ">DNAnexus API Specification : /gtable-xxxx/nextPart</a><br>
 </div>
-<pre><span id="VALgtable_remove_tags"><span class="keyword">val</span> gtable_remove_tags</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALgtable_remove_tags"><span class="keyword">val</span> gtable_remove_tags</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/gtable-xxxx/removeTags</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Tags#API-method%3A-%2Fclass-xxxx%2FremoveTags ">DNAnexus API Specification : /gtable-xxxx/removeTags</a><br>
 </div>
-<pre><span id="VALgtable_remove_types"><span class="keyword">val</span> gtable_remove_types</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALgtable_remove_types"><span class="keyword">val</span> gtable_remove_types</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/gtable-xxxx/removeTypes</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Types#API-method%3A-%2Fclass-xxxx%2FremoveTypes ">DNAnexus API Specification : /gtable-xxxx/removeTypes</a><br>
 </div>
-<pre><span id="VALgtable_rename"><span class="keyword">val</span> gtable_rename</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALgtable_rename"><span class="keyword">val</span> gtable_rename</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/gtable-xxxx/rename</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Name#API-method%3A-%2Fclass-xxxx%2Frename ">DNAnexus API Specification : /gtable-xxxx/rename</a><br>
 </div>
-<pre><span id="VALgtable_set_details"><span class="keyword">val</span> gtable_set_details</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALgtable_set_details"><span class="keyword">val</span> gtable_set_details</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/gtable-xxxx/setDetails</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Details-and-Links#API-method%3A-%2Fclass-xxxx%2FsetDetails ">DNAnexus API Specification : /gtable-xxxx/setDetails</a><br>
 </div>
-<pre><span id="VALgtable_set_properties"><span class="keyword">val</span> gtable_set_properties</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALgtable_set_properties"><span class="keyword">val</span> gtable_set_properties</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/gtable-xxxx/setProperties</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Properties#API-method%3A-%2Fclass-xxxx%2FsetProperties ">DNAnexus API Specification : /gtable-xxxx/setProperties</a><br>
 </div>
-<pre><span id="VALgtable_set_visibility"><span class="keyword">val</span> gtable_set_visibility</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALgtable_set_visibility"><span class="keyword">val</span> gtable_set_visibility</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/gtable-xxxx/setVisibility</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Visibility#API-method%3A-%2Fclass-xxxx%2FsetVisibility ">DNAnexus API Specification : /gtable-xxxx/setVisibility</a><br>
 </div>
-<pre><span id="VALgtable_new"><span class="keyword">val</span> gtable_new</span> : <code class="type">?always_retry:bool -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALgtable_new"><span class="keyword">val</span> gtable_new</span> : <code class="type">?always_retry:bool -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/gtable/new</code> API method with the given JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/GenomicTables#API-method%3A-%2Fgtable%2Fnew ">DNAnexus API Specification : /gtable/new</a><br>
 </div>
-<pre><span id="VALjob_describe"><span class="keyword">val</span> job_describe</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALjob_add_tags"><span class="keyword">val</span> job_add_tags</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/job-xxxx/addTags</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Applets-and-Entry-Points#API-method%3A-%2Fjob-xxxx%2FaddTags ">DNAnexus API Specification : /job-xxxx/addTags</a><br>
+</div>
+
+<pre><span id="VALjob_describe"><span class="keyword">val</span> job_describe</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/job-xxxx/describe</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Applets-and-Entry-Points#API-method%3A-%2Fjob-xxxx%2Fdescribe ">DNAnexus API Specification : /job-xxxx/describe</a><br>
 </div>
-<pre><span id="VALjob_stream_log"><span class="keyword">val</span> job_stream_log</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
-Invokes the <code class="code">/job-xxxx/streamLog</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+
+<pre><span id="VALjob_get_log"><span class="keyword">val</span> job_get_log</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/job-xxxx/getLog</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Applets-and-Entry-Points#API-method%3A-%2Fjob-xxxx%2FgetLog ">DNAnexus API Specification : /job-xxxx/getLog</a><br>
 </div>
-<pre><span id="VALjob_terminate"><span class="keyword">val</span> job_terminate</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALjob_remove_tags"><span class="keyword">val</span> job_remove_tags</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/job-xxxx/removeTags</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Applets-and-Entry-Points#API-method%3A-%2Fjob-xxxx%2FremoveTags ">DNAnexus API Specification : /job-xxxx/removeTags</a><br>
+</div>
+
+<pre><span id="VALjob_set_properties"><span class="keyword">val</span> job_set_properties</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/job-xxxx/setProperties</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Applets-and-Entry-Points#API-method%3A-%2Fjob-xxxx%2FsetProperties ">DNAnexus API Specification : /job-xxxx/setProperties</a><br>
+</div>
+
+<pre><span id="VALjob_terminate"><span class="keyword">val</span> job_terminate</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/job-xxxx/terminate</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Applets-and-Entry-Points#API-method%3A-%2Fjob-xxxx%2Fterminate ">DNAnexus API Specification : /job-xxxx/terminate</a><br>
 </div>
-<pre><span id="VALjob_new"><span class="keyword">val</span> job_new</span> : <code class="type">?always_retry:bool -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALjob_new"><span class="keyword">val</span> job_new</span> : <code class="type">?always_retry:bool -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/job/new</code> API method with the given JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Applets-and-Entry-Points#API-method%3A-%2Fjob%2Fnew ">DNAnexus API Specification : /job/new</a><br>
 </div>
-<pre><span id="VALnotifications_get"><span class="keyword">val</span> notifications_get</span> : <code class="type">?always_retry:bool -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALnotifications_get"><span class="keyword">val</span> notifications_get</span> : <code class="type">?always_retry:bool -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/notifications/get</code> API method with the given JSON input, returning the JSON output.<br>
 </div>
-<pre><span id="VALnotifications_mark_read"><span class="keyword">val</span> notifications_mark_read</span> : <code class="type">?always_retry:bool -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALnotifications_mark_read"><span class="keyword">val</span> notifications_mark_read</span> : <code class="type">?always_retry:bool -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/notifications/markRead</code> API method with the given JSON input, returning the JSON output.<br>
 </div>
-<pre><span id="VALproject_add_tags"><span class="keyword">val</span> project_add_tags</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALorg_describe"><span class="keyword">val</span> org_describe</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/org-xxxx/describe</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Organizations#API-method%3A-%2Forg-xxxx%2Fdescribe ">DNAnexus API Specification : /org-xxxx/describe</a><br>
+</div>
+
+<pre><span id="VALorg_find_projects"><span class="keyword">val</span> org_find_projects</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/org-xxxx/findProjects</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Organizations#API-method%3A-%2Forg-xxxx%2FfindProjects ">DNAnexus API Specification : /org-xxxx/findProjects</a><br>
+</div>
+
+<pre><span id="VALorg_get_member_access"><span class="keyword">val</span> org_get_member_access</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/org-xxxx/getMemberAccess</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Organizations#API-method%3A-%2Forg-xxxx%2FgetMemberAccess ">DNAnexus API Specification : /org-xxxx/getMemberAccess</a><br>
+</div>
+
+<pre><span id="VALorg_invite"><span class="keyword">val</span> org_invite</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/org-xxxx/invite</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Organizations#API-method%3A-%2Forg-xxxx%2Finvite ">DNAnexus API Specification : /org-xxxx/invite</a><br>
+</div>
+
+<pre><span id="VALorg_remove_member"><span class="keyword">val</span> org_remove_member</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/org-xxxx/removeMember</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Organizations#API-method%3A-%2Forg-xxxx%2FremoveMember ">DNAnexus API Specification : /org-xxxx/removeMember</a><br>
+</div>
+
+<pre><span id="VALorg_set_member_access"><span class="keyword">val</span> org_set_member_access</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/org-xxxx/setMemberAccess</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Organizations#API-method%3A-%2Forg-xxxx%2FsetMemberAccess ">DNAnexus API Specification : /org-xxxx/setMemberAccess</a><br>
+</div>
+
+<pre><span id="VALorg_update"><span class="keyword">val</span> org_update</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/org-xxxx/update</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Organizations#API-method%3A-%2Forg-xxxx%2Fupdate ">DNAnexus API Specification : /org-xxxx/update</a><br>
+</div>
+
+<pre><span id="VALorg_new"><span class="keyword">val</span> org_new</span> : <code class="type">?always_retry:bool -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/org/new</code> API method with the given JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Organizations#API-method%3A-%2Forg%2Fnew ">DNAnexus API Specification : /org/new</a><br>
+</div>
+
+<pre><span id="VALproject_add_tags"><span class="keyword">val</span> project_add_tags</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/project-xxxx/addTags</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Projects#API-method%3A-%2Fproject-xxxx%2FaddTags ">DNAnexus API Specification : /project-xxxx/addTags</a><br>
 </div>
-<pre><span id="VALproject_clone"><span class="keyword">val</span> project_clone</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALproject_clone"><span class="keyword">val</span> project_clone</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/project-xxxx/clone</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Cloning#API-method%3A-%2Fclass-xxxx%2Fclone ">DNAnexus API Specification : /project-xxxx/clone</a><br>
 </div>
-<pre><span id="VALproject_decrease_permissions"><span class="keyword">val</span> project_decrease_permissions</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALproject_decrease_permissions"><span class="keyword">val</span> project_decrease_permissions</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/project-xxxx/decreasePermissions</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Project-Permissions-and-Sharing#API-method%3A-%2Fproject-xxxx%2FdecreasePermissions ">DNAnexus API Specification : /project-xxxx/decreasePermissions</a><br>
 </div>
-<pre><span id="VALproject_describe"><span class="keyword">val</span> project_describe</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALproject_describe"><span class="keyword">val</span> project_describe</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/project-xxxx/describe</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Projects#API-method%3A-%2Fproject-xxxx%2Fdescribe ">DNAnexus API Specification : /project-xxxx/describe</a><br>
 </div>
-<pre><span id="VALproject_destroy"><span class="keyword">val</span> project_destroy</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALproject_destroy"><span class="keyword">val</span> project_destroy</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/project-xxxx/destroy</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Projects#API-method%3A-%2Fproject-xxxx%2Fdestroy ">DNAnexus API Specification : /project-xxxx/destroy</a><br>
 </div>
-<pre><span id="VALproject_invite"><span class="keyword">val</span> project_invite</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALproject_invite"><span class="keyword">val</span> project_invite</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/project-xxxx/invite</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Project-Permissions-and-Sharing#API-method%3A-%2Fproject-xxxx%2Finvite ">DNAnexus API Specification : /project-xxxx/invite</a><br>
 </div>
-<pre><span id="VALproject_leave"><span class="keyword">val</span> project_leave</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALproject_leave"><span class="keyword">val</span> project_leave</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/project-xxxx/leave</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Project-Permissions-and-Sharing#API-method%3A-%2Fproject-xxxx%2Fleave ">DNAnexus API Specification : /project-xxxx/leave</a><br>
 </div>
-<pre><span id="VALproject_list_folder"><span class="keyword">val</span> project_list_folder</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALproject_list_folder"><span class="keyword">val</span> project_list_folder</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/project-xxxx/listFolder</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Folders-and-Deletion#API-method%3A-%2Fclass-xxxx%2FlistFolder ">DNAnexus API Specification : /project-xxxx/listFolder</a><br>
 </div>
-<pre><span id="VALproject_move"><span class="keyword">val</span> project_move</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALproject_move"><span class="keyword">val</span> project_move</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/project-xxxx/move</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Folders-and-Deletion#API-method%3A-%2Fclass-xxxx%2Fmove ">DNAnexus API Specification : /project-xxxx/move</a><br>
 </div>
-<pre><span id="VALproject_new_folder"><span class="keyword">val</span> project_new_folder</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALproject_new_folder"><span class="keyword">val</span> project_new_folder</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/project-xxxx/newFolder</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Folders-and-Deletion#API-method%3A-%2Fclass-xxxx%2FnewFolder ">DNAnexus API Specification : /project-xxxx/newFolder</a><br>
 </div>
-<pre><span id="VALproject_remove_folder"><span class="keyword">val</span> project_remove_folder</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALproject_remove_folder"><span class="keyword">val</span> project_remove_folder</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/project-xxxx/removeFolder</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Folders-and-Deletion#API-method%3A-%2Fclass-xxxx%2FremoveFolder ">DNAnexus API Specification : /project-xxxx/removeFolder</a><br>
 </div>
-<pre><span id="VALproject_remove_objects"><span class="keyword">val</span> project_remove_objects</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALproject_remove_objects"><span class="keyword">val</span> project_remove_objects</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/project-xxxx/removeObjects</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Folders-and-Deletion#API-method%3A-%2Fclass-xxxx%2FremoveObjects ">DNAnexus API Specification : /project-xxxx/removeObjects</a><br>
 </div>
-<pre><span id="VALproject_remove_tags"><span class="keyword">val</span> project_remove_tags</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALproject_remove_tags"><span class="keyword">val</span> project_remove_tags</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/project-xxxx/removeTags</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Projects#API-method%3A-%2Fproject-xxxx%2FremoveTags ">DNAnexus API Specification : /project-xxxx/removeTags</a><br>
 </div>
-<pre><span id="VALproject_rename_folder"><span class="keyword">val</span> project_rename_folder</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALproject_rename_folder"><span class="keyword">val</span> project_rename_folder</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/project-xxxx/renameFolder</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Folders-and-Deletion#API-method%3A-%2Fclass-xxxx%2FrenameFolder ">DNAnexus API Specification : /project-xxxx/renameFolder</a><br>
 </div>
-<pre><span id="VALproject_set_properties"><span class="keyword">val</span> project_set_properties</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALproject_set_properties"><span class="keyword">val</span> project_set_properties</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/project-xxxx/setProperties</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Projects#API-method%3A-%2Fproject-xxxx%2FsetProperties ">DNAnexus API Specification : /project-xxxx/setProperties</a><br>
 </div>
-<pre><span id="VALproject_subscribe"><span class="keyword">val</span> project_subscribe</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
-Invokes the <code class="code">/project-xxxx/subscribe</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+
+<pre><span id="VALproject_transfer"><span class="keyword">val</span> project_transfer</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/project-xxxx/transfer</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Project-Permissions-and-Sharing#API-method%3A-%2Fproject-xxxx%2Ftransfer ">DNAnexus API Specification : /project-xxxx/transfer</a><br>
 </div>
-<pre><span id="VALproject_unsubscribe"><span class="keyword">val</span> project_unsubscribe</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
-Invokes the <code class="code">/project-xxxx/unsubscribe</code> API method with the given object ID and JSON input, returning the JSON output.<br>
-</div>
-<pre><span id="VALproject_update"><span class="keyword">val</span> project_update</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALproject_update"><span class="keyword">val</span> project_update</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/project-xxxx/update</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Projects#API-method%3A-%2Fproject-xxxx%2Fupdate ">DNAnexus API Specification : /project-xxxx/update</a><br>
 </div>
-<pre><span id="VALproject_new"><span class="keyword">val</span> project_new</span> : <code class="type">?always_retry:bool -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALproject_update_sponsorship"><span class="keyword">val</span> project_update_sponsorship</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/project-xxxx/updateSponsorship</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Projects#API-method%3A-%2Fproject-xxxx%2FupdateSponsorship ">DNAnexus API Specification : /project-xxxx/updateSponsorship</a><br>
+</div>
+
+<pre><span id="VALproject_new"><span class="keyword">val</span> project_new</span> : <code class="type">?always_retry:bool -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/project/new</code> API method with the given JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Projects#API-method%3A-%2Fproject%2Fnew ">DNAnexus API Specification : /project/new</a><br>
 </div>
-<pre><span id="VALrecord_add_tags"><span class="keyword">val</span> record_add_tags</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALrecord_add_tags"><span class="keyword">val</span> record_add_tags</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/record-xxxx/addTags</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Tags#API-method%3A-%2Fclass-xxxx%2FaddTags ">DNAnexus API Specification : /record-xxxx/addTags</a><br>
 </div>
-<pre><span id="VALrecord_add_types"><span class="keyword">val</span> record_add_types</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALrecord_add_types"><span class="keyword">val</span> record_add_types</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/record-xxxx/addTypes</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Types#API-method%3A-%2Fclass-xxxx%2FaddTypes ">DNAnexus API Specification : /record-xxxx/addTypes</a><br>
 </div>
-<pre><span id="VALrecord_close"><span class="keyword">val</span> record_close</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALrecord_close"><span class="keyword">val</span> record_close</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/record-xxxx/close</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Data-Object-Lifecycle#API-method%3A-%2Fclass-xxxx%2Fclose ">DNAnexus API Specification : /record-xxxx/close</a><br>
 </div>
-<pre><span id="VALrecord_describe"><span class="keyword">val</span> record_describe</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALrecord_describe"><span class="keyword">val</span> record_describe</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/record-xxxx/describe</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Records#API-method%3A-%2Frecord-xxxx%2Fdescribe ">DNAnexus API Specification : /record-xxxx/describe</a><br>
 </div>
-<pre><span id="VALrecord_get_details"><span class="keyword">val</span> record_get_details</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALrecord_get_details"><span class="keyword">val</span> record_get_details</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/record-xxxx/getDetails</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Details-and-Links#API-method%3A-%2Fclass-xxxx%2FgetDetails ">DNAnexus API Specification : /record-xxxx/getDetails</a><br>
 </div>
-<pre><span id="VALrecord_list_projects"><span class="keyword">val</span> record_list_projects</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALrecord_list_projects"><span class="keyword">val</span> record_list_projects</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/record-xxxx/listProjects</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Cloning#API-method%3A-%2Fclass-xxxx%2FlistProjects ">DNAnexus API Specification : /record-xxxx/listProjects</a><br>
 </div>
-<pre><span id="VALrecord_remove_tags"><span class="keyword">val</span> record_remove_tags</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALrecord_remove_tags"><span class="keyword">val</span> record_remove_tags</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/record-xxxx/removeTags</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Tags#API-method%3A-%2Fclass-xxxx%2FremoveTags ">DNAnexus API Specification : /record-xxxx/removeTags</a><br>
 </div>
-<pre><span id="VALrecord_remove_types"><span class="keyword">val</span> record_remove_types</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALrecord_remove_types"><span class="keyword">val</span> record_remove_types</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/record-xxxx/removeTypes</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Types#API-method%3A-%2Fclass-xxxx%2FremoveTypes ">DNAnexus API Specification : /record-xxxx/removeTypes</a><br>
 </div>
-<pre><span id="VALrecord_rename"><span class="keyword">val</span> record_rename</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALrecord_rename"><span class="keyword">val</span> record_rename</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/record-xxxx/rename</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Name#API-method%3A-%2Fclass-xxxx%2Frename ">DNAnexus API Specification : /record-xxxx/rename</a><br>
 </div>
-<pre><span id="VALrecord_set_details"><span class="keyword">val</span> record_set_details</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALrecord_set_details"><span class="keyword">val</span> record_set_details</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/record-xxxx/setDetails</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Details-and-Links#API-method%3A-%2Fclass-xxxx%2FsetDetails ">DNAnexus API Specification : /record-xxxx/setDetails</a><br>
 </div>
-<pre><span id="VALrecord_set_properties"><span class="keyword">val</span> record_set_properties</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALrecord_set_properties"><span class="keyword">val</span> record_set_properties</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/record-xxxx/setProperties</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Properties#API-method%3A-%2Fclass-xxxx%2FsetProperties ">DNAnexus API Specification : /record-xxxx/setProperties</a><br>
 </div>
-<pre><span id="VALrecord_set_visibility"><span class="keyword">val</span> record_set_visibility</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALrecord_set_visibility"><span class="keyword">val</span> record_set_visibility</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/record-xxxx/setVisibility</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Visibility#API-method%3A-%2Fclass-xxxx%2FsetVisibility ">DNAnexus API Specification : /record-xxxx/setVisibility</a><br>
 </div>
-<pre><span id="VALrecord_new"><span class="keyword">val</span> record_new</span> : <code class="type">?always_retry:bool -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALrecord_new"><span class="keyword">val</span> record_new</span> : <code class="type">?always_retry:bool -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/record/new</code> API method with the given JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Records#API-method%3A-%2Frecord%2Fnew ">DNAnexus API Specification : /record/new</a><br>
 </div>
-<pre><span id="VALsystem_find_affiliates"><span class="keyword">val</span> system_find_affiliates</span> : <code class="type">?always_retry:bool -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALsystem_find_affiliates"><span class="keyword">val</span> system_find_affiliates</span> : <code class="type">?always_retry:bool -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/system/findAffiliates</code> API method with the given JSON input, returning the JSON output.<br>
 </div>
-<pre><span id="VALsystem_find_apps"><span class="keyword">val</span> system_find_apps</span> : <code class="type">?always_retry:bool -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALsystem_find_apps"><span class="keyword">val</span> system_find_apps</span> : <code class="type">?always_retry:bool -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/system/findApps</code> API method with the given JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Search#API-method%3A-%2Fsystem%2FfindApps ">DNAnexus API Specification : /system/findApps</a><br>
 </div>
-<pre><span id="VALsystem_find_data_objects"><span class="keyword">val</span> system_find_data_objects</span> : <code class="type">?always_retry:bool -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALsystem_find_data_objects"><span class="keyword">val</span> system_find_data_objects</span> : <code class="type">?always_retry:bool -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/system/findDataObjects</code> API method with the given JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Search#API-method%3A-%2Fsystem%2FfindDataObjects ">DNAnexus API Specification : /system/findDataObjects</a><br>
 </div>
-<pre><span id="VALsystem_find_jobs"><span class="keyword">val</span> system_find_jobs</span> : <code class="type">?always_retry:bool -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALsystem_resolve_data_objects"><span class="keyword">val</span> system_resolve_data_objects</span> : <code class="type">?always_retry:bool -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/system/resolveDataObjects</code> API method with the given JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/System-Methods#API-method:-/system/resolveDataObjects ">DNAnexus API Specification : /system/resolveDataObjects</a><br>
+</div>
+
+<pre><span id="VALsystem_find_executions"><span class="keyword">val</span> system_find_executions</span> : <code class="type">?always_retry:bool -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/system/findExecutions</code> API method with the given JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Search#API-method%3A-%2Fsystem%2FfindExecutions ">DNAnexus API Specification : /system/findExecutions</a><br>
+</div>
+
+<pre><span id="VALsystem_find_analyses"><span class="keyword">val</span> system_find_analyses</span> : <code class="type">?always_retry:bool -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/system/findAnalyses</code> API method with the given JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Search#API-method%3A-%2Fsystem%2FfindAnalyses ">DNAnexus API Specification : /system/findAnalyses</a><br>
+</div>
+
+<pre><span id="VALsystem_find_jobs"><span class="keyword">val</span> system_find_jobs</span> : <code class="type">?always_retry:bool -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/system/findJobs</code> API method with the given JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Search#API-method%3A-%2Fsystem%2FfindJobs ">DNAnexus API Specification : /system/findJobs</a><br>
 </div>
-<pre><span id="VALsystem_find_projects"><span class="keyword">val</span> system_find_projects</span> : <code class="type">?always_retry:bool -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALsystem_find_projects"><span class="keyword">val</span> system_find_projects</span> : <code class="type">?always_retry:bool -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/system/findProjects</code> API method with the given JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Search#API-method%3A-%2Fsystem%2FfindProjects ">DNAnexus API Specification : /system/findProjects</a><br>
 </div>
-<pre><span id="VALsystem_find_users"><span class="keyword">val</span> system_find_users</span> : <code class="type">?always_retry:bool -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALsystem_find_users"><span class="keyword">val</span> system_find_users</span> : <code class="type">?always_retry:bool -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/system/findUsers</code> API method with the given JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Search#API-method%3A-%2Fsystem%2FfindUsers ">DNAnexus API Specification : /system/findUsers</a><br>
 </div>
-<pre><span id="VALsystem_find_project_members"><span class="keyword">val</span> system_find_project_members</span> : <code class="type">?always_retry:bool -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALsystem_find_project_members"><span class="keyword">val</span> system_find_project_members</span> : <code class="type">?always_retry:bool -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/system/findProjectMembers</code> API method with the given JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Search#API-method:-/system/findProjectMembers ">DNAnexus API Specification : /system/findProjectMembers</a><br>
 </div>
-<pre><span id="VALsystem_shorten_url"><span class="keyword">val</span> system_shorten_url</span> : <code class="type">?always_retry:bool -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALsystem_global_search"><span class="keyword">val</span> system_global_search</span> : <code class="type">?always_retry:bool -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/system/globalSearch</code> API method with the given JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Search#API-method:-/system/globalSearch ">DNAnexus API Specification : /system/globalSearch</a><br>
+</div>
+
+<pre><span id="VALsystem_greet"><span class="keyword">val</span> system_greet</span> : <code class="type">?always_retry:bool -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/system/greet</code> API method with the given JSON input, returning the JSON output.<br>
+</div>
+
+<pre><span id="VALsystem_shorten_url"><span class="keyword">val</span> system_shorten_url</span> : <code class="type">?always_retry:bool -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/system/shortenURL</code> API method with the given JSON input, returning the JSON output.<br>
 </div>
-<pre><span id="VALuser_describe"><span class="keyword">val</span> user_describe</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
-Invokes the <code class="code">/user-xxxx/describe</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+
+<pre><span id="VALsystem_whoami"><span class="keyword">val</span> system_whoami</span> : <code class="type">?always_retry:bool -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/system/whoami</code> API method with the given JSON input, returning the JSON output.<br>
 </div>
-<pre><span id="VALuser_update"><span class="keyword">val</span> user_update</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALuser_describe"><span class="keyword">val</span> user_describe</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/user-xxxx/describe</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Users#API-method%3A-%2Fuser-xxxx%2Fdescribe ">DNAnexus API Specification : /user-xxxx/describe</a><br>
+</div>
+
+<pre><span id="VALuser_update"><span class="keyword">val</span> user_update</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
 Invokes the <code class="code">/user-xxxx/update</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Users#API-method%3A-%2Fuser-xxxx%2Fupdate ">DNAnexus API Specification : /user-xxxx/update</a><br>
+</div>
+
+<pre><span id="VALworkflow_add_stage"><span class="keyword">val</span> workflow_add_stage</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/workflow-xxxx/addStage</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Workflows-and-Analyses#API-method%3A-%2Fworkflow-xxxx%2FaddStage ">DNAnexus API Specification : /workflow-xxxx/addStage</a><br>
+</div>
+
+<pre><span id="VALworkflow_add_tags"><span class="keyword">val</span> workflow_add_tags</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/workflow-xxxx/addTags</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Tags#API-method%3A-%2Fclass-xxxx%2FaddTags ">DNAnexus API Specification : /workflow-xxxx/addTags</a><br>
+</div>
+
+<pre><span id="VALworkflow_add_types"><span class="keyword">val</span> workflow_add_types</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/workflow-xxxx/addTypes</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Types#API-method%3A-%2Fclass-xxxx%2FaddTypes ">DNAnexus API Specification : /workflow-xxxx/addTypes</a><br>
+</div>
+
+<pre><span id="VALworkflow_close"><span class="keyword">val</span> workflow_close</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/workflow-xxxx/close</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Data-Object-Lifecycle#API-method%3A-%2Fclass-xxxx%2Fclose ">DNAnexus API Specification : /workflow-xxxx/close</a><br>
+</div>
+
+<pre><span id="VALworkflow_describe"><span class="keyword">val</span> workflow_describe</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/workflow-xxxx/describe</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Workflows-and-Analyses#API-method%3A-%2Fworkflow-xxxx%2Fdescribe ">DNAnexus API Specification : /workflow-xxxx/describe</a><br>
+</div>
+
+<pre><span id="VALworkflow_dry_run"><span class="keyword">val</span> workflow_dry_run</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/workflow-xxxx/dryRun</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Workflows-and-Analyses#API-method%3A-%2Fworkflow-xxxx%2FdryRun ">DNAnexus API Specification : /workflow-xxxx/dryRun</a><br>
+</div>
+
+<pre><span id="VALworkflow_get_details"><span class="keyword">val</span> workflow_get_details</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/workflow-xxxx/getDetails</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Details-and-Links#API-method%3A-%2Fclass-xxxx%2FgetDetails ">DNAnexus API Specification : /workflow-xxxx/getDetails</a><br>
+</div>
+
+<pre><span id="VALworkflow_is_stage_compatible"><span class="keyword">val</span> workflow_is_stage_compatible</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/workflow-xxxx/isStageCompatible</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Workflows-and-Analyses#API-method%3A-%2Fworkflow-xxxx%2FisStageCompatible ">DNAnexus API Specification : /workflow-xxxx/isStageCompatible</a><br>
+</div>
+
+<pre><span id="VALworkflow_list_projects"><span class="keyword">val</span> workflow_list_projects</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/workflow-xxxx/listProjects</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Cloning#API-method%3A-%2Fclass-xxxx%2FlistProjects ">DNAnexus API Specification : /workflow-xxxx/listProjects</a><br>
+</div>
+
+<pre><span id="VALworkflow_move_stage"><span class="keyword">val</span> workflow_move_stage</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/workflow-xxxx/moveStage</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Workflows-and-Analyses#API-method%3A-%2Fworkflow-xxxx%2FmoveStage ">DNAnexus API Specification : /workflow-xxxx/moveStage</a><br>
+</div>
+
+<pre><span id="VALworkflow_overwrite"><span class="keyword">val</span> workflow_overwrite</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/workflow-xxxx/overwrite</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Workflows-and-Analyses#API-method%3A-%2Fworkflow-xxxx%2Foverwrite ">DNAnexus API Specification : /workflow-xxxx/overwrite</a><br>
+</div>
+
+<pre><span id="VALworkflow_remove_stage"><span class="keyword">val</span> workflow_remove_stage</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/workflow-xxxx/removeStage</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Workflows-and-Analyses#API-method%3A-%2Fworkflow-xxxx%2FremoveStage ">DNAnexus API Specification : /workflow-xxxx/removeStage</a><br>
+</div>
+
+<pre><span id="VALworkflow_remove_tags"><span class="keyword">val</span> workflow_remove_tags</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/workflow-xxxx/removeTags</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Tags#API-method%3A-%2Fclass-xxxx%2FremoveTags ">DNAnexus API Specification : /workflow-xxxx/removeTags</a><br>
+</div>
+
+<pre><span id="VALworkflow_remove_types"><span class="keyword">val</span> workflow_remove_types</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/workflow-xxxx/removeTypes</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Types#API-method%3A-%2Fclass-xxxx%2FremoveTypes ">DNAnexus API Specification : /workflow-xxxx/removeTypes</a><br>
+</div>
+
+<pre><span id="VALworkflow_rename"><span class="keyword">val</span> workflow_rename</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/workflow-xxxx/rename</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Name#API-method%3A-%2Fclass-xxxx%2Frename ">DNAnexus API Specification : /workflow-xxxx/rename</a><br>
+</div>
+
+<pre><span id="VALworkflow_run"><span class="keyword">val</span> workflow_run</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/workflow-xxxx/run</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Workflows-and-Analyses#API-method%3A-%2Fworkflow-xxxx%2Frun ">DNAnexus API Specification : /workflow-xxxx/run</a><br>
+</div>
+
+<pre><span id="VALworkflow_set_details"><span class="keyword">val</span> workflow_set_details</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/workflow-xxxx/setDetails</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Details-and-Links#API-method%3A-%2Fclass-xxxx%2FsetDetails ">DNAnexus API Specification : /workflow-xxxx/setDetails</a><br>
+</div>
+
+<pre><span id="VALworkflow_set_properties"><span class="keyword">val</span> workflow_set_properties</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/workflow-xxxx/setProperties</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Properties#API-method%3A-%2Fclass-xxxx%2FsetProperties ">DNAnexus API Specification : /workflow-xxxx/setProperties</a><br>
+</div>
+
+<pre><span id="VALworkflow_set_stage_inputs"><span class="keyword">val</span> workflow_set_stage_inputs</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/workflow-xxxx/setStageInputs</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Workflows-and-Analyses#API-method%3A-%2Fworkflow-xxxx%2FsetStageInputs ">DNAnexus API Specification : /workflow-xxxx/setStageInputs</a><br>
+</div>
+
+<pre><span id="VALworkflow_set_visibility"><span class="keyword">val</span> workflow_set_visibility</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/workflow-xxxx/setVisibility</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Visibility#API-method%3A-%2Fclass-xxxx%2FsetVisibility ">DNAnexus API Specification : /workflow-xxxx/setVisibility</a><br>
+</div>
+
+<pre><span id="VALworkflow_update"><span class="keyword">val</span> workflow_update</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/workflow-xxxx/update</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Workflows-and-Analyses#API-method%3A-%2Fworkflow-xxxx%2Fupdate ">DNAnexus API Specification : /workflow-xxxx/update</a><br>
+</div>
+
+<pre><span id="VALworkflow_update_stage_executable"><span class="keyword">val</span> workflow_update_stage_executable</span> : <code class="type">?always_retry:bool -> string -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/workflow-xxxx/updateStageExecutable</code> API method with the given object ID and JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Workflows-and-Analyses#API-method%3A-%2Fworkflow-xxxx%2FupdateStageExecutable ">DNAnexus API Specification : /workflow-xxxx/updateStageExecutable</a><br>
+</div>
+
+<pre><span id="VALworkflow_new"><span class="keyword">val</span> workflow_new</span> : <code class="type">?always_retry:bool -> JSON.t -> JSON.t</code></pre><div class="info ">
+Invokes the <code class="code">/workflow/new</code> API method with the given JSON input, returning the JSON output.<br>
+<b>See also</b> <a href=" https://wiki.dnanexus.com/API-Specification-v1.0.0/Workflows-and-Analyses#API-method%3A-%2Fworkflow%2Fnew ">DNAnexus API Specification : /workflow/new</a><br>
 </div>
 </body></html>

@@ -17,11 +17,12 @@
 <title>DNAnexus</title>
 </head>
 <body>
-<div class="navbar">&nbsp;<a href="index.html">Up</a>
+<div class="navbar">&nbsp;<a class="up" href="index.html" title="Index">Up</a>
 &nbsp;</div>
-<center><h1>Module <a href="type_DNAnexus.html">DNAnexus</a></h1></center>
-<br>
-<pre><span class="keyword">module</span> DNAnexus: <code class="code">sig</code> <a href="DNAnexus.html">..</a> <code class="code">end</code></pre>Bindings to the DNAnexus API, using libcurl for HTTP operations and
+<h1>Module <a href="type_DNAnexus.html">DNAnexus</a></h1>
+
+<pre><span class="keyword">module</span> DNAnexus: <code class="code">sig</code> <a href="DNAnexus.html">..</a> <code class="code">end</code></pre><div class="info module top">
+Bindings to the DNAnexus API, using libcurl for HTTP operations and
 <a href=" https://github.com/mlin/yajl-ocaml"> yajl-ocaml</a> for JSON processing.
 <p>
 
@@ -32,131 +33,138 @@ in progress.<br>
 <b>See also</b><ul><li><a href=" http://wiki.dnanexus.com/ ">DNAnexus Documentation Wiki</a></li>
 <li><a href=" http://mlin.github.com/yajl-ocaml/extra/JSON.html ">yajl-ocaml JSON API</a></li>
 </ul>
+</div>
 <hr width="100%">
 <br>
-<span id="2_Bindingsconfiguration"><h2>Bindings configuration</h2></span><br>
-<br><code><span id="TYPEconfiguration"><span class="keyword">type</span> <code class="type"></code>configuration</span> = {</code><table class="typetable">
+<h2 id="2_Bindingsconfiguration">Bindings configuration</h2><br>
+
+<pre><code><span id="TYPEconfiguration"><span class="keyword">type</span> <code class="type"></code>configuration</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>apiserver_host&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTconfiguration.apiserver_host">apiserver_host</span>&nbsp;: <code class="type">string</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>apiserver_port&nbsp;: <code class="type">int</code>;</code></td>
+<code><span id="TYPEELTconfiguration.apiserver_port">apiserver_port</span>&nbsp;: <code class="type">int</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>apiserver_protocol&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTconfiguration.apiserver_protocol">apiserver_protocol</span>&nbsp;: <code class="type">string</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>auth_token&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTconfiguration.auth_token">auth_token</span>&nbsp;: <code class="type">string</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>auth_token_type&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTconfiguration.auth_token_type">auth_token_type</span>&nbsp;: <code class="type">string</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>project_context_id&nbsp;: <code class="type">string option</code>;</code></td>
+<code><span id="TYPEELTconfiguration.project_context_id">project_context_id</span>&nbsp;: <code class="type">string option</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>job&nbsp;: <code class="type"><a href="DNAnexus.html#TYPEjob_configuration">job_configuration</a> option</code>;</code></td>
+<code><span id="TYPEELTconfiguration.job">job</span>&nbsp;: <code class="type"><a href="DNAnexus.html#TYPEjob_configuration">job_configuration</a> option</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>retry_times&nbsp;: <code class="type">int</code>;</code></td>
+<code><span id="TYPEELTconfiguration.retry_times">retry_times</span>&nbsp;: <code class="type">int</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>retry_initial_delay&nbsp;: <code class="type">float</code>;</code></td>
+<code><span id="TYPEELTconfiguration.retry_initial_delay">retry_initial_delay</span>&nbsp;: <code class="type">float</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>retry_backoff_factor&nbsp;: <code class="type">float</code>;</code></td>
+<code><span id="TYPEELTconfiguration.retry_backoff_factor">retry_backoff_factor</span>&nbsp;: <code class="type">float</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>retry_logger&nbsp;: <code class="type">(string -> exn option -> unit) option</code>;</code></td>
+<code><span id="TYPEELTconfiguration.retry_logger">retry_logger</span>&nbsp;: <code class="type">(string -> exn option -> unit) option</code>;</code></td>
 
 </tr></table>
 }
 
-<div class="info">
+<div class="info ">
 General configuration needed to make API calls from both inside and outside
 the platform.<br>
 </div>
 
-<br><code><span id="TYPEjob_configuration"><span class="keyword">type</span> <code class="type"></code>job_configuration</span> = {</code><table class="typetable">
+
+<pre><code><span id="TYPEjob_configuration"><span class="keyword">type</span> <code class="type"></code>job_configuration</span> = {</code></pre><table class="typetable">
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>job_id&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTjob_configuration.job_id">job_id</span>&nbsp;: <code class="type">string</code>;</code></td>
 
 </tr>
 <tr>
 <td align="left" valign="top" >
 <code>&nbsp;&nbsp;</code></td>
 <td align="left" valign="top" >
-<code>workspace_id&nbsp;: <code class="type">string</code>;</code></td>
+<code><span id="TYPEELTjob_configuration.workspace_id">workspace_id</span>&nbsp;: <code class="type">string</code>;</code></td>
 
 </tr></table>
 }
 
-<div class="info">
+<div class="info ">
 Configuration relevant to apps and applets executing on the
 platform.<br>
 </div>
 
-<pre><span id="VALconfig"><span class="keyword">val</span> config</span> : <code class="type">unit -> <a href="DNAnexus.html#TYPEconfiguration">configuration</a></code></pre><div class="info">
+
+<pre><span id="VALconfig"><span class="keyword">val</span> config</span> : <code class="type">unit -> <a href="DNAnexus.html#TYPEconfiguration">configuration</a></code></pre><div class="info ">
 Get the current configuration. The configuration is initially loaded from
 environment variables the first time it's needed.<br>
 <b>See also</b> <a href=" http://wiki.dnanexus.com/Execution-Environment-Reference#Environment-variables-in-the-container ">Execution Environment Reference : Environment variables in the container</a><br>
 </div>
-<pre><span id="VALconfig_json"><span class="keyword">val</span> config_json</span> : <code class="type">?security_context:bool -> unit -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALconfig_json"><span class="keyword">val</span> config_json</span> : <code class="type">?security_context:bool -> unit -> JSON.t</code></pre><div class="info ">
 Get the current configuration as JSON (useful to print for debugging).<br>
 </div>
 <div class="param_info"><code class="code">security_context</code> : include the authentication token (default false)</div>
-<pre><span id="VALreconfigure"><span class="keyword">val</span> reconfigure</span> : <code class="type"><a href="DNAnexus.html#TYPEconfiguration">configuration</a> -> unit</code></pre><div class="info">
+
+<pre><span id="VALreconfigure"><span class="keyword">val</span> reconfigure</span> : <code class="type"><a href="DNAnexus.html#TYPEconfiguration">configuration</a> -> unit</code></pre><div class="info ">
 Change the configuration (rarely necessary). For example, to change the project
 context:
 <code class="code">DNAnexus.reconfigure {(DNAnexus.config()) with DNAnexus.project_context_id = Some "project-xxxx"}</code><br>
 </div>
-<pre><span id="VALproject_id"><span class="keyword">val</span> project_id</span> : <code class="type">unit -> string</code></pre><div class="info">
+
+<pre><span id="VALproject_id"><span class="keyword">val</span> project_id</span> : <code class="type">unit -> string</code></pre><div class="info ">
 Return the project ID in the configuration <code class="code">project_context_id</code>.
 <p>
 
@@ -165,13 +173,15 @@ project, but cannot write to it. They may instead write to a "workspace" (see
 the "Execution Environment" section below).<br>
 <b>Raises</b> <code>Failure</code> if <code class="code">project_context_id = None</code><br>
 </div>
-<pre><span id="VALwith_project_id"><span class="keyword">val</span> with_project_id</span> : <code class="type">JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALwith_project_id"><span class="keyword">val</span> with_project_id</span> : <code class="type">JSON.t -> JSON.t</code></pre><div class="info ">
 Add the key <code class="code">"project": DNAnexus.project_id()</code> to the given JSON object.
 Convenient for formulating JSON inputs to API calls requiring this field.<br>
 </div>
 <br>
-<span id="2_LowlevelAPIcalls"><h2>Low-level API calls</h2></span><br>
-<pre><span id="VALapi_call"><span class="keyword">val</span> api_call</span> : <code class="type">?always_retry:bool -> string list -> JSON.t -> JSON.t</code></pre><div class="info">
+<h2 id="2_LowlevelAPIcalls">Low-level API calls</h2><br>
+
+<pre><span id="VALapi_call"><span class="keyword">val</span> api_call</span> : <code class="type">?always_retry:bool -> string list -> JSON.t -> JSON.t</code></pre><div class="info ">
 <code class="code">DNAnexus.api_call ["noun"; "verb"] input</code> synchronously executes an HTTP
 request for the API route <code class="code">/noun/verb</code> (e.g. <code class="code">/gtable-xxxx/get</code>) with the
 given input JSON, and returns the response JSON.
@@ -198,39 +208,46 @@ request (especially <code class="code">CurlException</code>).<br>
 <div class="param_info"><code class="code">always_retry</code> : Enable retry in the event the HTTP request is interrupted
 midway through, not just for "safe" errors. This should only be used for
 idempotent API methods.</div>
+
 <pre><span id="EXCEPTIONAPIError"><span class="keyword">exception</span> APIError</span> <span class="keyword">of</span> <code class="type">int * string * string * JSON.t</code></pre>
-<div class="info">
+<div class="info ">
 Exception representing errors returned by the DNAnexus API server. Carries
 the HTTP code, error type, message, and "details" JSON (which can be <code class="code">`Null</code>)<br>
 <b>See also</b> <a href=" http://wiki.dnanexus.com/API-Specification-v1.0.0/Protocols#Errors ">API Specification : Protocols : Errors</a><br>
 </div>
 <br>
 <b>API method wrappers</b><br>
+
 <pre><span class="keyword">module</span> <a href="DNAnexus.API.html">API</a>: <code class="code">sig</code> <a href="DNAnexus.API.html">..</a> <code class="code">end</code></pre><div class="info">
 Low-level wrapper functions for each individual method in the DNAnexus API.
 </div>
 <br>
-<span id="2_HighlevelbindingsforrecordsfilesandGTables"><h2>High-level bindings for records, files, and GTables</h2></span><br>
+<h2 id="2_HighlevelbindingsforrecordsfilesandGTables">High-level bindings for records, files, and GTables</h2><br>
+
 <pre><span class="keyword">module type</span> <a href="DNAnexus.DataObject.html">DataObject</a> = <code class="code">sig</code> <a href="DNAnexus.DataObject.html">..</a> <code class="code">end</code></pre><div class="info">
 Signature common to DNAnexus data objects (records, files, and GenomicTables).
 </div>
+
 <pre><span class="keyword">module</span> <a href="DNAnexus.Record.html">Record</a>: <code class="code">sig</code> <a href="DNAnexus.Record.html">..</a> <code class="code">end</code></pre><div class="info">
 Records
 </div>
+
 <pre><span class="keyword">module</span> <a href="DNAnexus.File.html">File</a>: <code class="code">sig</code> <a href="DNAnexus.File.html">..</a> <code class="code">end</code></pre><div class="info">
 Files
 </div>
+
 <pre><span class="keyword">module</span> <a href="DNAnexus.GTable.html">GTable</a>: <code class="code">sig</code> <a href="DNAnexus.GTable.html">..</a> <code class="code">end</code></pre><div class="info">
 GenomicTables
 </div>
 <br>
-<span id="2_Executionenvironment"><h2>Execution environment</h2></span>
+<h2 id="2_Executionenvironment">Execution environment</h2>
 <p>
 
 While the API above can be used both inside and outside the platform, this
 section is relevant specifically for writing a DNAnexus app/applet to run on
 the platform.<br>
-<pre><span id="VALjob_main"><span class="keyword">val</span> job_main</span> : <code class="type">(JSON.t -> JSON.t) -> unit</code></pre><div class="info">
+
+<pre><span id="VALjob_main"><span class="keyword">val</span> job_main</span> : <code class="type">(JSON.t -> JSON.t) -> unit</code></pre><div class="info ">
 A wrapper for your application logic to assist with conforming to the
 input, output and error handling scheme of the DNAnexus execution environment.<ul>
 <li>Reads and parses JSON input in the file job_input.json</li>
@@ -243,35 +260,42 @@ input, output and error handling scheme of the DNAnexus execution environment.<u
 <br>
 <b>See also</b> <a href=" http://wiki.dnanexus.com/Execution-Environment-Reference#Handling-of-input%252C-output%252C-and-error-values ">Execution Environment Reference : Handling of input, output, and error values</a><br>
 </div>
+
 <pre><span id="EXCEPTIONAppError"><span class="keyword">exception</span> AppError</span> <span class="keyword">of</span> <code class="type">string</code></pre>
-<div class="info">
+<div class="info ">
 An exception you can raise to indicate a "Recognized actionable error"<br>
 </div>
+
 <pre><span id="EXCEPTIONAppInternalError"><span class="keyword">exception</span> AppInternalError</span> <span class="keyword">of</span> <code class="type">string</code></pre>
-<div class="info">
+<div class="info ">
 Exceptions other than <code class="code">AppError</code> are mapped to <code class="code">AppInternalError</code>.<br>
 </div>
 <br>
 <b>Retrieving job configuration</b><br>
-<pre><span id="VALis_job"><span class="keyword">val</span> is_job</span> : <code class="type">unit -> bool</code></pre><div class="info">
+
+<pre><span id="VALis_job"><span class="keyword">val</span> is_job</span> : <code class="type">unit -> bool</code></pre><div class="info ">
 Indicates whether the program is running as a job on the DNAnexus platform.<br>
 </div>
-<pre><span id="VALjob_id"><span class="keyword">val</span> job_id</span> : <code class="type">unit -> string</code></pre><div class="info">
+
+<pre><span id="VALjob_id"><span class="keyword">val</span> job_id</span> : <code class="type">unit -> string</code></pre><div class="info ">
 Get the current job ID.<br>
 <b>Raises</b> <code>Failure</code> if <code class="code">not (is_job ())</code><br>
 </div>
-<pre><span id="VALworkspace_id"><span class="keyword">val</span> workspace_id</span> : <code class="type">unit -> string</code></pre><div class="info">
+
+<pre><span id="VALworkspace_id"><span class="keyword">val</span> workspace_id</span> : <code class="type">unit -> string</code></pre><div class="info ">
 Get the container ID of the job workspace, if available, or the project context
 ID otherwise.<br>
 <b>Raises</b> <code>Failure</code> if <code class="code">not (is_job ())</code><br>
 </div>
-<pre><span id="VALwith_workspace_id"><span class="keyword">val</span> with_workspace_id</span> : <code class="type">JSON.t -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALwith_workspace_id"><span class="keyword">val</span> with_workspace_id</span> : <code class="type">JSON.t -> JSON.t</code></pre><div class="info ">
 Add the key <code class="code">"project": DNAnexus.workspace_id()</code> to the given JSON object.
 Convenient for formulating JSON inputs to API calls requiring this field.<br>
 </div>
 <br>
 <b>Launching subjobs</b><br>
-<pre><span id="VALnew_job"><span class="keyword">val</span> new_job</span> : <code class="type">?options:JSON.t -> string -> JSON.t -> string</code></pre><div class="info">
+
+<pre><span id="VALnew_job"><span class="keyword">val</span> new_job</span> : <code class="type">?options:JSON.t -> string -> JSON.t -> string</code></pre><div class="info ">
 <code class="code">DNAnexus.new_job function_name input</code> launches a subjob using the same app or
     applet as the calling job, and sharing the same workspace. <code class="code">function_name</code> is
     the name of a bash function in the wrapper script, which can in turn start the
@@ -285,20 +309,23 @@ Convenient for formulating JSON inputs to API calls requiring this field.<br>
            systemRequirements).</div>
 <br>
 <b>Job input/output JSON helpers</b><br>
-<pre><span id="VALget_link"><span class="keyword">val</span> get_link</span> : <code class="type">JSON.t -> string option * string</code></pre><div class="info">
+
+<pre><span id="VALget_link"><span class="keyword">val</span> get_link</span> : <code class="type">JSON.t -> string option * string</code></pre><div class="info ">
 Given the JSON <code class="code">{"$dnanexus_link": "record-xxxx"}</code>, extract
 <code class="code">(None, "record-xxxx")</code>. Given
 <code class="code">{"$dnanexus_link": {"project": "project-yyyy", "id": "record-xxxx"}}</code>,
 extract <code class="code">(Some "project-yyyy", "record-xxxx")</code>.<br>
 <b>See also</b> <a href=" http://wiki.dnanexus.com/API-Specification-v1.0.0/Jobs#Job-Input ">API Specification : Jobs : Job Input</a><br>
 </div>
-<pre><span id="VALmake_link"><span class="keyword">val</span> make_link</span> : <code class="type">?project:string -> string -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALmake_link"><span class="keyword">val</span> make_link</span> : <code class="type">?project:string -> string -> JSON.t</code></pre><div class="info ">
 Formulate the JSON <code class="code">{"$dnanexus_link": "record-xxxx"}</code> from <code class="code">"record-xxxx"</code>.<br>
 <b>See also</b> <a href=" http://wiki.dnanexus.com/API-Specification-v1.0.0/Jobs#Job-output ">API Specification : Jobs : Job output</a><br>
 </div>
 <div class="param_info"><code class="code">project</code> : if specified, formulate
 <code class="code">{"$dnanexus_link": {"project": "project-yyyy", "id": "record-xxxx"}}</code></div>
-<pre><span id="VALmake_jobref"><span class="keyword">val</span> make_jobref</span> : <code class="type">string -> string -> JSON.t</code></pre><div class="info">
+
+<pre><span id="VALmake_jobref"><span class="keyword">val</span> make_jobref</span> : <code class="type">string -> string -> JSON.t</code></pre><div class="info ">
 <code class="code">DNAnexus.make_jobref "job-xxxx" "xyz"</code> formulates the JSON <code class="code">{"job": "job-xxxx", "field": "xyz"}</code>.<br>
 <b>See also</b> <a href=" http://wiki.dnanexus.com/API-Specification-v1.0.0/Jobs#Job-based-Object-References ">API Specification : Jobs : Job-based Object References</a><br>
 </div>
@@ -310,7 +337,7 @@ The skeleton of an app that takes a FASTQ file as input and produces a
 mappings GTable as output might look like this:
 <p>
 
-<pre><code class="code">open JSON.Operators;;
+<pre class="codepre"><code class="code">open JSON.Operators;;
 
 let my_app input_json =
   let file_id = DNAnexus.get_link (input_json$"fastq") in

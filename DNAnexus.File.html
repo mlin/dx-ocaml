@@ -18,22 +18,26 @@
 <title>DNAnexus.File</title>
 </head>
 <body>
-<div class="navbar"><a href="DNAnexus.Record.html">Previous</a>
-&nbsp;<a href="DNAnexus.html">Up</a>
-&nbsp;<a href="DNAnexus.GTable.html">Next</a>
+<div class="navbar"><a class="pre" href="DNAnexus.Record.html" title="DNAnexus.Record">Previous</a>
+&nbsp;<a class="up" href="DNAnexus.html" title="DNAnexus">Up</a>
+&nbsp;<a class="post" href="DNAnexus.GTable.html" title="DNAnexus.GTable">Next</a>
 </div>
-<center><h1>Module <a href="type_DNAnexus.File.html">DNAnexus.File</a></h1></center>
-<br>
-<pre><span class="keyword">module</span> File: <code class="code">sig</code> <a href="DNAnexus.File.html">..</a> <code class="code">end</code></pre>Files<br>
+<h1>Module <a href="type_DNAnexus.File.html">DNAnexus.File</a></h1>
+
+<pre><span class="keyword">module</span> File: <code class="code">sig</code> <a href="DNAnexus.File.html">..</a> <code class="code">end</code></pre><div class="info module top">
+Files<br>
 <b>See also</b> <a href=" http://wiki.dnanexus.com/API-Specification-v1.0.0/Files ">API Specification : Files</a><br>
+</div>
 <hr width="100%">
+
 <pre><span class="keyword">include</span> <a href="DNAnexus.DataObject.html">DNAnexus.DataObject</a></pre>
-<div class="info">
+<div class="info ">
 Common interface to all data objects<br>
 </div>
 <br>
-<span id="3_Transferringfilestoandfromthelocalfilesystem"><h3>Transferring files to and from the local file system</h3></span><br>
-<pre><span id="VALupload_new"><span class="keyword">val</span> upload_new</span> : <code class="type">?options:JSON.t -> ?wait:bool -> string -> t</code></pre><div class="info">
+<h3 id="3_Transferringfilestoandfromthelocalfilesystem">Transferring files to and from the local file system</h3><br>
+
+<pre><span id="VALupload_new"><span class="keyword">val</span> upload_new</span> : <code class="type">?options:JSON.t -> ?wait:bool -> string -> t</code></pre><div class="info ">
 <code class="code">DNAnexus.File.upload_new local_filename</code> creates a new platform file object,
       uploads the local file to it, and closes it. By default, the file object will
       be placed in the root folder of the current workspace or project, and will be
@@ -45,7 +49,8 @@ Common interface to all data objects<br>
       the API documentation).</div>
 <div class="param_info"><code class="code">wait</code> : for the file object to become 'closed' before returning (default
              false)</div>
-<pre><span id="VALupload"><span class="keyword">val</span> upload</span> : <code class="type">t -> string -> unit</code></pre><div class="info">
+
+<pre><span id="VALupload"><span class="keyword">val</span> upload</span> : <code class="type">t -> string -> unit</code></pre><div class="info ">
 <code class="code">DNAnexus.File.upload file local_filename</code> uploads a local file to the
       existing platform file object. The file object must be in the open state,
       generally with no data yet written to it, and is <em><b>not</b></em> closed when the
@@ -53,7 +58,8 @@ Common interface to all data objects<br>
       necessary to make the <code class="code">/file-xxxx/close</code> API call before the data can be read
       through the API.<br>
 </div>
-<pre><span id="VALdownload_url"><span class="keyword">val</span> download_url</span> : <code class="type">?duration:int -> t -> string</code></pre><div class="info">
+
+<pre><span id="VALdownload_url"><span class="keyword">val</span> download_url</span> : <code class="type">?duration:int -> t -> string</code></pre><div class="info ">
 <code class="code">DNAnexus.File.download_url file</code> invokes <code class="code">/file-xxxx/download</code>, returning
       a "preauthenticated" URL from which the file data can be downloaded by any
       HTTP[S] client.<br>
@@ -64,17 +70,19 @@ Common interface to all data objects<br>
       <b>Security warning:</b> since file downloads URLs provide access to the file data,
       they generally should not be printed on the console, logged in error messages,
       or otherwise stored permanently.</div>
-<pre><span id="VALdownload"><span class="keyword">val</span> download</span> : <code class="type">?duration:int -> t -> string -> unit</code></pre><div class="info">
+
+<pre><span id="VALdownload"><span class="keyword">val</span> download</span> : <code class="type">?duration:int -> t -> string -> unit</code></pre><div class="info ">
 <code class="code">DNAnexus.File.download file local_filename</code> downloads the file to the local file
       system.<br>
 </div>
 <div class="param_info"><code class="code">duration</code> : see <a href=" http://wiki.dnanexus.com/API-Specification-v1.0.0/Files#API-method%3A-%2Ffile-xxxx%2Fdownload "> API Specification : Files : /file-xxxx/download </a></div>
 <br>
-<span id="3_Streamingfiledata"><h3>Streaming file data</h3></span>
+<h3 id="3_Streamingfiledata">Streaming file data</h3>
 <p>
 
   <b>See also</b> <a href=" http://ocaml-batteries-team.github.com/batteries-included/hdoc/BatIO.html "> OCaml Batteries Included : IO</a><br>
-<pre><span id="VALopen_output"><span class="keyword">val</span> open_output</span> : <code class="type">t -> unit Batteries.IO.output</code></pre><div class="info">
+
+<pre><span id="VALopen_output"><span class="keyword">val</span> open_output</span> : <code class="type">t -> unit Batteries.IO.output</code></pre><div class="info ">
 <code class="code">DNAnexus.File.open_output file</code> creates an <code class="code">output</code> you can use to write
       bytes into the file. The file must be in the open state. 
 <p>
@@ -97,12 +105,14 @@ Common interface to all data objects<br>
       If multiple threads will be writing to the <code class="code">output</code>, it should be protected
       using <code class="code">Batteries.IO.synchronize_out</code>.<br>
 </div>
-<pre><span id="VALwith_output"><span class="keyword">val</span> with_output</span> : <code class="type">t -> (unit Batteries.IO.output -> 'a) -> 'a</code></pre><div class="info">
+
+<pre><span id="VALwith_output"><span class="keyword">val</span> with_output</span> : <code class="type">t -> (unit Batteries.IO.output -> 'a) -> 'a</code></pre><div class="info ">
 Create an <code class="code">output</code> as in <code class="code">open_output</code>, call your function on it, and then call
       <code class="code">Batteries.IO.close_out</code> on it (even if your function raises an exception). As
       with <code class="code">open_out</code>, the file object itself is not closed.<br>
 </div>
-<pre><span id="VALopen_input"><span class="keyword">val</span> open_input</span> : <code class="type">?duration:int -> ?pos:int -> t -> Batteries.IO.input</code></pre><div class="info">
+
+<pre><span id="VALopen_input"><span class="keyword">val</span> open_input</span> : <code class="type">?duration:int -> ?pos:int -> t -> Batteries.IO.input</code></pre><div class="info ">
 <code class="code">DNAnexus.File.open_input file</code> creates an <code class="code">input</code> stream you can use to read
       bytes from the file. The file must be in the closed state.
 <p>
@@ -117,13 +127,15 @@ Create an <code class="code">output</code> as in <code class="code">open_output<
       using <code class="code">Batteries.IO.synchronize_in</code>.<br>
 </div>
 <div class="param_info"><code class="code">pos</code> : byte offset at which to begin reading the file (default 0)</div>
-<pre><span id="VALwith_input"><span class="keyword">val</span> with_input</span> : <code class="type">?duration:int -> ?pos:int -> t -> (Batteries.IO.input -> 'a) -> 'a</code></pre><div class="info">
+
+<pre><span id="VALwith_input"><span class="keyword">val</span> with_input</span> : <code class="type">?duration:int -> ?pos:int -> t -> (Batteries.IO.input -> 'a) -> 'a</code></pre><div class="info ">
 Create an <code class="code">input</code> as in <code class="code">open_in</code>, call your function on it, and then call
       <code class="code">Batteries.IO.close_in</code> on it (even if your function raises an exception).<br>
 </div>
 <br>
-<span id="3_Controllingparallelismandmemoryusage"><h3>Controlling parallelism and memory usage</h3></span><br>
-<pre><span id="VALreconfigure"><span class="keyword">val</span> reconfigure</span> : <code class="type">?part_size:int -> ?parallelism:int -> t -> unit</code></pre><div class="info">
+<h3 id="3_Controllingparallelismandmemoryusage">Controlling parallelism and memory usage</h3><br>
+
+<pre><span id="VALreconfigure"><span class="keyword">val</span> reconfigure</span> : <code class="type">?part_size:int -> ?parallelism:int -> t -> unit</code></pre><div class="info ">
 The above operations each use parallel HTTP requests to maximize network
       throughput. For example, files are uploaded in 64MB parts, four parts at a
       time in parallel. This means that the upload of a large file requires at least

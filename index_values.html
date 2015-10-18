@@ -11,7 +11,9 @@
 <link title="DNAnexus" rel="Chapter" href="DNAnexus.html"><title>Index of values</title>
 </head>
 <body>
-<center><h1>Index of values</h1></center>
+<div class="navbar">&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;</div>
+<h1>Index of values</h1>
 <table>
 <tr><td align="left"><br>A</td></tr>
 <tr><td><a href="DNAnexus.GTable.html#VALadd_row">add_row</a> [<a href="DNAnexus.GTable.html">DNAnexus.GTable</a>]</td>
@@ -23,10 +25,40 @@ Add one row to the GTable.
 <td></td></tr>
 <tr><td><a href="DNAnexus.DataObject.html#VALadd_types">add_types</a> [<a href="DNAnexus.DataObject.html">DNAnexus.DataObject</a>]</td>
 <td></td></tr>
+<tr><td><a href="DNAnexus.API.html#VALanalysis_add_tags">analysis_add_tags</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/analysis-xxxx/addTags</code> API method with the given object ID and JSON input, returning the JSON output.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.API.html#VALanalysis_describe">analysis_describe</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/analysis-xxxx/describe</code> API method with the given object ID and JSON input, returning the JSON output.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.API.html#VALanalysis_remove_tags">analysis_remove_tags</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/analysis-xxxx/removeTags</code> API method with the given object ID and JSON input, returning the JSON output.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.API.html#VALanalysis_set_properties">analysis_set_properties</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/analysis-xxxx/setProperties</code> API method with the given object ID and JSON input, returning the JSON output.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.API.html#VALanalysis_terminate">analysis_terminate</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/analysis-xxxx/terminate</code> API method with the given object ID and JSON input, returning the JSON output.
+</div>
+</td></tr>
 <tr><td><a href="DNAnexus.html#VALapi_call">api_call</a> [<a href="DNAnexus.html">DNAnexus</a>]</td>
 <td><div class="info">
 <code class="code">DNAnexus.api_call ["noun"; "verb"] input</code> synchronously executes an HTTP
 request for the API route <code class="code">/noun/verb</code> (e.g.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.API.html#VALapp_add_authorized_users">app_add_authorized_users</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/app-xxxx/addAuthorizedUsers</code> API method with the given app name/ID and JSON input, returning the JSON output.
 </div>
 </td></tr>
 <tr><td><a href="DNAnexus.API.html#VALapp_add_categories">app_add_categories</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
@@ -64,6 +96,11 @@ Invokes the <code class="code">/app-xxxx/get</code> API method with the given ap
 Invokes the <code class="code">/app-xxxx/install</code> API method with the given app name/ID and JSON input, returning the JSON output.
 </div>
 </td></tr>
+<tr><td><a href="DNAnexus.API.html#VALapp_list_authorized_users">app_list_authorized_users</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/app-xxxx/listAuthorizedUsers</code> API method with the given app name/ID and JSON input, returning the JSON output.
+</div>
+</td></tr>
 <tr><td><a href="DNAnexus.API.html#VALapp_list_categories">app_list_categories</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
 <td><div class="info">
 Invokes the <code class="code">/app-xxxx/listCategories</code> API method with the given app name/ID and JSON input, returning the JSON output.
@@ -82,6 +119,11 @@ Invokes the <code class="code">/app/new</code> API method with the given JSON in
 <tr><td><a href="DNAnexus.API.html#VALapp_publish">app_publish</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
 <td><div class="info">
 Invokes the <code class="code">/app-xxxx/publish</code> API method with the given app name/ID and JSON input, returning the JSON output.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.API.html#VALapp_remove_authorized_users">app_remove_authorized_users</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/app-xxxx/removeAuthorizedUsers</code> API method with the given app name/ID and JSON input, returning the JSON output.
 </div>
 </td></tr>
 <tr><td><a href="DNAnexus.API.html#VALapp_remove_categories">app_remove_categories</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
@@ -119,16 +161,6 @@ Invokes the <code class="code">/app-xxxx/update</code> API method with the given
 Invokes the <code class="code">/applet-xxxx/addTags</code> API method with the given object ID and JSON input, returning the JSON output.
 </div>
 </td></tr>
-<tr><td><a href="DNAnexus.API.html#VALapplet_add_types">applet_add_types</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
-<td><div class="info">
-Invokes the <code class="code">/applet-xxxx/addTypes</code> API method with the given object ID and JSON input, returning the JSON output.
-</div>
-</td></tr>
-<tr><td><a href="DNAnexus.API.html#VALapplet_close">applet_close</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
-<td><div class="info">
-Invokes the <code class="code">/applet-xxxx/close</code> API method with the given object ID and JSON input, returning the JSON output.
-</div>
-</td></tr>
 <tr><td><a href="DNAnexus.API.html#VALapplet_describe">applet_describe</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
 <td><div class="info">
 Invokes the <code class="code">/applet-xxxx/describe</code> API method with the given object ID and JSON input, returning the JSON output.
@@ -159,11 +191,6 @@ Invokes the <code class="code">/applet/new</code> API method with the given JSON
 Invokes the <code class="code">/applet-xxxx/removeTags</code> API method with the given object ID and JSON input, returning the JSON output.
 </div>
 </td></tr>
-<tr><td><a href="DNAnexus.API.html#VALapplet_remove_types">applet_remove_types</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
-<td><div class="info">
-Invokes the <code class="code">/applet-xxxx/removeTypes</code> API method with the given object ID and JSON input, returning the JSON output.
-</div>
-</td></tr>
 <tr><td><a href="DNAnexus.API.html#VALapplet_rename">applet_rename</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
 <td><div class="info">
 Invokes the <code class="code">/applet-xxxx/rename</code> API method with the given object ID and JSON input, returning the JSON output.
@@ -174,19 +201,9 @@ Invokes the <code class="code">/applet-xxxx/rename</code> API method with the gi
 Invokes the <code class="code">/applet-xxxx/run</code> API method with the given object ID and JSON input, returning the JSON output.
 </div>
 </td></tr>
-<tr><td><a href="DNAnexus.API.html#VALapplet_set_details">applet_set_details</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
-<td><div class="info">
-Invokes the <code class="code">/applet-xxxx/setDetails</code> API method with the given object ID and JSON input, returning the JSON output.
-</div>
-</td></tr>
 <tr><td><a href="DNAnexus.API.html#VALapplet_set_properties">applet_set_properties</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
 <td><div class="info">
 Invokes the <code class="code">/applet-xxxx/setProperties</code> API method with the given object ID and JSON input, returning the JSON output.
-</div>
-</td></tr>
-<tr><td><a href="DNAnexus.API.html#VALapplet_set_visibility">applet_set_visibility</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
-<td><div class="info">
-Invokes the <code class="code">/applet-xxxx/setVisibility</code> API method with the given object ID and JSON input, returning the JSON output.
 </div>
 </td></tr>
 <tr><td align="left"><br>B</td></tr>
@@ -194,6 +211,13 @@ Invokes the <code class="code">/applet-xxxx/setVisibility</code> API method with
 <td><div class="info">
 <code class="code">DNAnexus.{Class}.bind (project,dxid)</code> returns a wrapper for an existing
       data object with the given project and object IDs.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.DataObject.html#VALbind_link">bind_link</a> [<a href="DNAnexus.DataObject.html">DNAnexus.DataObject</a>]</td>
+<td><div class="info">
+<code class="code">DNAnexus.{Class}.bind_link link</code> returns a wrapper for an existing data
+      object specified by a <code class="code">$dnanexus_link</code> JSON, as frequently received in
+      job input.
 </div>
 </td></tr>
 <tr><td align="left"><br>C</td></tr>
@@ -474,9 +498,19 @@ Get rows from the GTable in their natural order.
 </div>
 </td></tr>
 <tr><td align="left"><br>J</td></tr>
+<tr><td><a href="DNAnexus.API.html#VALjob_add_tags">job_add_tags</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/job-xxxx/addTags</code> API method with the given object ID and JSON input, returning the JSON output.
+</div>
+</td></tr>
 <tr><td><a href="DNAnexus.API.html#VALjob_describe">job_describe</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
 <td><div class="info">
 Invokes the <code class="code">/job-xxxx/describe</code> API method with the given object ID and JSON input, returning the JSON output.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.API.html#VALjob_get_log">job_get_log</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/job-xxxx/getLog</code> API method with the given object ID and JSON input, returning the JSON output.
 </div>
 </td></tr>
 <tr><td><a href="DNAnexus.html#VALjob_id">job_id</a> [<a href="DNAnexus.html">DNAnexus</a>]</td>
@@ -495,9 +529,14 @@ input, output and error handling scheme of the DNAnexus execution environment.
 Invokes the <code class="code">/job/new</code> API method with the given JSON input, returning the JSON output.
 </div>
 </td></tr>
-<tr><td><a href="DNAnexus.API.html#VALjob_stream_log">job_stream_log</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<tr><td><a href="DNAnexus.API.html#VALjob_remove_tags">job_remove_tags</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
 <td><div class="info">
-Invokes the <code class="code">/job-xxxx/streamLog</code> API method with the given object ID and JSON input, returning the JSON output.
+Invokes the <code class="code">/job-xxxx/removeTags</code> API method with the given object ID and JSON input, returning the JSON output.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.API.html#VALjob_set_properties">job_set_properties</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/job-xxxx/setProperties</code> API method with the given object ID and JSON input, returning the JSON output.
 </div>
 </td></tr>
 <tr><td><a href="DNAnexus.API.html#VALjob_terminate">job_terminate</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
@@ -564,6 +603,46 @@ Invokes the <code class="code">/notifications/markRead</code> API method with th
 <td><div class="info">
 <code class="code">DNAnexus.File.open_output file</code> creates an <code class="code">output</code> you can use to write
       bytes into the file.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.API.html#VALorg_describe">org_describe</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/org-xxxx/describe</code> API method with the given object ID and JSON input, returning the JSON output.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.API.html#VALorg_find_projects">org_find_projects</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/org-xxxx/findProjects</code> API method with the given object ID and JSON input, returning the JSON output.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.API.html#VALorg_get_member_access">org_get_member_access</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/org-xxxx/getMemberAccess</code> API method with the given object ID and JSON input, returning the JSON output.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.API.html#VALorg_invite">org_invite</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/org-xxxx/invite</code> API method with the given object ID and JSON input, returning the JSON output.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.API.html#VALorg_new">org_new</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/org/new</code> API method with the given JSON input, returning the JSON output.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.API.html#VALorg_remove_member">org_remove_member</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/org-xxxx/removeMember</code> API method with the given object ID and JSON input, returning the JSON output.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.API.html#VALorg_set_member_access">org_set_member_access</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/org-xxxx/setMemberAccess</code> API method with the given object ID and JSON input, returning the JSON output.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.API.html#VALorg_update">org_update</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/org-xxxx/update</code> API method with the given object ID and JSON input, returning the JSON output.
 </div>
 </td></tr>
 <tr><td align="left"><br>P</td></tr>
@@ -652,19 +731,19 @@ Invokes the <code class="code">/project-xxxx/renameFolder</code> API method with
 Invokes the <code class="code">/project-xxxx/setProperties</code> API method with the given object ID and JSON input, returning the JSON output.
 </div>
 </td></tr>
-<tr><td><a href="DNAnexus.API.html#VALproject_subscribe">project_subscribe</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<tr><td><a href="DNAnexus.API.html#VALproject_transfer">project_transfer</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
 <td><div class="info">
-Invokes the <code class="code">/project-xxxx/subscribe</code> API method with the given object ID and JSON input, returning the JSON output.
-</div>
-</td></tr>
-<tr><td><a href="DNAnexus.API.html#VALproject_unsubscribe">project_unsubscribe</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
-<td><div class="info">
-Invokes the <code class="code">/project-xxxx/unsubscribe</code> API method with the given object ID and JSON input, returning the JSON output.
+Invokes the <code class="code">/project-xxxx/transfer</code> API method with the given object ID and JSON input, returning the JSON output.
 </div>
 </td></tr>
 <tr><td><a href="DNAnexus.API.html#VALproject_update">project_update</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
 <td><div class="info">
 Invokes the <code class="code">/project-xxxx/update</code> API method with the given object ID and JSON input, returning the JSON output.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.API.html#VALproject_update_sponsorship">project_update_sponsorship</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/project-xxxx/updateSponsorship</code> API method with the given object ID and JSON input, returning the JSON output.
 </div>
 </td></tr>
 <tr><td align="left"><br>Q</td></tr>
@@ -777,6 +856,11 @@ Set properties on the object.
 Invokes the <code class="code">/system/findAffiliates</code> API method with the given JSON input, returning the JSON output.
 </div>
 </td></tr>
+<tr><td><a href="DNAnexus.API.html#VALsystem_find_analyses">system_find_analyses</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/system/findAnalyses</code> API method with the given JSON input, returning the JSON output.
+</div>
+</td></tr>
 <tr><td><a href="DNAnexus.API.html#VALsystem_find_apps">system_find_apps</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
 <td><div class="info">
 Invokes the <code class="code">/system/findApps</code> API method with the given JSON input, returning the JSON output.
@@ -785,6 +869,11 @@ Invokes the <code class="code">/system/findApps</code> API method with the given
 <tr><td><a href="DNAnexus.API.html#VALsystem_find_data_objects">system_find_data_objects</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
 <td><div class="info">
 Invokes the <code class="code">/system/findDataObjects</code> API method with the given JSON input, returning the JSON output.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.API.html#VALsystem_find_executions">system_find_executions</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/system/findExecutions</code> API method with the given JSON input, returning the JSON output.
 </div>
 </td></tr>
 <tr><td><a href="DNAnexus.API.html#VALsystem_find_jobs">system_find_jobs</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
@@ -807,9 +896,29 @@ Invokes the <code class="code">/system/findProjects</code> API method with the g
 Invokes the <code class="code">/system/findUsers</code> API method with the given JSON input, returning the JSON output.
 </div>
 </td></tr>
+<tr><td><a href="DNAnexus.API.html#VALsystem_global_search">system_global_search</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/system/globalSearch</code> API method with the given JSON input, returning the JSON output.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.API.html#VALsystem_greet">system_greet</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/system/greet</code> API method with the given JSON input, returning the JSON output.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.API.html#VALsystem_resolve_data_objects">system_resolve_data_objects</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/system/resolveDataObjects</code> API method with the given JSON input, returning the JSON output.
+</div>
+</td></tr>
 <tr><td><a href="DNAnexus.API.html#VALsystem_shorten_url">system_shorten_url</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
 <td><div class="info">
 Invokes the <code class="code">/system/shortenURL</code> API method with the given JSON input, returning the JSON output.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.API.html#VALsystem_whoami">system_whoami</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/system/whoami</code> API method with the given JSON input, returning the JSON output.
 </div>
 </td></tr>
 <tr><td align="left"><br>U</td></tr>
@@ -870,12 +979,127 @@ Add the key <code class="code">"project": DNAnexus.project_id()</code> to the gi
 Add the key <code class="code">"project": DNAnexus.workspace_id()</code> to the given JSON object.
 </div>
 </td></tr>
+<tr><td><a href="DNAnexus.API.html#VALworkflow_add_stage">workflow_add_stage</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/workflow-xxxx/addStage</code> API method with the given object ID and JSON input, returning the JSON output.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.API.html#VALworkflow_add_tags">workflow_add_tags</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/workflow-xxxx/addTags</code> API method with the given object ID and JSON input, returning the JSON output.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.API.html#VALworkflow_add_types">workflow_add_types</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/workflow-xxxx/addTypes</code> API method with the given object ID and JSON input, returning the JSON output.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.API.html#VALworkflow_close">workflow_close</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/workflow-xxxx/close</code> API method with the given object ID and JSON input, returning the JSON output.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.API.html#VALworkflow_describe">workflow_describe</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/workflow-xxxx/describe</code> API method with the given object ID and JSON input, returning the JSON output.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.API.html#VALworkflow_dry_run">workflow_dry_run</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/workflow-xxxx/dryRun</code> API method with the given object ID and JSON input, returning the JSON output.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.API.html#VALworkflow_get_details">workflow_get_details</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/workflow-xxxx/getDetails</code> API method with the given object ID and JSON input, returning the JSON output.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.API.html#VALworkflow_is_stage_compatible">workflow_is_stage_compatible</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/workflow-xxxx/isStageCompatible</code> API method with the given object ID and JSON input, returning the JSON output.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.API.html#VALworkflow_list_projects">workflow_list_projects</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/workflow-xxxx/listProjects</code> API method with the given object ID and JSON input, returning the JSON output.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.API.html#VALworkflow_move_stage">workflow_move_stage</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/workflow-xxxx/moveStage</code> API method with the given object ID and JSON input, returning the JSON output.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.API.html#VALworkflow_new">workflow_new</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/workflow/new</code> API method with the given JSON input, returning the JSON output.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.API.html#VALworkflow_overwrite">workflow_overwrite</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/workflow-xxxx/overwrite</code> API method with the given object ID and JSON input, returning the JSON output.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.API.html#VALworkflow_remove_stage">workflow_remove_stage</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/workflow-xxxx/removeStage</code> API method with the given object ID and JSON input, returning the JSON output.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.API.html#VALworkflow_remove_tags">workflow_remove_tags</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/workflow-xxxx/removeTags</code> API method with the given object ID and JSON input, returning the JSON output.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.API.html#VALworkflow_remove_types">workflow_remove_types</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/workflow-xxxx/removeTypes</code> API method with the given object ID and JSON input, returning the JSON output.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.API.html#VALworkflow_rename">workflow_rename</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/workflow-xxxx/rename</code> API method with the given object ID and JSON input, returning the JSON output.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.API.html#VALworkflow_run">workflow_run</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/workflow-xxxx/run</code> API method with the given object ID and JSON input, returning the JSON output.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.API.html#VALworkflow_set_details">workflow_set_details</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/workflow-xxxx/setDetails</code> API method with the given object ID and JSON input, returning the JSON output.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.API.html#VALworkflow_set_properties">workflow_set_properties</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/workflow-xxxx/setProperties</code> API method with the given object ID and JSON input, returning the JSON output.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.API.html#VALworkflow_set_stage_inputs">workflow_set_stage_inputs</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/workflow-xxxx/setStageInputs</code> API method with the given object ID and JSON input, returning the JSON output.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.API.html#VALworkflow_set_visibility">workflow_set_visibility</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/workflow-xxxx/setVisibility</code> API method with the given object ID and JSON input, returning the JSON output.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.API.html#VALworkflow_update">workflow_update</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/workflow-xxxx/update</code> API method with the given object ID and JSON input, returning the JSON output.
+</div>
+</td></tr>
+<tr><td><a href="DNAnexus.API.html#VALworkflow_update_stage_executable">workflow_update_stage_executable</a> [<a href="DNAnexus.API.html">DNAnexus.API</a>]</td>
+<td><div class="info">
+Invokes the <code class="code">/workflow-xxxx/updateStageExecutable</code> API method with the given object ID and JSON input, returning the JSON output.
+</div>
+</td></tr>
 <tr><td><a href="DNAnexus.html#VALworkspace_id">workspace_id</a> [<a href="DNAnexus.html">DNAnexus</a>]</td>
 <td><div class="info">
 Get the container ID of the job workspace, if available, or the project context
 ID otherwise.
 </div>
 </td></tr>
-</table><br>
+</table>
 </body>
 </html>
