@@ -9,11 +9,12 @@ DX.reconfigure {(DX.config()) with DX.project_context_id = None}
 let master_teardown () =
   if ((DX.config()).DX.project_context_id <> None) then
     try
-      ignore (DXAPI.project_destroy (DX.project_id()) JSON.empty)
+      ignore (DXAPI.project_destroy (DX.project_id()) (JSON.of_assoc ["terminateJobs", `Bool true]))
       eprintf "Destroyed test project %s\n" (DX.project_id())
     with
       | exn ->
         eprintf "Exception trying to tear down test project %s:\n" (DX.project_id())
+        eprintf "%s\n" (Printexc.to_string exn)
         Printexc.print_backtrace stderr
 (*
 dx find projects --name "Test project for OCaml bindings" --level ADMINISTER --brief | xargs -n 1 -iXXX dx api XXX destroy {}
