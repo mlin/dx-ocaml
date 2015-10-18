@@ -115,6 +115,7 @@ let project_id () =
 let with_project_id json = json$+("project",`String (project_id()))
 
 exception Escape_retry of exn
+type retryability = [`None | `Finite | `Infinite]
 
 let rec generic_retry ?(i=0) ?(desc="") ?retryable f x =
   let cfg = config()
@@ -135,7 +136,9 @@ let rec generic_retry ?(i=0) ?(desc="") ?retryable f x =
     y
   with
     | Escape_retry exn -> raise exn
-    | exn when (match retryable with Some f -> f exn | None -> true) && i < cfg.retry_times ->
+    | exn ->
+        let mode = match retryable with Some f -> f exn | None -> `Finite
+        if mode = `None || (mode = `Finite && i >= cfg.retry_times) then raise exn
         let d = cfg.retry_initial_delay *. (cfg.retry_backoff_factor ** (float i))
         match cfg.retry_logger with
           | Some log ->
@@ -147,17 +150,20 @@ let rec generic_retry ?(i=0) ?(desc="") ?retryable f x =
                 Some exn
           | None -> ()
         Thread.delay d
-        generic_retry ~i:(i+1) ~desc ?retryable f x
+        let next_i = if i >= cfg.retry_times-1 && mode = `Infinite then 0 else i+1
+        generic_retry ~i:next_i ~desc ?retryable f x
 
 exception APIError of int*string*string*JSON.t
 exception MalformedResponse of int*string
 
 let api_retryable always_retry = function
-  | APIError (code,_,_,_) when code >= 500 && code <= 599 -> true
-  | APIError _ -> false
-  | MalformedResponse (code,_) when code >= 500 && code <= 599 -> true
-  | MalformedResponse (code,_) when code >= 200 && code <= 299 -> always_retry
-  | MalformedResponse _ -> false
+  | APIError(503,_,_,_) -> `Infinite
+  | APIError (code,_,_,_) when code >= 500 && code <= 599 -> `Finite
+  | APIError _ -> `None
+  | MalformedResponse (503,_) -> `Infinite
+  | MalformedResponse (code,_) when code >= 500 && code <= 599 -> `Finite
+  | MalformedResponse (code,_) when code >= 200 && code <= 299 -> if always_retry then `Finite else `None
+  | MalformedResponse _ -> `None
   | Curl.CurlException (curlcode,_,_) ->
       let open Curl
       match curlcode with
@@ -165,9 +171,10 @@ let api_retryable always_retry = function
         | CURLE_COULDNT_RESOLVE_PROXY
         | CURLE_COULDNT_RESOLVE_HOST
         | CURLE_COULDNT_CONNECT
-        | CURLE_SSL_CONNECT_ERROR -> true
-        | _ -> always_retry (* e.g. CURLE_GOT_NOTHING, CURLE_PARTIAL_FILE *)
-  | _ -> false
+        | CURLE_SSL_CONNECT_ERROR -> `Finite
+        (* e.g. CURLE_GOT_NOTHING, CURLE_PARTIAL_FILE *)
+        | _ -> if always_retry then `Finite else `None
+  | _ -> `None
 
 let api_call_raw_body ?(always_retry=false) path input =
   let cfg = config()
